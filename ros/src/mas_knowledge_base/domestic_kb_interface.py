@@ -39,3 +39,25 @@ class DomesticKBInterface(KnowledgeBaseInterface):
             if object_on_desired_surface:
                 surface_objects.append(object_name)
         return surface_objects
+
+    def get_robot_location(self, robot_name):
+        '''Returns a string representing the location of the robot
+        as specified by the robot_at attribute; an empty string
+        is returned if the location is not specified.
+
+        Keyword arguments:
+        @param robot_name -- string representing the name of a robot
+
+        '''
+        robot_at_instances = self.get_all_attributes('robot_at')
+        robot_location = ''
+        for item in robot_at_instances:
+            if not item.is_negative:
+                for param in item.values:
+                    if param.key == 'bot' and param.value != robot_name:
+                        break
+                    if param.key == 'wp':
+                        robot_location = param.value
+                        break
+                break
+        return robot_location

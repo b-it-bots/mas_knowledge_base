@@ -95,3 +95,4 @@ The following methods are exposed for interacting with MongoDB store (most of wh
 
 The domestic knowledge base interface exposes methods common for domestic applications:
 * `get_surface_object_names`: Returns a list of names of objects that are on a given surface
+* `get_robot_location`: Returns a string representing the location of a robot
