@@ -96,3 +96,8 @@ The following methods are exposed for interacting with MongoDB store (most of wh
 The domestic knowledge base interface exposes methods common for domestic applications:
 * `get_surface_object_names`: Returns a list of names of objects that are on a given surface
 * `get_robot_location`: Returns a string representing the location of a robot
+* `get_surface_name`: Returns the name of a surface that contains a given name prefix
+* `is_surface_empty`: Checks whether the surface with a given name is empty of objects
+* `get_obj_category_map`: Returns a dictionary in which the keys are object names and the values are the objects' categories
+* `get_object_category`: Returns the category of an object with a given name; returns an empty string if the object is unknown
+* `get_surface_category_counts`: Returns a nested dictionary in which the keys are surface names and the values are object counts for each object category on the surface

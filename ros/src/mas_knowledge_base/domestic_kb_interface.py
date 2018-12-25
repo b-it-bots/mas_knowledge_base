@@ -61,3 +61,120 @@ class DomesticKBInterface(KnowledgeBaseInterface):
                         break
                 break
         return robot_location
+
+    def get_surface_name(self, surface_prefix):
+        '''Returns the name of a surface whose name contains the given prefix.
+        If there are multiple surfaces that contain the prefix, returns the
+        name of the first instance.
+
+        Keyword arguments:
+        @param surface_prefix -- string included in a surface name
+
+        '''
+        explored_instances = self.get_all_attributes('explored')
+        for item in explored_instances:
+            for param in item.values:
+                if param.key == 'plane' and param.value.find(surface_prefix) != -1:
+                    return param.value
+        return ''
+
+    def is_surface_empty(self, surface_name):
+        '''Returns True if there are no objects on the given surfaces; returns False otherwise.
+
+        Keyword arguments:
+        @param surface_name -- string representing the name of a surface
+
+        '''
+        no_objects_on_surface = True
+        on_instances = self.get_all_attributes('on')
+        for item in on_instances:
+            object_on_desired_surface = False
+            if not item.is_negative:
+                for param in item.values:
+                    if param.key == 'plane' and param.value.find(surface_name) != -1:
+                        object_on_desired_surface = True
+            if object_on_desired_surface:
+                no_objects_on_surface = False
+                break
+        return no_objects_on_surface
+
+    def get_obj_category_map(self):
+        '''Returns a dictionary of objects and object categories in which
+        each key represents an object and the value is its category.
+        '''
+        category_instances = self.get_all_attributes('object_category')
+        obj_category_dict = {}
+        for item in category_instances:
+            obj_name = ''
+            obj_category = ''
+            for param in item.values:
+                if param.key == 'obj':
+                    obj_name = param.value
+                elif param.key == 'cat':
+                    obj_category = param.value
+            obj_category_dict[obj_name] = obj_category
+        return obj_category_dict
+
+    def get_object_category(self, obj_name):
+        '''Returns the category of the given object if the object is known.
+        Returns an empty string if the object is unknown.
+
+        @param obj_name -- string representing the name of an object
+
+        '''
+        obj_category_map = self.get_obj_category_map()
+        if obj_name in obj_category_map:
+            return obj_category_map[obj_name]
+        return ''
+
+    def get_surface_category_counts(self, surface_prefix='', obj_category_map=None):
+        '''Returns a dictionary of surfaces and object category counts in which
+        each key represents a surface in the environment and the value
+        is a dictionary of object counts for each category.
+
+        Keyword arguments:
+        @param surface_prefix -- name prefix of the surfaces that should be considered
+                                 (default '')
+        @param obj_category_map -- a dictionary of objects and their categories
+                                   (default None, in which case a call to
+                                   self.get_obj_category_map is made)
+
+        '''
+        if not obj_category_map:
+            obj_category_map = self.get_obj_category_map()
+        surface_category_counts = {}
+
+        # we take all explored surfaces and populate 'surface_category_counts'
+        # with an empty dictionary for each surface; each such dictionary
+        # will store the object category count for the respective surface
+        explored_instances = self.get_all_attributes('explored')
+        for item in explored_instances:
+            surface_name = ''
+            for param in item.values:
+                if param.key == 'plane':
+                    surface_name = param.value
+                    # we don't want to place items on the table, so we
+                    # don't consider the table as a placing surface
+                    if surface_name not in surface_category_counts and \
+                       surface_name.find(surface_prefix) != -1:
+                        surface_category_counts[surface_name] = {}
+
+        # we populate surface_category_counts with
+        # the object category counts for each surface
+        on_instances = self.get_all_attributes('on')
+        for item in on_instances:
+            obj_name = ''
+            obj_surface = ''
+            for param in item.values:
+                if param.key == 'obj':
+                    obj_name = param.value
+                elif param.key == 'plane':
+                    obj_surface = param.value
+
+            if obj_surface.find(surface_prefix) != -1:
+                obj_category = obj_category_map[obj_name]
+                if obj_category not in surface_category_counts[obj_surface]:
+                    surface_category_counts[obj_surface][obj_category] = 1
+                else:
+                    surface_category_counts[obj_surface][obj_category] += 1
+        return surface_category_counts
