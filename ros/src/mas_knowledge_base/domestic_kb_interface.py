@@ -98,6 +98,34 @@ class DomesticKBInterface(KnowledgeBaseInterface):
                 break
         return no_objects_on_surface
 
+    def get_surface_object_map(self, surface_prefix):
+        '''Returns a dictionary of objects on the surfaces whose names contain the
+        given prefix, such that each key is a surface name
+        and each value is a list of objects on the surface.
+
+        Keyword arguments:
+        @param surface_prefix -- name prefix of the surfaces that should be considered
+
+        '''
+        surface_objects = {}
+        on_instances = self.get_all_attributes('on')
+        for item in on_instances:
+            object_on_desired_surface = False
+            object_name = ''
+            surface_name = ''
+            if not item.is_negative:
+                for param in item.values:
+                    if param.key == 'plane' and param.value.find(surface_prefix) != -1:
+                        object_on_desired_surface = True
+                        surface_name = param.value
+                        if surface_name not in surface_objects:
+                            surface_objects[surface_name] = []
+                    elif param.key == 'obj':
+                        object_name = param.value
+            if object_on_desired_surface:
+                surface_objects[surface_name].append(object_name)
+        return surface_objects
+
     def get_obj_category_map(self):
         '''Returns a dictionary of objects and object categories in which
         each key represents an object and the value is its category.
@@ -178,3 +206,26 @@ class DomesticKBInterface(KnowledgeBaseInterface):
                 else:
                     surface_category_counts[obj_surface][obj_category] += 1
         return surface_category_counts
+
+    ############################################################################
+    #------------------------------ Data storage ------------------------------#
+    ############################################################################
+    def get_surface_object_pose_map(self, surface_object_map, obj_type):
+        '''Returns a dictionary of surfaces and object poses, namely each key
+        is a surface from the given dictionary and each value is a dictionary of
+        object names and poses.
+
+        Keyword arguments:
+        @param surface_object_map -- a dictionary of surfaces and objects on them
+        @param obj_type -- type of the objects to be retrieved
+                           (the value of the objects' "_type" field)
+
+        '''
+        object_poses = {}
+        for surface, objects in surface_object_map.items():
+            object_poses[surface] = {}
+            for obj_name in objects:
+                obj = self.get_obj_instance(obj_name, obj_type)
+                if obj:
+                    object_poses[surface][obj_name] = obj.pose
+        return object_poses
