@@ -100,6 +100,7 @@ The following methods are exposed for interacting with the symbolic knowledge ba
 * `get_robot_location`: Returns a string representing the location of a robot
 * `get_surface_name`: Returns the name of a surface that contains a given name prefix
 * `is_surface_empty`: Checks whether the surface with a given name is empty of objects
+* `get_object_location`: Given an object name, returns the name of its location and a predicate indicating the relation of the object and the location ("in" or "on"). Both return values are None if the given object is unknown
 * `get_surface_object_map`: Returns a dictionary in which the keys are surfaces whose names contain a given prefix and the values are lists of surface objects
 * `get_obj_category_map`: Returns a dictionary in which the keys are object names and the values are the objects' categories
 * `get_object_category`: Returns the category of an object with a given name; returns an empty string if the object is unknown

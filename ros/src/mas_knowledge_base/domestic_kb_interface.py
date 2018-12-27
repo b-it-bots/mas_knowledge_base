@@ -98,6 +98,58 @@ class DomesticKBInterface(KnowledgeBaseInterface):
                 break
         return no_objects_on_surface
 
+    def get_object_location(self, obj_name):
+        '''Returns a string indicating the location of the object with the
+        given name and a predicate to indicate the relation of the object
+        and its location ("in" or "on"). Returns None for both the object
+        and the predicate if the object is unknown.
+
+        Keyword arguments:
+        @param obj_name -- string representing the name of an object
+
+        '''
+        obj_location = None
+        predicate = None
+
+        current_obj_location = None
+        obj_found = False
+
+        # we check whether the object is on a given plane
+        on_instances = self.get_all_attributes('on')
+        for item in on_instances:
+            if not item.is_negative:
+                for param in item.values:
+                    if param.key == 'plane':
+                        current_obj_location = param.value
+                    elif param.key == 'obj' and param.value == obj_name:
+                        obj_found = True
+                        break
+
+                if obj_found:
+                    obj_location = current_obj_location
+                    predicate = 'on'
+                    break
+
+        # if the object couldn't be found on a plane, we check
+        # whether it is inside another object
+        if not obj_found:
+            in_instances = self.get_all_attributes('in')
+            for item in in_instances:
+                if not item.is_negative:
+                    for param in item.values:
+                        if param.key == 'dest_obj':
+                            current_obj_location = param.value
+                        elif param.key == 'obj' and param.value == obj_name:
+                            obj_found = True
+                            break
+
+                    if obj_found:
+                        obj_location = current_obj_location
+                        predicate = 'in'
+                        break
+
+        return obj_location, predicate
+
     def get_surface_object_map(self, surface_prefix):
         '''Returns a dictionary of objects on the surfaces whose names contain the
         given prefix, such that each key is a surface name
