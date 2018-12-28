@@ -70,6 +70,8 @@ The ontology query interface exposes the following methods:
 * `get_instances_of`: Returns a list of all instances belonging to a given class
 * `get_subclasses_of`: Returns a list of all subclasses of a given class
 * `get_parent_classes_of`: Returns a list of all ancestor classes of a given class
+* `get_subjects_of`: Returns a list of all subjects related to a given object through a given property `(subject property object)`
+* `get_objects_of`: Returns a list of all objects related to a given subject through a given property `(subject property object)`
 
 ### mas_knowledge_base
 

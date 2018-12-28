@@ -18,6 +18,7 @@ class OntologyQueryInterface(object):
         self.knowledge_graph = rdflib.Graph()
         self.knowledge_graph.load(ontology_file)
         self.class_prefix = class_prefix
+        self.ontology_url = ontology_file[0:ontology_file.rfind('/')]
 
     def is_instance_of(self, obj_name, class_name):
         '''Checks whether 'obj_name' is an instance of 'class_name'.
@@ -70,6 +71,44 @@ class OntologyQueryInterface(object):
                           for parent_class in [str(x) for x in query_result]]
         return parent_classes
 
+    def get_subjects_of(self, prop, obj):
+        '''Returns a list of subject of the relation involving the given object and property
+        (i.e. given a property "subject prop object", returns a list of all subject
+        involved with the object). Returns an empty list if the object
+        doesn't have the given property or does not exist in the ontology.
+
+        Keyword arguments:
+        @param prop -- string representing the name of a property
+        @param object -- string representing an entity in the ontology
+
+        '''
+        object_url = self.__get_entity_url(obj)
+        rdf_property = self.__format_class_name(prop)
+        query_result = self.knowledge_graph.query('SELECT ?subj ' +
+                                                  'WHERE {?subj ' + rdf_property +
+                                                  ' <' + object_url +  '>}')
+        subject_list = [self.__extract_obj_name(x[0]) for x in query_result]
+        return subject_list
+
+    def get_objects_of(self, prop, subject):
+        '''Returns a list of objects of the relation involving the given subject and property
+        (i.e. given a property "subject prop object", returns a list of all objects
+        involved with the subject). Returns an empty list if the subject
+        doesn't have the given property or does not exist in the ontology.
+
+        Keyword arguments:
+        @param prop -- string representing the name of a property
+        @param subject -- string representing an entity in the ontology
+
+        '''
+        subject_url = self.__get_entity_url(subject)
+        rdf_property = self.__format_class_name(prop)
+        query_result = self.knowledge_graph.query('SELECT ?obj ' +
+                                                  'WHERE {<' + subject_url + '> ' +
+                                                  rdf_property + ' ?obj}')
+        object_list = [self.__extract_obj_name(x[0]) for x in query_result]
+        return object_list
+
     def __format_class_name(self, class_name):
         '''Returns a string of the format "self.class_prefix:class_name".
 
@@ -78,6 +117,15 @@ class OntologyQueryInterface(object):
 
         '''
         return '{0}:{1}'.format(self.class_prefix, class_name)
+
+    def __get_entity_url(self, entity):
+        '''Returns a string of the format "self.ontology_url/entity"
+
+        Keyword arguments:
+        @param entity -- string representing the name of an entity in the ontology
+
+        '''
+        return '{0}/{1}'.format(self.ontology_url, entity)
 
     def __extract_class_name(self, rdf_class):
         '''Extracts the name of a class given a string
