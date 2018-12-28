@@ -38,7 +38,8 @@ mas_knowledge_base
 |____common
 |    |____mas_knowledge_utils
 |    |    |    __init__.py
-|    |    |____ontology_query_interface.py
+|    |    |    ontology_query_interface.py
+|    |    |____domestic_ontology_interface.py
 |    |
 |    |____ontology
 |    |    |____apartment.owl
@@ -56,6 +57,7 @@ mas_knowledge_base
 ## Dependencies
 
 * ``rdflib`` (for the ontology query interface)
+* ``termcolor``
 * ``mongodb_store`` (for the knowledge base interface)
 * ``rosplan_knowledge_msgs`` (for the knowledge base interface)
 
@@ -72,6 +74,13 @@ The ontology query interface exposes the following methods:
 * `get_parent_classes_of`: Returns a list of all ancestor classes of a given class
 * `get_subjects_of`: Returns a list of all subjects related to a given object through a given property `(subject property object)`
 * `get_objects_of`: Returns a list of all objects related to a given subject through a given property `(subject property object)`
+
+#### domestic_ontology_interface
+
+The domestic ontology interface exposes methods useful for domestic applications.
+
+The following methods are exposed by the domestic interface:
+* `get_default_storing_location`: Returns a string representing the location where a specific item or an item of a given category is stored by default
 
 ### mas_knowledge_base
 
