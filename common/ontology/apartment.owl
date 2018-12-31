@@ -11,23 +11,38 @@
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
 
+    <owl:Ontology rdf:about="http://apartment" />
+
     <!--************* Class definitions ************-->
-    <owl:Class rdf:about="apartment:Plane"/>
-    <owl:Class rdf:about="apartment:Location"/>
     <owl:Class rdf:about="apartment:Object"/>
-    <owl:Class rdf:about="apartment:ObjectContainer"/>
+    <owl:Class rdf:about="apartment:Plane"/>
+    <owl:Class rdf:about="apartment:Room"/>
+    <owl:Class rdf:about="apartment:Location"/>
 
     <!-- Furniture items -->
     <owl:Class rdf:about="apartment:Furniture"/>
+    <owl:Class rdf:about="apartment:ObjectContainer"/>
     <owl:Class rdf:about="apartment:Table"/>
     <owl:Class rdf:about="apartment:DiningTable"/>
     <owl:Class rdf:about="apartment:WorkTable"/>
     <owl:Class rdf:about="apartment:Drawer"/>
     <owl:Class rdf:about="apartment:Bed"/>
+    <owl:Class rdf:about="apartment:Wardrobe"/>
     <owl:Class rdf:about="apartment:Chair"/>
     <owl:Class rdf:about="apartment:Sofa"/>
     <owl:Class rdf:about="apartment:Cupboard"/>
     <owl:Class rdf:about="apartment:Sink"/>
+
+    <!-- Appliances -->
+    <owl:Class rdf:about="apartment:Appliance"/>
+    <owl:Class rdf:about="apartment:Laptop"/>
+    <owl:Class rdf:about="apartment:VacuumCleaner"/>
+    <owl:Class rdf:about="apartment:Fridge"/>
+    <owl:Class rdf:about="apartment:Oven"/>
+    <owl:Class rdf:about="apartment:MicrowaveOven"/>
+    <owl:Class rdf:about="apartment:WaterBoiler"/>
+    <owl:Class rdf:about="apartment:Mixer"/>
+    <owl:Class rdf:about="apartment:Dishwasher"/>
 
     <!-- Kitchen items -->
     <owl:Class rdf:about="apartment:KitchenUtensil"/>
@@ -36,14 +51,6 @@
     <owl:Class rdf:about="apartment:BreadKnife"/>
     <owl:Class rdf:about="apartment:TableSpoon"/>
     <owl:Class rdf:about="apartment:TeaSpoon"/>
-
-    <!-- Kitchen appliances -->
-    <owl:Class rdf:about="apartment:KitchenAppliance"/>
-    <owl:Class rdf:about="apartment:Oven"/>
-    <owl:Class rdf:about="apartment:MicrowaveOven"/>
-    <owl:Class rdf:about="apartment:WaterBoiler"/>
-    <owl:Class rdf:about="apartment:Mixer"/>
-    <owl:Class rdf:about="apartment:Dishwasher"/>
 
     <!-- Drinkware -->
     <owl:Class rdf:about="apartment:Drinkware"/>
@@ -77,22 +84,22 @@
         <rdfs:range rdf:resource="apartment:Furniture"/>
     </owl:ObjectProperty>
 
-    <owl:ObjectProperty rdf:about="apartment:furnitureLocatedAt">
+    <owl:ObjectProperty rdf:about="apartment:locatedAt">
         <rdf:type rdf:resource="&owl;FunctionalProperty" />
-        <rdfs:domain rdf:resource="apartment:Furniture"/>
+        <rdfs:domain rdf:resource="apartment:Object"/>
         <rdfs:range rdf:resource="apartment:Location"/>
     </owl:ObjectProperty>
 
     <!-- Geometric properties -->
-    <owl:TransitiveProperty rdf:about="apartment:above">
+    <owl:ObjectProperty rdf:about="apartment:above">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
         <rdfs:domain rdf:resource="apartment:Object"/>
         <rdfs:range rdf:resource="apartment:Object"/>
-    </owl:TransitiveProperty>
+    </owl:ObjectProperty>
 
-    <owl:TransitiveProperty rdf:about="apartment:below">
-        <rdfs:domain rdf:resource="apartment:Object"/>
-        <rdfs:range rdf:resource="apartment:Object"/>
-    </owl:TransitiveProperty>
+    <owl:ObjectProperty rdf:about="apartment:below">
+        <owl:inverseOf rdf:resource="#apartment:above"/>
+    </owl:ObjectProperty>
 
     <owl:ObjectProperty rdf:about="apartment:onTopOf">
         <rdfs:domain rdf:resource="apartment:Object"/>
@@ -104,17 +111,34 @@
         <rdfs:range rdf:resource="apartment:Object"/>
     </owl:ObjectProperty>
 
+    <owl:ObjectProperty rdf:about="apartment:toTheLeftOf">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Object"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="apartment:toTheRightOf">
+        <owl:inverseOf rdf:resource="#apartment:toTheLeftOf"/>
+    </owl:ObjectProperty>
     <!--*********************************************-->
 
 
     <!--*********** Subclass definitions ************-->
 
     <!-- Object subclass definitions -->
+    <owl:Class rdf:about="apartment:Furniture">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="apartment:ObjectContainer">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    </owl:Class>
+
     <owl:Class rdf:about="apartment:KitchenUtensil">
         <rdfs:subClassOf rdf:resource="apartment:Object"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:KitchenAppliance">
+    <owl:Class rdf:about="apartment:Appliance">
         <rdfs:subClassOf rdf:resource="apartment:Object"/>
     </owl:Class>
 
@@ -159,6 +183,9 @@
     <owl:Class rdf:about="apartment:Bed">
       <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
+    <owl:Class rdf:about="apartment:Wardrobe">
+      <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    </owl:Class>
     <owl:Class rdf:about="apartment:Chair">
       <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
@@ -186,21 +213,30 @@
       <rdfs:subClassOf rdf:resource="apartment:KitchenUtensil"/>
     </owl:Class>
 
-    <!-- Kitchen appliance subclass definitions -->
+    <!-- Appliance subclass definitions -->
+    <owl:Class rdf:about="apartment:Laptop">
+      <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
+    </owl:Class>
+    <owl:Class rdf:about="apartment:VacuumCleaner">
+      <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
+    </owl:Class>
+    <owl:Class rdf:about="apartment:Fridge">
+      <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
+    </owl:Class>
     <owl:Class rdf:about="apartment:Oven">
-      <rdfs:subClassOf rdf:resource="apartment:KitchenAppliance"/>
+      <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
     </owl:Class>
     <owl:Class rdf:about="apartment:MicrowaveOven">
-      <rdfs:subClassOf rdf:resource="apartment:KitchenAppliance"/>
+      <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
     </owl:Class>
     <owl:Class rdf:about="apartment:WaterBoiler">
-      <rdfs:subClassOf rdf:resource="apartment:KitchenAppliance"/>
+      <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
     </owl:Class>
     <owl:Class rdf:about="apartment:Mixer">
-      <rdfs:subClassOf rdf:resource="apartment:KitchenAppliance"/>
+      <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
     </owl:Class>
     <owl:Class rdf:about="apartment:Dishwasher">
-      <rdfs:subClassOf rdf:resource="apartment:KitchenAppliance"/>
+      <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
     </owl:Class>
 
     <!-- Drinkware subclass definitions -->
@@ -241,10 +277,10 @@
     <!--****** Class disjointness definitions *******-->
     <owl:AllDisjointClasses>
         <owl:members rdf:parseType="Collection">
-            <owl:Class rdf:about="apartment:Plane"/>
+            <owl:Class rdf:about="apartment:Room"/>
             <owl:Class rdf:about="apartment:Location"/>
+            <owl:Class rdf:about="apartment:Plane"/>
             <owl:Class rdf:about="apartment:Object"/>
-            <owl:Class rdf:about="apartment:ObjectContainer"/>
         </owl:members>
     </owl:AllDisjointClasses>
 
@@ -252,7 +288,7 @@
         <owl:members rdf:parseType="Collection">
             <owl:Class rdf:about="apartment:Furniture"/>
             <owl:Class rdf:about="apartment:KitchenUtensil"/>
-            <owl:Class rdf:about="apartment:KitchenAppliance"/>
+            <owl:Class rdf:about="apartment:Appliance"/>
             <owl:Class rdf:about="apartment:Drinkware"/>
             <owl:Class rdf:about="apartment:Foodcontainer"/>
             <owl:Class rdf:about="apartment:CookingUtensil"/>
@@ -263,6 +299,7 @@
         <owl:members rdf:parseType="Collection">
             <owl:Class rdf:about="apartment:Drawer"/>
             <owl:Class rdf:about="apartment:Bed"/>
+            <owl:Class rdf:about="apartment:Wardrobe"/>
             <owl:Class rdf:about="apartment:Chair"/>
             <owl:Class rdf:about="apartment:Sofa"/>
             <owl:Class rdf:about="apartment:Cupboard"/>
@@ -283,6 +320,9 @@
 
     <owl:AllDisjointClasses>
         <owl:members rdf:parseType="Collection">
+            <owl:Class rdf:about="apartment:Laptop"/>
+            <owl:Class rdf:about="apartment:VacuumCleaner"/>
+            <owl:Class rdf:about="apartment:Fridge"/>
             <owl:Class rdf:about="apartment:Oven"/>
             <owl:Class rdf:about="apartment:MicrowaveOven"/>
             <owl:Class rdf:about="apartment:WaterBoiler"/>
