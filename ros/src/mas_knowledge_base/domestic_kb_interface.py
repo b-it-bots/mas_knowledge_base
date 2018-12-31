@@ -207,6 +207,19 @@ class DomesticKBInterface(KnowledgeBaseInterface):
             return obj_category_map[obj_name]
         return ''
 
+    def get_category_objects(self, obj_category):
+        '''Returns a list of object names that belong to the given category.
+        Returns an empty list if there are no objects of the category.
+
+        Keyword arguments:
+        @param obj_category -- string representing an object category
+
+        '''
+        obj_category_map = self.get_obj_category_map()
+        category_objects = [obj for obj, cat in obj_category_map.items()
+                            if cat == obj_category]
+        return category_objects
+
     def get_surface_category_counts(self, surface_prefix='', obj_category_map=None):
         '''Returns a dictionary of surfaces and object category counts in which
         each key represents a surface in the environment and the value
