@@ -125,6 +125,11 @@
 
     <!--*********** Subclass definitions ************-->
 
+    <!-- Location subclass definitions -->
+    <owl:Class rdf:about="apartment:Room">
+        <rdfs:subClassOf rdf:resource="apartment:Location"/>
+    </owl:Class>
+
     <!-- Object subclass definitions -->
     <owl:Class rdf:about="apartment:Furniture">
         <rdfs:subClassOf rdf:resource="apartment:Object"/>
@@ -277,7 +282,6 @@
     <!--****** Class disjointness definitions *******-->
     <owl:AllDisjointClasses>
         <owl:members rdf:parseType="Collection">
-            <owl:Class rdf:about="apartment:Room"/>
             <owl:Class rdf:about="apartment:Location"/>
             <owl:Class rdf:about="apartment:Plane"/>
             <owl:Class rdf:about="apartment:Object"/>
