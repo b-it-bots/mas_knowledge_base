@@ -40,6 +40,7 @@
     <owl:Class rdf:about="apartment:Fridge"/>
     <owl:Class rdf:about="apartment:Oven"/>
     <owl:Class rdf:about="apartment:MicrowaveOven"/>
+    <owl:Class rdf:about="apartment:Stove"/>
     <owl:Class rdf:about="apartment:WaterBoiler"/>
     <owl:Class rdf:about="apartment:Mixer"/>
     <owl:Class rdf:about="apartment:Dishwasher"/>
@@ -57,6 +58,8 @@
     <owl:Class rdf:about="apartment:Cup"/>
     <owl:Class rdf:about="apartment:Mug"/>
     <owl:Class rdf:about="apartment:DrinkingGlass"/>
+    <owl:Class rdf:about="apartment:ShotGlass"/>
+    <owl:Class rdf:about="apartment:WineGlass"/>
 
     <!-- Food containers -->
     <owl:Class rdf:about="apartment:FoodContainer"/>
@@ -69,6 +72,16 @@
     <owl:Class rdf:about="apartment:CookingUtensil"/>
     <owl:Class rdf:about="apartment:FryingPan"/>
     <owl:Class rdf:about="apartment:Pot"/>
+
+    <!-- Personal hygiene items -->
+    <owl:Class rdf:about="apartment:PersonalHygieneItem"/>
+    <owl:Class rdf:about="apartment:Toothbrush"/>
+    <owl:Class rdf:about="apartment:Toothpaste"/>
+    <owl:Class rdf:about="apartment:HandSoap"/>
+    <owl:Class rdf:about="apartment:Shampoo"/>
+    <owl:Class rdf:about="apartment:ShowerGel"/>
+    <owl:Class rdf:about="apartment:ShavingCream"/>
+    <owl:Class rdf:about="apartment:ToiletPaper"/>
     <!--*********************************************-->
 
 
@@ -88,6 +101,17 @@
         <rdf:type rdf:resource="&owl;FunctionalProperty" />
         <rdfs:domain rdf:resource="apartment:Object"/>
         <rdfs:range rdf:resource="apartment:Location"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="apartment:hasDoor">
+        <rdf:type rdf:resource="&owl;FunctionalProperty" />
+        <rdfs:domain rdf:resource="apartment:Furniture"/>
+        <rdfs:range rdf:resource="xsd:boolean"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="apartment:likelyLocation">
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Furniture"/>
     </owl:ObjectProperty>
 
     <!-- Geometric properties -->
@@ -156,6 +180,10 @@
     </owl:Class>
 
     <owl:Class rdf:about="apartment:CookingUtensil">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="apartment:PersonalHygieneItem">
         <rdfs:subClassOf rdf:resource="apartment:Object"/>
     </owl:Class>
 
@@ -231,6 +259,9 @@
     <owl:Class rdf:about="apartment:Oven">
       <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
     </owl:Class>
+    <owl:Class rdf:about="apartment:Stove">
+      <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
+    </owl:Class>
     <owl:Class rdf:about="apartment:MicrowaveOven">
       <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
     </owl:Class>
@@ -254,6 +285,12 @@
     <owl:Class rdf:about="apartment:DrinkingGlass">
       <rdfs:subClassOf rdf:resource="apartment:Drinkware"/>
     </owl:Class>
+    <owl:Class rdf:about="apartment:DrinkingGlass">
+      <rdfs:subClassOf rdf:resource="apartment:ShotGlass"/>
+    </owl:Class>
+    <owl:Class rdf:about="apartment:DrinkingGlass">
+      <rdfs:subClassOf rdf:resource="apartment:WineGlass"/>
+    </owl:Class>
 
     <!-- Food container subclass definitions -->
     <owl:Class rdf:about="apartment:Bowl">
@@ -276,6 +313,32 @@
     <owl:Class rdf:about="apartment:Pot">
       <rdfs:subClassOf rdf:resource="apartment:CookingUtensil"/>
     </owl:Class>
+
+    <!-- Personal hygiene subclass definitions -->
+    <owl:Class rdf:about="apartment:Toothbrush">
+      <rdfs:subClassOf rdf:resource="apartment:PersonalHygieneItem"/>
+    </owl:Class>
+    <owl:Class rdf:about="apartment:Toothpaste">
+      <rdfs:subClassOf rdf:resource="apartment:PersonalHygieneItem"/>
+    </owl:Class>
+    <owl:Class rdf:about="apartment:HandSoap">
+      <rdfs:subClassOf rdf:resource="apartment:PersonalHygieneItem"/>
+    </owl:Class>
+    <owl:Class rdf:about="apartment:Shampoo">
+      <rdfs:subClassOf rdf:resource="apartment:PersonalHygieneItem"/>
+    </owl:Class>
+    <owl:Class rdf:about="apartment:ShowerGel">
+      <rdfs:subClassOf rdf:resource="apartment:PersonalHygieneItem"/>
+    </owl:Class>
+    <owl:Class rdf:about="apartment:ShavingCream">
+      <rdfs:subClassOf rdf:resource="apartment:PersonalHygieneItem"/>
+    </owl:Class>
+    <owl:Class rdf:about="apartment:ShavingCream">
+      <rdfs:subClassOf rdf:resource="apartment:PersonalHygieneItem"/>
+    </owl:Class>
+    <owl:Class rdf:about="apartment:ToiletPaper">
+      <rdfs:subClassOf rdf:resource="apartment:PersonalHygieneItem"/>
+    </owl:Class>
     <!--*********************************************-->
 
 
@@ -296,6 +359,7 @@
             <owl:Class rdf:about="apartment:Drinkware"/>
             <owl:Class rdf:about="apartment:Foodcontainer"/>
             <owl:Class rdf:about="apartment:CookingUtensil"/>
+            <owl:Class rdf:about="apartment:PersonalHygieneItem"/>
         </owl:members>
     </owl:AllDisjointClasses>
 
@@ -329,6 +393,7 @@
             <owl:Class rdf:about="apartment:Fridge"/>
             <owl:Class rdf:about="apartment:Oven"/>
             <owl:Class rdf:about="apartment:MicrowaveOven"/>
+            <owl:Class rdf:about="apartment:Stove"/>
             <owl:Class rdf:about="apartment:WaterBoiler"/>
             <owl:Class rdf:about="apartment:Mixer"/>
             <owl:Class rdf:about="apartment:Dishwasher"/>
@@ -340,6 +405,8 @@
             <owl:Class rdf:about="apartment:Cup"/>
             <owl:Class rdf:about="apartment:Mug"/>
             <owl:Class rdf:about="apartment:DrinkingGlass"/>
+            <owl:Class rdf:about="apartment:ShotGlass"/>
+            <owl:Class rdf:about="apartment:WineGlass"/>
         </owl:members>
     </owl:AllDisjointClasses>
 
@@ -356,6 +423,18 @@
         <owl:members rdf:parseType="Collection">
             <owl:Class rdf:about="apartment:FryingPan"/>
             <owl:Class rdf:about="apartment:Pot"/>
+        </owl:members>
+    </owl:AllDisjointClasses>
+
+    <owl:AllDisjointClasses>
+        <owl:members rdf:parseType="Collection">
+            <owl:Class rdf:about="apartment:Toothbrush"/>
+            <owl:Class rdf:about="apartment:Toothpaste"/>
+            <owl:Class rdf:about="apartment:HandSoap"/>
+            <owl:Class rdf:about="apartment:Shampoo"/>
+            <owl:Class rdf:about="apartment:ShowerGel"/>
+            <owl:Class rdf:about="apartment:ShavingCream"/>
+            <owl:Class rdf:about="apartment:ToiletPaper"/>
         </owl:members>
     </owl:AllDisjointClasses>
     <!--*********************************************-->
