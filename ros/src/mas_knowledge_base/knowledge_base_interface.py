@@ -11,6 +11,8 @@ class KnowledgeUpdateTypes(object):
     # with the values used by the ROSPlan knowledge update service
     INSERT = 0
     REMOVE = 2
+    INSERT_GOAL = 1
+    REMOVE_GOAL = 3
 
 class KnowledgeBaseInterface(object):
     '''Defines an interface for interacting with a knowledge base.
@@ -121,6 +123,30 @@ class KnowledgeBaseInterface(object):
 
         '''
         self.__update_kb(KnowledgeUpdateTypes.REMOVE, fact_list)
+
+    def insert_goals(self, goal_list):
+        '''Inserts the goals in the given list into the knowledge base.
+
+        Keyword arguments:
+        @param goal_list -- a list in which each entry is a tuple of the form
+                            (predicate, [(variable, value), ...]), where
+                            "predicate" is the predicate name and the
+                            (variable, value) tuples are the variable values
+
+        '''
+        self.__update_kb(KnowledgeUpdateTypes.INSERT_GOAL, goal_list)
+
+    def remove_goals(self, goal_list):
+        '''Removes the goals in the given list from the knowledge base.
+
+        Keyword arguments:
+        @param goal_list -- a list in which each entry is a tuple of the form
+                            (predicate, [(variable, value), ...]), where
+                            "predicate" is the predicate name and the
+                            (variable, value) tuples are the variable values
+
+        '''
+        self.__update_kb(KnowledgeUpdateTypes.REMOVE_GOAL, goal_list)
 
     def __update_kb(self, update_type, fact_list):
         '''Updates the knowledge base with the facts in the given list.

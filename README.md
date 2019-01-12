@@ -91,6 +91,8 @@ The knowledge base interface exposes methods for interacting both with the ROSPl
 * `update_kb`: Inserts facts into and removes facts from the knowledge base
 * `insert_facts`: Inserts a list of facts into the knowledge base
 * `remove_facts`: Removes a list of facts from the knowledge base
+* `insert_goals`: Inserts a list of goals into the knowledge base
+* `remove_goals`: Removes a list of goals from the knowledge base
 
 The following methods are exposed for interacting with MongoDB store (most of which are just wrappers around the built-in MongoDB store methods):
 * `insert_objects`: Inserts a list of named objects into the knowledge base
