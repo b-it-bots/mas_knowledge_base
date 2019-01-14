@@ -87,6 +87,7 @@ The following methods are exposed by the domestic interface:
 #### knowledge_base_interface
 
 The knowledge base interface exposes methods for interacting both with the ROSPlan symbolic knowledge base and with MongoDB store. The following methods are exposed for interacting with the symbolic knowledge base:
+* `get_predicate_names`: Returns the names of all predicates in the domain
 * `get_all_attributes`: Returns a list of all instances of a given predicate
 * `update_kb`: Inserts facts into and removes facts from the knowledge base
 * `insert_facts`: Inserts a list of facts into the knowledge base

@@ -22,6 +22,9 @@ class KnowledgeBaseInterface(object):
 
     '''
     def __init__(self):
+        # a client for the /rosplan_knowledge_base/domain/predicates service
+        self.predicate_retrieval_client = None
+
         # a client for the /rosplan_knowledge_base/update service
         self.knowledge_update_client = None
 
@@ -33,6 +36,15 @@ class KnowledgeBaseInterface(object):
 
         # name of the host robot; value read from the knowledge base
         self.robot_name = ''
+
+        rospy.loginfo('[kb_interface] Creating a domain predicate retrieval client')
+        try:
+            rospy.wait_for_service('/rosplan_knowledge_base/domain/predicates', 5.)
+            self.predicate_retrieval_client = rospy.ServiceProxy('/rosplan_knowledge_base/domain/predicates',
+                                                                 rosplan_srvs.GetDomainAttributeService)
+        except (rospy.ServiceException, rospy.ROSException) as exc:
+            rospy.logwarn('The service /rosplan_knowledge_base/domain/predicates does not appear to exist.\n' +
+                          'Please spawn rosplan_knowledge_base/knowledgeBase')
 
         rospy.loginfo('[kb_interface] Creating a knowledge base update client')
         try:
@@ -72,6 +84,14 @@ class KnowledgeBaseInterface(object):
     ############################################################################
     #--------------------------- Symbolic knowledge ---------------------------#
     ############################################################################
+    def get_predicate_names(self):
+        '''Returns a list with the names of all predicates in the domain.
+        '''
+        request = rosplan_srvs.GetDomainAttributeServiceRequest()
+        result = self.predicate_retrieval_client(request)
+        predicate_names = [p.name for p in result.items]
+        return predicate_names
+
     def get_all_attributes(self, predicate_name):
         '''Returns a list of all instances of the given predicate in the knowledge base.
 
