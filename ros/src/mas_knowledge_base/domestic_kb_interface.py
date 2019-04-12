@@ -98,6 +98,26 @@ class DomesticKBInterface(KnowledgeBaseInterface):
                 break
         return no_objects_on_surface
 
+    def is_container_empty(self, container_name):
+        '''Returns True if there are no objects in the given container; returns False otherwise.
+
+        Keyword arguments:
+        @param container_name -- string representing the name of a container
+
+        '''
+        no_objects_in_container = True
+        in_instances = self.get_all_attributes('in')
+        for item in in_instances:
+            object_in_desired_container = False
+            if not item.is_negative:
+                for param in item.values:
+                    if param.key == 'source' and param.value.find(container_name) != -1:
+                        object_in_desired_container = True
+            if object_in_desired_container:
+                no_objects_in_container = False
+                break
+        return no_objects_in_container
+
     def get_object_location(self, obj_name):
         '''Returns a string indicating the location of the object with the
         given name and a predicate to indicate the relation of the object
