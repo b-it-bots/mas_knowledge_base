@@ -37,7 +37,27 @@ class DomesticOntologyInterface(OntologyQueryInterface):
             # TODO: define class restrictions for category-wide default storing locations
             pass
         else:
-            error_msg = colored('[get_default_storing_location] obj_name ' +
-                                'and obj_category cannot both be None', 'red')
-            print(error_msg)
+            error_msg = '[get_default_storing_location] obj_name and obj_category cannot both be None'
+            raise AssertionError(error_msg)
         return location
+
+    def get_obj_height(self, obj_name):
+        '''Returns a floating point number representing the height of the given object.
+
+        Keyword arguments:
+        @param obj_name -- string representing the name of an object
+
+        '''
+        height = 0.
+        if obj_name:
+            height_list = self.get_objects_of('heightOf', obj_name)
+            if height_list:
+                try:
+                    height = float(height_list[0])
+                except:
+                    print(colored('[get_obj_height] Height is not a floating-point number', 'red'))
+                    raise
+        else:
+            error_msg = '[get_obj_height] obj_name cannot be None'
+            raise AssertionError(error_msg)
+        return height
