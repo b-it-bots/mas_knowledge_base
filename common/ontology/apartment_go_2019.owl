@@ -79,7 +79,7 @@
     </owl:Class>
 
     <!-- Room Subclass -->
-    <owl:Class rdf:about="apartment:BedRoom">
+    <owl:Class rdf:about="apartment:Bedroom">
         <rdfs:subClassOf rdf:resource="apartment:Room"/>
     </owl:Class>
 
@@ -136,7 +136,7 @@
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:BookCase">
+    <owl:Class rdf:about="apartment:Bookcase">
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
 
@@ -152,7 +152,7 @@
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:SideBoard">
+    <owl:Class rdf:about="apartment:Sideboard">
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
 
@@ -188,7 +188,7 @@
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:CoatHanger">
+    <owl:Class rdf:about="apartment:Coathanger">
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
 
@@ -235,7 +235,7 @@
         <rdfs:subClassOf rdf:resource="apartment:Drinks"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:BigLemonJuice">
+    <owl:Class rdf:about="apartment:BigWater">
         <rdfs:subClassOf rdf:resource="apartment:Drinks"/>
     </owl:Class>
 
@@ -277,7 +277,7 @@
         <rdfs:subClassOf rdf:resource="apartment:Care"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:ToothPaste">
+    <owl:Class rdf:about="apartment:Toothpaste">
         <rdfs:subClassOf rdf:resource="apartment:Care"/>
     </owl:Class>
 
@@ -405,7 +405,6 @@
     <apartment:Wall rdf:about="apartment:LivingRoomSouthhWall"/>
     <apartment:Wall rdf:about="apartment:LivingRoomWesthWall"/>
 
-
     <apartment:Plane rdf:about="BarTablePlane"/>
     <apartment:Plane rdf:about="KitchenCabinetTopPlaneLeft1"/>
     <apartment:Plane rdf:about="KitchenCabinetopPlaneLeft2"/>
@@ -415,16 +414,16 @@
     <apartment:Plane rdf:about="CupboardPlane1"/>
     <apartment:Plane rdf:about="CupboardPlane2"/>
     <apartment:Plane rdf:about="CupboardPlane3"/>
-    <apartment:Plane rdf:about="BookCasePlane1"/>
-    <apartment:Plane rdf:about="BookCasePlane2"/>
-    <apartment:Plane rdf:about="BookCasePlane3"/>
+    <apartment:Plane rdf:about="BookcasePlane1"/>
+    <apartment:Plane rdf:about="BookcasePlane2"/>
+    <apartment:Plane rdf:about="BookcasePlane3"/>
     <apartment:Plane rdf:about="SideTablePlane"/>
     <apartment:Plane rdf:about="DeskPlane"/>
     <apartment:Plane rdf:about="DishwasherPlane"/>
     <apartment:Plane rdf:about="KitchenTablePlane"/>
     <apartment:Plane rdf:about="HighTablePlane"/>
     <apartment:Plane rdf:about="CoffeeTablePlane"/>
-    <apartment:Plane rdf:about="SideBoardPlane"/>
+    <apartment:Plane rdf:about="SideboardPlane"/>
     <apartment:Plane rdf:about="TVTablePlane"/>
     <apartment:Plane rdf:about="CabinetPlane"/>
     <apartment:Plane rdf:about="WhiteDrawerPlane"/>
@@ -556,7 +555,7 @@
     <rdf:Description rdf:about="Bar">
         <apartment:connectedTo rdf:resource="Hallway"/>
     </rdf:Description>
-    <rdf:Description rdf:about="BedRoom">
+    <rdf:Description rdf:about="Bedroom">
         <apartment:connectedTo rdf:resource="Hallway"/>
     </rdf:Description>
     <rdf:Description rdf:about="LivingRoom">
@@ -565,20 +564,20 @@
     <rdf:Description rdf:about="LivingRoom">
         <apartment:connectedTo rdf:resource="Kitchen"/>
     </rdf:Description>
-    <rdf:Description rdf:about="BedRoom">
+    <rdf:Description rdf:about="Bedroom">
         <apartment:connectedTo rdf:resource="Kitchen"/>
     </rdf:Description>
 
     <!--  Furniture Locations -->
-    <!--  Belongs to BedRoom -->
+    <!--  Belongs to Bedroom -->
     <rdf:Description rdf:about="Bed">
-        <apartment:locatedAt rdf:resource="BedRoom"/>
+        <apartment:locatedAt rdf:resource="Bedroom"/>
     </rdf:Description>
     <rdf:Description rdf:about="Desk">
-        <apartment:locatedAt rdf:resource="BedRoom"/>
+        <apartment:locatedAt rdf:resource="Bedroom"/>
     </rdf:Description>
     <rdf:Description rdf:about="SideTable">
-        <apartment:locatedAt rdf:resource="BedRoom"/>
+        <apartment:locatedAt rdf:resource="Bedroom"/>
     </rdf:Description>
     <!--  Belongs to Kitchen -->
     <rdf:Description rdf:about="KitchenTable">
@@ -604,7 +603,7 @@
     <rdf:Description rdf:about="TVTable">
         <apartment:locatedAt rdf:resource="LivingRoom"/>
     </rdf:Description>
-    <rdf:Description rdf:about="BookCase">
+    <rdf:Description rdf:about="Bookcase">
         <apartment:locatedAt rdf:resource="LivingRoom"/>
     </rdf:Description>
     <rdf:Description rdf:about="Couch">
@@ -619,7 +618,7 @@
     <rdf:Description rdf:about="CoffeeTable">
         <apartment:locatedAt rdf:resource="LivingRoom"/>
     </rdf:Description>
-    <rdf:Description rdf:about="SideBoard">
+    <rdf:Description rdf:about="Sideboard">
         <apartment:locatedAt rdf:resource="LivingRoom"/>
     </rdf:Description>
     <rdf:Description rdf:about="HighTable">
@@ -654,7 +653,7 @@
         <apartment:defaultLocation rdf:resource="KitchenTable"/>
     </rdf:Description>
     <rdf:Description rdf:about="Food">
-        <apartment:defaultLocation rdf:resource="BookCase"/>
+        <apartment:defaultLocation rdf:resource="Bookcase"/>
     </rdf:Description>
     <rdf:Description rdf:about="Care">
         <apartment:defaultLocation rdf:resource="SideTable"/>
@@ -683,7 +682,7 @@
         <apartment:closeToWall rdf:resource="BarNorthWall"/>
     </rdf:Description>
 
-    <!--  Relative positons of objects at the BedRoom -->
+    <!--  Relative positons of objects at the Bedroom -->
     <rdf:Description rdf:about="SideTable">
         <apartment:nextTo rdf:resource="Bed"/>
     </rdf:Description>
@@ -732,7 +731,6 @@
         <apartment:closeToWall rdf:resource="KitchenSouthWall"/>
     </rdf:Description>
 
-
     <!--  Relative positons of objects at the LivingRoom -->
     <rdf:Description rdf:about="TrashBin">
         <apartment:nextTo rdf:resource="TVTable"/>
@@ -741,7 +739,7 @@
         <apartment:nextTo rdf:resource="TV"/>
     </rdf:Description>
     <rdf:Description rdf:about="TV">
-        <apartment:nextTo rdf:resource="SideBoard"/>
+        <apartment:nextTo rdf:resource="Sideoard"/>
     </rdf:Description>
     <rdf:Description rdf:about="TrashBin">
         <apartment:closeToWall rdf:resource="LivingRoomNorthWall"/>
@@ -752,17 +750,14 @@
     <rdf:Description rdf:about="TV">
         <apartment:closeToWall rdf:resource="LivingRoomNorthWall"/>
     </rdf:Description>
-    <rdf:Description rdf:about="SideBoard">
+    <rdf:Description rdf:about="Sideboard">
         <apartment:closeToWall rdf:resource="LivingRoomNorthWall"/>
     </rdf:Description>
-    <rdf:Description rdf:about="BookCase">
+    <rdf:Description rdf:about="Bookcase">
         <apartment:closeToWall rdf:resource="LivingRoomEastWall"/>
     </rdf:Description>
     <rdf:Description rdf:about="HighTable">
         <apartment:closeToWall rdf:resource="LivingRoomEastWall"/>
     </rdf:Description>
-
-
-
 
 </rdf:RDF>
