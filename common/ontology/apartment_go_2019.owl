@@ -553,213 +553,213 @@
     <!--*********************************************-->
     <!--****** Object relation definitions *******-->
     <!--  Furniture Locations -->
-    <rdf:Description rdf:about="apartment:Bar">
-        <apartment:connectedTo rdf:resource="apartment:Hallway"/>
+    <rdf:Description rdf:about="Bar">
+        <apartment:connectedTo rdf:resource="Hallway"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:BedRoom">
-        <apartment:connectedTo rdf:resource="apartment:Hallway"/>
+    <rdf:Description rdf:about="BedRoom">
+        <apartment:connectedTo rdf:resource="Hallway"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:LivingRoom">
-        <apartment:connectedTo rdf:resource="apartment:Hallway"/>
+    <rdf:Description rdf:about="LivingRoom">
+        <apartment:connectedTo rdf:resource="Hallway"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:LivingRoom">
-        <apartment:connectedTo rdf:resource="apartment:Kitchen"/>
+    <rdf:Description rdf:about="LivingRoom">
+        <apartment:connectedTo rdf:resource="Kitchen"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:BedRoom">
-        <apartment:connectedTo rdf:resource="apartment:Kitchen"/>
+    <rdf:Description rdf:about="BedRoom">
+        <apartment:connectedTo rdf:resource="Kitchen"/>
     </rdf:Description>
 
     <!--  Furniture Locations -->
     <!--  Belongs to BedRoom -->
-    <rdf:Description rdf:about="apartment:Bed">
-        <apartment:locatedAt rdf:resource="apartment:BedRoom"/>
+    <rdf:Description rdf:about="Bed">
+        <apartment:locatedAt rdf:resource="BedRoom"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:Desk">
-        <apartment:locatedAt rdf:resource="apartment:BedRoom"/>
+    <rdf:Description rdf:about="Desk">
+        <apartment:locatedAt rdf:resource="BedRoom"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:SideTable">
-        <apartment:locatedAt rdf:resource="apartment:BedRoom"/>
+    <rdf:Description rdf:about="SideTable">
+        <apartment:locatedAt rdf:resource="BedRoom"/>
     </rdf:Description>
     <!--  Belongs to Kitchen -->
-    <rdf:Description rdf:about="apartment:KitchenTable">
-        <apartment:locatedAt rdf:resource="apartment:Kitchen"/>
+    <rdf:Description rdf:about="KitchenTable">
+        <apartment:locatedAt rdf:resource="Kitchen"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:KitchenCabinet">
-        <apartment:locatedAt rdf:resource="apartment:Kitchen"/>
+    <rdf:Description rdf:about="KitchenCabinet">
+        <apartment:locatedAt rdf:resource="Kitchen"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:Dishwasher">
-        <apartment:locatedAt rdf:resource="apartment:Kitchen"/>
+    <rdf:Description rdf:about="Dishwasher">
+        <apartment:locatedAt rdf:resource="Kitchen"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:Cabinet">
-        <apartment:locatedAt rdf:resource="apartment:Kitchen"/>
+    <rdf:Description rdf:about="Cabinet">
+        <apartment:locatedAt rdf:resource="Kitchen"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:WhiteDrawer">
-        <apartment:locatedAt rdf:resource="apartment:Kitchen"/>
+    <rdf:Description rdf:about="WhiteDrawer">
+        <apartment:locatedAt rdf:resource="Kitchen"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:TrashCan">
-        <apartment:locatedAt rdf:resource="apartment:Kitchen"/>
+    <rdf:Description rdf:about="TrashCan">
+        <apartment:locatedAt rdf:resource="Kitchen"/>
     </rdf:Description>
 
     <!--  Belongs to Living Room -->
-    <rdf:Description rdf:about="apartment:TVTable">
-        <apartment:locatedAt rdf:resource="apartment:LivingRoom"/>
+    <rdf:Description rdf:about="TVTable">
+        <apartment:locatedAt rdf:resource="LivingRoom"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:BookCase">
-        <apartment:locatedAt rdf:resource="apartment:LivingRoom"/>
+    <rdf:Description rdf:about="BookCase">
+        <apartment:locatedAt rdf:resource="LivingRoom"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:Couch">
-        <apartment:locatedAt rdf:resource="apartment:LivingRoom"/>
+    <rdf:Description rdf:about="Couch">
+        <apartment:locatedAt rdf:resource="LivingRoom"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:LeftArmChair">
-        <apartment:locatedAt rdf:resource="apartment:LivingRoom"/>
+    <rdf:Description rdf:about="LeftArmChair">
+        <apartment:locatedAt rdf:resource="LivingRoom"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:RightArmChair">
-        <apartment:locatedAt rdf:resource="apartment:LivingRoom"/>
+    <rdf:Description rdf:about="RightArmChair">
+        <apartment:locatedAt rdf:resource="LivingRoom"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:CoffeeTable">
-        <apartment:locatedAt rdf:resource="apartment:LivingRoom"/>
+    <rdf:Description rdf:about="CoffeeTable">
+        <apartment:locatedAt rdf:resource="LivingRoom"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:SideBoard">
-        <apartment:locatedAt rdf:resource="apartment:LivingRoom"/>
+    <rdf:Description rdf:about="SideBoard">
+        <apartment:locatedAt rdf:resource="LivingRoom"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:HighTable">
-        <apartment:locatedAt rdf:resource="apartment:LivingRoom"/>
+    <rdf:Description rdf:about="HighTable">
+        <apartment:locatedAt rdf:resource="LivingRoom"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:TrashBin">
-        <apartment:locatedAt rdf:resource="apartment:LivingRoom"/>
+    <rdf:Description rdf:about="TrashBin">
+        <apartment:locatedAt rdf:resource="LivingRoom"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:CoatHanger">
-        <apartment:locatedAt rdf:resource="apartment:LivingRoom"/>
+    <rdf:Description rdf:about="CoatHanger">
+        <apartment:locatedAt rdf:resource="LivingRoom"/>
     </rdf:Description>
 
     <!--  Belongs to Bar -->
-    <rdf:Description rdf:about="apartment:CupBoard">
-        <apartment:locatedAt rdf:resource="apartment:Bar"/>
+    <rdf:Description rdf:about="CupBoard">
+        <apartment:locatedAt rdf:resource="Bar"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:BarTable">
-        <apartment:locatedAt rdf:resource="apartment:Bar"/>
+    <rdf:Description rdf:about="BarTable">
+        <apartment:locatedAt rdf:resource="Bar"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:Sofa">
-        <apartment:locatedAt rdf:resource="apartment:Bar"/>
+    <rdf:Description rdf:about="Sofa">
+        <apartment:locatedAt rdf:resource="Bar"/>
     </rdf:Description>
 
     <!--  Default Location of Objects -->
-    <rdf:Description rdf:about="apartment:CleaningStuff">
+    <rdf:Description rdf:about="CleaningStuff">
         <apartment:defaultLocation rdf:resource="Dishwasher"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:Snacks">
-        <apartment:defaultLocation rdf:resource="apartment:CoffeeTable"/>
+    <rdf:Description rdf:about="Snacks">
+        <apartment:defaultLocation rdf:resource="CoffeeTable"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:Drinks">
-        <apartment:defaultLocation rdf:resource="apartment:KitchenTable"/>
+    <rdf:Description rdf:about="Drinks">
+        <apartment:defaultLocation rdf:resource="KitchenTable"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:Food">
-        <apartment:defaultLocation rdf:resource="apartment:BookCase"/>
+    <rdf:Description rdf:about="Food">
+        <apartment:defaultLocation rdf:resource="BookCase"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:Care">
-        <apartment:defaultLocation rdf:resource="apartment:SideTable"/>
+    <rdf:Description rdf:about="Care">
+        <apartment:defaultLocation rdf:resource="SideTable"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:Container">
-        <apartment:defaultLocation rdf:resource="apartment:TVTable"/>
+    <rdf:Description rdf:about="Container">
+        <apartment:defaultLocation rdf:resource="TVTable"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:Fruit">
-        <apartment:defaultLocation rdf:resource="apartment:BarTable"/>
+    <rdf:Description rdf:about="Fruit">
+        <apartment:defaultLocation rdf:resource="BarTable"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:KitchenStuff">
-        <apartment:efaultLocation rdf:resource="apartment:KitchenCabinet"/>
+    <rdf:Description rdf:about="KitchenStuff">
+        <apartment:efaultLocation rdf:resource="KitchenCabinet"/>
     </rdf:Description>
     <!--*********************************************-->
         <!--  Relative positons of objects at the bar -->
-    <rdf:Description rdf:about="apartment:CupBoard">
-        <apartment:nextTo rdf:resource="apartment:Sofa"/>
+    <rdf:Description rdf:about="CupBoard">
+        <apartment:nextTo rdf:resource="Sofa"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:BarTableChair">
-        <apartment:nextTo rdf:resource="apartment:BarTable"/>
+    <rdf:Description rdf:about="BarTableChair">
+        <apartment:nextTo rdf:resource="BarTable"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:BarTable">
-        <apartment:locatedInRoom rdf:resource="apartment:Bar"/>
+    <rdf:Description rdf:about="BarTable">
+        <apartment:locatedInRoom rdf:resource="Bar"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:CupBoard">
-        <apartment:closeToWall rdf:resource="apartment:BarNorthWall"/>
+    <rdf:Description rdf:about="CupBoard">
+        <apartment:closeToWall rdf:resource="BarNorthWall"/>
     </rdf:Description>
 
     <!--  Relative positons of objects at the BedRoom -->
-    <rdf:Description rdf:about="apartment:SideTable">
-        <apartment:nextTo rdf:resource="apartment:Bed"/>
+    <rdf:Description rdf:about="SideTable">
+        <apartment:nextTo rdf:resource="Bed"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:DeskChair">
-        <apartment:nextTo rdf:resource="apartment:Desk"/>
+    <rdf:Description rdf:about="DeskChair">
+        <apartment:nextTo rdf:resource="Desk"/>
     </rdf:Description>
 
-    <rdf:Description rdf:about="apartment:SideTable">
-        <apartment:closeToWall rdf:resource="apartment:BedroomNorthWall"/>
+    <rdf:Description rdf:about="SideTable">
+        <apartment:closeToWall rdf:resource="BedroomNorthWall"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:Bed">
-        <apartment:closeToWall rdf:resource="apartment:BedroomNorthWall"/>
+    <rdf:Description rdf:about="Bed">
+        <apartment:closeToWall rdf:resource="BedroomNorthWall"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:Desk">
-        <apartment:closeToWall rdf:resource="apartment:BedroomEastWall"/>
+    <rdf:Description rdf:about="Desk">
+        <apartment:closeToWall rdf:resource="BedroomEastWall"/>
     </rdf:Description>
 
     <!--  Relative positons of objects at the Kitchen-->
-    <rdf:Description rdf:about="apartment:KitchenCabinet">
-        <apartment:nextTo rdf:resource="apartment:Dishwasher"/>
+    <rdf:Description rdf:about="KitchenCabinet">
+        <apartment:nextTo rdf:resource="Dishwasher"/>
     </rdf:Description>
 
-    <rdf:Description rdf:about="apartment:KitchenTableChair1">
-        <apartment:nextTo rdf:resource="apartment:KitchenTable"/>
+    <rdf:Description rdf:about="KitchenTableChair1">
+        <apartment:nextTo rdf:resource="KitchenTable"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:KitchenTableChair2">
-        <apartment:nextTo rdf:resource="apartment:KitchenTable"/>
+    <rdf:Description rdf:about="KitchenTableChair2">
+        <apartment:nextTo rdf:resource="KitchenTable"/>
     </rdf:Description>
 
-    <rdf:Description rdf:about="apartment:KitchenTable">
-        <apartment:locatedInRoom rdf:resource="apartment:Kitchen"/>
+    <rdf:Description rdf:about="KitchenTable">
+        <apartment:locatedInRoom rdf:resource="Kitchen"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:TrashCan">
-        <apartment:closeToWall rdf:resource="apartment:KitchenNorthWall"/>
+    <rdf:Description rdf:about="TrashCan">
+        <apartment:closeToWall rdf:resource="KitchenNorthWall"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:KitchenCabinet">
-        <apartment:closeToWall rdf:resource="apartment:KitchenEasthWall"/>
+    <rdf:Description rdf:about="KitchenCabinet">
+        <apartment:closeToWall rdf:resource="KitchenEasthWall"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:Dishwasher">
-        <apartment:closeToWall rdf:resource="apartment:KitchenEasthWall"/>
+    <rdf:Description rdf:about="Dishwasher">
+        <apartment:closeToWall rdf:resource="KitchenEasthWall"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:Cabinet">
-        <apartment:closeToWall rdf:resource="apartment:KitchenSouthWall"/>
+    <rdf:Description rdf:about="Cabinet">
+        <apartment:closeToWall rdf:resource="KitchenSouthWall"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:WhiteDrawer">
-        <apartment:closeToWall rdf:resource="apartment:KitchenSouthWall"/>
+    <rdf:Description rdf:about="WhiteDrawer">
+        <apartment:closeToWall rdf:resource="KitchenSouthWall"/>
     </rdf:Description>
 
 
     <!--  Relative positons of objects at the LivingRoom -->
-    <rdf:Description rdf:about="apartment:TrashBin">
-        <apartment:nextTo rdf:resource="apartment:TVTable"/>
+    <rdf:Description rdf:about="TrashBin">
+        <apartment:nextTo rdf:resource="TVTable"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:TVTable">
-        <apartment:nextTo rdf:resource="apartment:TV"/>
+    <rdf:Description rdf:about="TVTable">
+        <apartment:nextTo rdf:resource="TV"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:TV">
-        <apartment:nextTo rdf:resource="apartment:SideBoard"/>
+    <rdf:Description rdf:about="TV">
+        <apartment:nextTo rdf:resource=":SideBoard"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:TrashBin">
-        <apartment:closeToWall rdf:resource="apartment:LivingRoomNorthWall"/>
+    <rdf:Description rdf:about="TrashBin">
+        <apartment:closeToWall rdf:resource="LivingRoomNorthWall"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:TVTable">
-        <apartment:closeToWall rdf:resource="apartment:LivingRoomNorthWall"/>
+    <rdf:Description rdf:about="TVTable">
+        <apartment:closeToWall rdf:resource="LivingRoomNorthWall"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:TV">
-        <apartment:closeToWall rdf:resource="apartment:LivingRoomNorthWall"/>
+    <rdf:Description rdf:about="TV">
+        <apartment:closeToWall rdf:resource="LivingRoomNorthWall"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:SideBoard">
-        <apartment:closeToWall rdf:resource="apartment:LivingRoomNorthWall"/>
+    <rdf:Description rdf:about="SideBoard">
+        <apartment:closeToWall rdf:resource="LivingRoomNorthWall"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:BookCase">
-        <apartment:closeToWall rdf:resource="apartment:LivingRoomEastWall"/>
+    <rdf:Description rdf:about="BookCase">
+        <apartment:closeToWall rdf:resource="LivingRoomEastWall"/>
     </rdf:Description>
-    <rdf:Description rdf:about="apartment:HighTable">
-        <apartment:closeToWall rdf:resource="apartment:LivingRoomEastWall"/>
+    <rdf:Description rdf:about="HighTable">
+        <apartment:closeToWall rdf:resource="LivingRoomEastWall"/>
     </rdf:Description>
 
 
