@@ -41,6 +41,27 @@ class DomesticOntologyInterface(OntologyQueryInterface):
             raise AssertionError(error_msg)
         return location
 
+    def get_obj_location(self, obj_name):
+        '''Returns the location of the given object or None
+        if there location is unknown.
+
+        Keyword arguments:
+        @param obj_name -- string representing the name of an object
+
+        '''
+        obj_location = None
+        if obj_name:
+            location_list = self.get_objects_of('locatedAt', obj_name)
+            if location_list:
+                try:
+                    obj_location = location_list[0]
+                except:
+                    print(colored('[get_obj_location] Location of {0} unknown'.format(obj_name), 'yellow'))
+        else:
+            error_msg = '[get_obj_height] obj_name cannot be None'
+            raise AssertionError(error_msg)
+        return obj_location
+
     def get_obj_height(self, obj_name):
         '''Returns a floating point number representing the height of the given object.
 
