@@ -741,7 +741,7 @@
         <apartment:nextTo rdf:resource="TV"/>
     </rdf:Description>
     <rdf:Description rdf:about="TV">
-        <apartment:nextTo rdf:resource=":SideBoard"/>
+        <apartment:nextTo rdf:resource="SideBoard"/>
     </rdf:Description>
     <rdf:Description rdf:about="TrashBin">
         <apartment:closeToWall rdf:resource="LivingRoomNorthWall"/>

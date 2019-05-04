@@ -62,6 +62,23 @@ class DomesticOntologyInterface(OntologyQueryInterface):
             raise AssertionError(error_msg)
         return obj_location
 
+    def get_objects_next_to(self, obj_name):
+        '''Returns all objects that are next to the given object.
+
+        Keyword arguments:
+        @param obj_name -- string representing the name of an object
+
+        '''
+        next_to_obj_list = []
+        if obj_name:
+            next_to_objects = set(self.get_objects_of('nextTo', obj_name))
+            next_to_subjects = set(self.get_subjects_of('nextTo', obj_name))
+            next_to_obj_list = list(next_to_subjects.union(next_to_objects))
+        else:
+            error_msg = '[get_objects_next_to] obj_name cannot be None'
+            raise AssertionError(error_msg)
+        return next_to_obj_list
+
     def get_obj_height(self, obj_name):
         '''Returns a floating point number representing the height of the given object.
 
