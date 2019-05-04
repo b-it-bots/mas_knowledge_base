@@ -30,11 +30,7 @@
         <rdfs:subClassOf rdf:resource="apartment:Object"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:Snacks">
-        <rdfs:subClassOf rdf:resource="apartment:Object"/>
-    </owl:Class>
-
-    <owl:Class rdf:about="apartment:CleaningStuff">
+    <owl:Class rdf:about="apartment:Other">
         <rdfs:subClassOf rdf:resource="apartment:Object"/>
     </owl:Class>
 
@@ -42,7 +38,7 @@
         <rdfs:subClassOf rdf:resource="apartment:Object"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:Food">
+    <owl:Class rdf:about="apartment:Fruit">
         <rdfs:subClassOf rdf:resource="apartment:Object"/>
     </owl:Class>
 
@@ -50,15 +46,23 @@
         <rdfs:subClassOf rdf:resource="apartment:Object"/>
     </owl:Class>
 
+    <owl:Class rdf:about="apartment:Food">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    </owl:Class>
+
     <owl:Class rdf:about="apartment:Container">
         <rdfs:subClassOf rdf:resource="apartment:Object"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:Fruit">
+    <owl:Class rdf:about="apartment:KitchenStuff">
         <rdfs:subClassOf rdf:resource="apartment:Object"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:KitchenStuff">
+    <owl:Class rdf:about="apartment:CleaningStuff">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="apartment:Snacks">
         <rdfs:subClassOf rdf:resource="apartment:Object"/>
     </owl:Class>
 
@@ -72,7 +76,7 @@
     </owl:Class>
 
     <!-- Room Subclass -->
-    <owl:Class rdf:about="apartment:Bedroom">
+    <owl:Class rdf:about="apartment:BedRoom">
         <rdfs:subClassOf rdf:resource="apartment:Room"/>
     </owl:Class>
 
@@ -185,6 +189,11 @@
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
 
+    <!-- Other Subclass -->
+    <owl:Class rdf:about="apartment:Trashbag">
+        <rdfs:subClassOf rdf:resource="apartment:Other"/>
+    </owl:Class>
+
     <!-- KitchenStuff Subclass -->
     <owl:Class rdf:about="apartment:Bowl">
         <rdfs:subClassOf rdf:resource="apartment:KitchenStuff"/>
@@ -215,11 +224,27 @@
         <rdfs:subClassOf rdf:resource="apartment:Drinks"/>
     </owl:Class>
 
+    <owl:Class rdf:about="apartment:BigCoke">
+        <rdfs:subClassOf rdf:resource="apartment:Drinks"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="apartment:BigLemonJuice">
+        <rdfs:subClassOf rdf:resource="apartment:Drinks"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="apartment:BigLemonJuice">
+        <rdfs:subClassOf rdf:resource="apartment:Drinks"/>
+    </owl:Class>
+
     <owl:Class rdf:about="apartment:IsoDrink">
         <rdfs:subClassOf rdf:resource="apartment:Drinks"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:Orangejuice">
+    <owl:Class rdf:about="apartment:Milk">
+        <rdfs:subClassOf rdf:resource="apartment:Drinks"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="apartment:OrangeJuice">
         <rdfs:subClassOf rdf:resource="apartment:Drinks"/>
     </owl:Class>
 
@@ -249,12 +274,15 @@
         <rdfs:subClassOf rdf:resource="apartment:Care"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:Toothpaste">
+    <owl:Class rdf:about="apartment:ToothPaste">
         <rdfs:subClassOf rdf:resource="apartment:Care"/>
     </owl:Class>
 
     <!-- Food Subclass -->
     <owl:Class rdf:about="apartment:Bouillon">
+        <rdfs:subClassOf rdf:resource="apartment:Food"/>
+    </owl:Class>
+    <owl:Class rdf:about="apartment:Cereal">
         <rdfs:subClassOf rdf:resource="apartment:Food"/>
     </owl:Class>
 
@@ -284,6 +312,15 @@
 
     <owl:Class rdf:about="apartment:Tomatoes">
         <rdfs:subClassOf rdf:resource="apartment:Food"/>
+    </owl:Class>
+
+    <!-- Container Subclass -->
+    <owl:Class rdf:about="apartment:Basket">
+        <rdfs:subClassOf rdf:resource="apartment:Container"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="apartment:Tray">
+        <rdfs:subClassOf rdf:resource="apartment:Container"/>
     </owl:Class>
 
     <!-- CleaningStuff Subclass -->
@@ -365,6 +402,12 @@
     <!-- Chair Instances -->
     <apartment:Chair rdf:about="LeftArmChair"/>
     <apartment:Chair rdf:about="RightArmChair"/>
+    <apartment:Chair rdf:about="HighTableChair"/>
+    <apartment:Chair rdf:about="KitchenTableChair1"/>
+    <apartment:Chair rdf:about="KitchenTableChair2"/>
+    <apartment:Chair rdf:about="DeskChair"/>
+    <apartment:Chair rdf:about="BarTableChair"/>
+
 
     <!-- Female Names Instances -->
     <apartment:Female rdf:about="Sophia"/>
@@ -392,16 +435,48 @@
     <!--*********************************************-->
     <!--************ Property definitions ***********-->
     <!--  Locations Properties -->
+    <!--  Connection between Rooms -->
+    <owl:ObjectProperty rdf:about="apartment:connectedTo">
+        <rdfs:domain rdf:resource="apartment:Room"/>
+        <rdfs:range rdf:resource="apartment:Room"/>
+    </owl:ObjectProperty>
+    <!--  Default location of objects -->
     <owl:ObjectProperty rdf:about="apartment:defaultLocation">
         <rdf:type rdf:resource="&owl;FunctionalProperty" />
         <rdfs:domain rdf:resource="apartment:Object"/>
         <rdfs:range rdf:resource="apartment:Furniture"/>
     </owl:ObjectProperty>
-
+    <!--  Mapps furniture to rooms-->
     <owl:ObjectProperty rdf:about="apartment:locatedAt">
         <rdf:type rdf:resource="&owl;FunctionalProperty" />
         <rdfs:domain rdf:resource="apartment:Object"/>
         <rdfs:range rdf:resource="apartment:Location"/>
+    </owl:ObjectProperty>
+    <!-- Objects next to each other -->
+    <owl:ObjectProperty rdf:about="apartment:nextTo">
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Object"/>
+    </owl:ObjectProperty>
+    <owl:SymmetricProperty rdf:about="apartment:nextTo"/>
+    <!-- Objects close to each other -->
+    <owl:ObjectProperty rdf:about="apartment:closeTo">
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Object"/>
+    </owl:ObjectProperty>
+    <!-- Objects opposite to each other -->
+    <owl:ObjectProperty rdf:about="apartment:oppositeTo">
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Object"/>
+    </owl:ObjectProperty>
+    <!-- Objects attached to a wall -->
+    <owl:ObjectProperty rdf:about="apartment:attachedToWall">
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Object"/>
+    </owl:ObjectProperty>
+    <!-- Objects centered in the room -->
+    <owl:ObjectProperty rdf:about="apartment:locatedInRoom">
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Room"/>
     </owl:ObjectProperty>
 
     <!-- Placing Proberties -->
@@ -449,15 +524,32 @@
     <!--*********************************************-->
     <!--****** Object relation definitions *******-->
     <!--  Furniture Locations -->
-    <!--  Belongs to Bedroom -->
+    <rdf:Description rdf:about="Bar">
+        <apartment:connectedTo rdf:resource="Hallway"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="BedRoom">
+        <apartment:connectedTo rdf:resource="Hallway"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="LivingRoom">
+        <apartment:connectedTo rdf:resource="Hallway"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="LivingRoom">
+        <apartment:connectedTo rdf:resource="Kitchen"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="BedRoom">
+        <apartment:connectedTo rdf:resource="Kitchen"/>
+    </rdf:Description>
+
+    <!--  Furniture Locations -->
+    <!--  Belongs to BedRoom -->
     <rdf:Description rdf:about="Bed">
-        <apartment:locatedAt rdf:resource="Bedroom"/>
+        <apartment:locatedAt rdf:resource="BedRoom"/>
     </rdf:Description>
     <rdf:Description rdf:about="Desk">
-        <apartment:locatedAt rdf:resource="Bedroom"/>
+        <apartment:locatedAt rdf:resource="BedRoom"/>
     </rdf:Description>
     <rdf:Description rdf:about="SideTable">
-        <apartment:locatedAt rdf:resource="Bedroom"/>
+        <apartment:locatedAt rdf:resource="BedRoom"/>
     </rdf:Description>
     <!--  Belongs to Kitchen -->
     <rdf:Description rdf:about="KitchenTable">
@@ -547,9 +639,34 @@
     <rdf:Description rdf:about="KitchenStuff">
         <defaultLocation rdf:resource="KitchenCabinet"/>
     </rdf:Description>
-
-
     <!--*********************************************-->
+        <!--  Relative positons of objects at the bar -->
+    <rdf:Description rdf:about="CupBoard">
+        <nextTo rdf:resource="Sofa"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="BarTableChair">
+        <nextTo rdf:resource="BarTable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="BarTable">
+        <locatedInRoom rdf:resource="Bar"/>
+    </rdf:Description>
 
-
+    <!--  Relative positons of objects at the bedroom -->
+    <rdf:Description rdf:about="SideTable">
+        <nextTo rdf:resource="Bed"/>
+    </rdf:Description>
+    <!--  Relative positons of objects at the kitchen -->
+    <rdf:Description rdf:about="KitchenCabinet">
+        <nextTo rdf:resource="Dishwasher"/>
+    </rdf:Description>
+    <!--  Relative positons of objects at the living room -->
+    <rdf:Description rdf:about="TrashBin">
+        <nextTo rdf:resource="TVTable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="TVTable">
+        <nextTo rdf:resource="TV"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="TV">
+        <nextTo rdf:resource="SideBoard"/>
+    </rdf:Description>
 </rdf:RDF>
