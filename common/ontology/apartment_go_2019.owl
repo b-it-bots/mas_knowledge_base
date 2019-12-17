@@ -381,29 +381,29 @@
     <!-- Plane Instances -->
     <!-- Wall Instances -->
     <!-- Bar Walls -->
-    <apartment:Wall rdf:about="apartment:BarNorthWall"/>
-    <apartment:Wall rdf:about="apartment:BarEasthWall"/>
-    <apartment:Wall rdf:about="apartment:BarSouthWall"/>
-    <apartment:Wall rdf:about="apartment:BarWestWall"/>
+    <apartment:Wall rdf:about="BarNorthWall"/>
+    <apartment:Wall rdf:about="BarEasthWall"/>
+    <apartment:Wall rdf:about="BarSouthWall"/>
+    <apartment:Wall rdf:about="BarWestWall"/>
     <!-- Hallway Walls -->
-    <apartment:Wall rdf:about="apartment:HallwayNorthWall"/>
-    <apartment:Wall rdf:about="apartment:HallwayEasthWall"/>
-    <apartment:Wall rdf:about="apartment:HallwayWesthWall"/>
+    <apartment:Wall rdf:about="HallwayNorthWall"/>
+    <apartment:Wall rdf:about="HallwayEasthWall"/>
+    <apartment:Wall rdf:about="HallwayWesthWall"/>
     <!-- Bedroom Walls -->
-    <apartment:Wall rdf:about="apartment:BedroomNorthWall"/>
-    <apartment:Wall rdf:about="apartment:BedroomEasthWall"/>
-    <apartment:Wall rdf:about="apartment:BedroomSouthWall"/>
-    <apartment:Wall rdf:about="apartment:BedroomWesthWall"/>
+    <apartment:Wall rdf:about="BedroomNorthWall"/>
+    <apartment:Wall rdf:about="BedroomEasthWall"/>
+    <apartment:Wall rdf:about="BedroomSouthWall"/>
+    <apartment:Wall rdf:about="BedroomWesthWall"/>
     <!-- Kitchen Walls -->
-    <apartment:Wall rdf:about="apartment:KitchenNorthWall"/>
-    <apartment:Wall rdf:about="apartment:KitchenEasthWall"/>
-    <apartment:Wall rdf:about="apartment:KitchenSouthhWall"/>
-    <apartment:Wall rdf:about="apartment:KitchenWestWall"/>
+    <apartment:Wall rdf:about="KitchenNorthWall"/>
+    <apartment:Wall rdf:about="KitchenEasthWall"/>
+    <apartment:Wall rdf:about="KitchenSouthhWall"/>
+    <apartment:Wall rdf:about="KitchenWestWall"/>
     <!-- LivingRoom Walls -->
-    <apartment:Wall rdf:about="apartment:LivingRoomNorthWall"/>
-    <apartment:Wall rdf:about="apartment:LivingRoomEastWall"/>
-    <apartment:Wall rdf:about="apartment:LivingRoomSouthhWall"/>
-    <apartment:Wall rdf:about="apartment:LivingRoomWesthWall"/>
+    <apartment:Wall rdf:about="LivingRoomNorthWall"/>
+    <apartment:Wall rdf:about="LivingRoomEastWall"/>
+    <apartment:Wall rdf:about="LivingRoomSouthhWall"/>
+    <apartment:Wall rdf:about="LivingRoomWesthWall"/>
 
     <apartment:Plane rdf:about="BarTablePlane"/>
     <apartment:Plane rdf:about="KitchenCabinetTopPlaneLeft1"/>
@@ -460,11 +460,58 @@
     <apartment:Male rdf:about="Charles"/>
     <apartment:Male rdf:about="Joseph"/>
     <apartment:Male rdf:about="Thomas"/>
+
+    <!-- Location Instances -->
+    <apartment:LivingRoom rdf:about="LivingRoom"/>
+    <apartment:Hallway rdf:about="Hallway"/>
+    <apartment:Kitchen rdf:about="Kitchen"/>
+    <apartment:Bar rdf:about="Bar"/>
+    <apartment:Bedroom rdf:about="Bedroom"/>
+
+    <!-- Object Instances -->
+    <apartment:Bed rdf:about="Bed"/>
+    <apartment:Sofa rdf:about="Sofa"/>
+    <apartment:Couch rdf:about="Couch"/>
+    <apartment:CoatHanger rdf:about="CoatHanger"/>
+    
+    <apartment:TV rdf:about="TV"/>
+    <apartment:Dishwasher rdf:about="Dishwasher"/>
+
+    <apartment:Desk rdf:about="Desk"/>
+    <apartment:TVTable rdf:about="TVTable"/>
+    <apartment:BarTable rdf:about="BarTable"/>
+    <apartment:HighTable rdf:about="HighTable"/>
+    <apartment:SideTable rdf:about="SideTable"/>
+    <apartment:CoffeeTable rdf:about="CoffeeTable"/>
+    <apartment:KitchenTable rdf:about="KitchenTable"/>
+
+    <apartment:Cabinet rdf:about="Cabinet"/>
+    <apartment:CupBoard rdf:about="CupBoard"/>
+    <apartment:Bookcase rdf:about="Bookcase"/>
+    <apartment:Sideboard rdf:about="Sideboard"/>
+    <apartment:WhiteDrawer rdf:about="WhiteDrawer"/>
+    <apartment:KitchenCabinet rdf:about="KitchenCabinet"/>
+
+    <apartment:TrashBin rdf:about="TrashBin"/>
+    <apartment:TrashCan rdf:about="TrashCan"/>
+    <apartment:CleaningStuff rdf:about="CleaningStuff"/>
+
+    <apartment:Food rdf:about="Food"/>
+    <apartment:Care rdf:about="Care"/>
+    <apartment:Fruit rdf:about="Fruit"/>
+    <apartment:Snacks rdf:about="Snacks"/>
+    <apartment:Drinks rdf:about="Drinks"/>
+    
+    <apartment:Container rdf:about="Container"/>
+    <apartment:KitchenStuff rdf:about="KitchenStuff"/>
+
     <!--*********************************************-->
     <!--************ Property definitions ***********-->
     <!--  Locations Properties -->
     <!--  Connection between Rooms -->
     <owl:ObjectProperty rdf:about="apartment:connectedTo">
+        <!-- If room A is connected to room B, then room B is connected to A-->
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
         <rdfs:domain rdf:resource="apartment:Room"/>
         <rdfs:range rdf:resource="apartment:Room"/>
     </owl:ObjectProperty>
@@ -474,7 +521,7 @@
         <rdfs:domain rdf:resource="apartment:Object"/>
         <rdfs:range rdf:resource="apartment:Furniture"/>
     </owl:ObjectProperty>
-    <!--  Mapps furniture to rooms-->
+    <!--  Maps furniture to rooms-->
     <owl:ObjectProperty rdf:about="apartment:locatedAt">
         <rdf:type rdf:resource="&owl;FunctionalProperty" />
         <rdfs:domain rdf:resource="apartment:Object"/>
@@ -482,17 +529,19 @@
     </owl:ObjectProperty>
     <!-- Objects next to each other -->
     <owl:ObjectProperty rdf:about="apartment:nextTo">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
         <rdfs:domain rdf:resource="apartment:Object"/>
         <rdfs:range rdf:resource="apartment:Object"/>
     </owl:ObjectProperty>
-    <owl:SymmetricProperty rdf:about="apartment:nextTo"/>
     <!-- Objects close to each other -->
     <owl:ObjectProperty rdf:about="apartment:closeTo">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
         <rdfs:domain rdf:resource="apartment:Object"/>
         <rdfs:range rdf:resource="apartment:Object"/>
     </owl:ObjectProperty>
     <!-- Objects opposite to each other -->
     <owl:ObjectProperty rdf:about="apartment:oppositeTo">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
         <rdfs:domain rdf:resource="apartment:Object"/>
         <rdfs:range rdf:resource="apartment:Object"/>
     </owl:ObjectProperty>
@@ -551,7 +600,7 @@
     </owl:ObjectProperty>
     <!--*********************************************-->
     <!--****** Object relation definitions *******-->
-    <!--  Furniture Locations -->
+    <!-- Room connections -->
     <rdf:Description rdf:about="Bar">
         <apartment:connectedTo rdf:resource="Hallway"/>
     </rdf:Description>
@@ -739,7 +788,7 @@
         <apartment:nextTo rdf:resource="TV"/>
     </rdf:Description>
     <rdf:Description rdf:about="TV">
-        <apartment:nextTo rdf:resource="Sideoard"/>
+        <apartment:nextTo rdf:resource="Sideboard"/>
     </rdf:Description>
     <rdf:Description rdf:about="TrashBin">
         <apartment:closeToWall rdf:resource="LivingRoomNorthWall"/>
