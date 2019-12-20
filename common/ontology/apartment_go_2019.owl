@@ -524,7 +524,7 @@
     <!--  Maps furniture to rooms-->
     <owl:ObjectProperty rdf:about="apartment:locatedAt">
         <rdf:type rdf:resource="&owl;FunctionalProperty" />
-        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:domain rdf:resource="apartment:Furniture"/>
         <rdfs:range rdf:resource="apartment:Location"/>
     </owl:ObjectProperty>
     <!-- Objects next to each other -->
@@ -552,6 +552,7 @@
     </owl:ObjectProperty>
     <!-- Objects centered in the room -->
     <owl:ObjectProperty rdf:about="apartment:locatedInRoom">
+        <rdf:type rdf:resource="&owl;FunctionalProperty" />
         <rdfs:domain rdf:resource="apartment:Object"/>
         <rdfs:range rdf:resource="apartment:Room"/>
     </owl:ObjectProperty>
