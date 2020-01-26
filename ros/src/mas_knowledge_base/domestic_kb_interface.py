@@ -210,7 +210,7 @@ class DomesticKBInterface(KnowledgeBaseInterface):
             for param in item.values:
                 if param.key == 'obj':
                     obj_name = param.value
-                elif param.key == 'cat':
+                elif param.key == 'class':
                     obj_category = param.value
             obj_category_dict[obj_name] = obj_category
         return obj_category_dict
