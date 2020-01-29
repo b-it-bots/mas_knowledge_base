@@ -18,6 +18,7 @@
     <owl:Class rdf:about="apartment:Plane"/>
     <owl:Class rdf:about="apartment:Room"/>
     <owl:Class rdf:about="apartment:Location"/>
+    <owl:Class rdf:about="apartment:Coordinate"/>
 
     <!-- Furniture items -->
     <owl:Class rdf:about="apartment:Furniture"/>
@@ -144,6 +145,16 @@
     <owl:ObjectProperty rdf:about="apartment:toTheRightOf">
         <owl:inverseOf rdf:resource="#apartment:toTheLeftOf"/>
     </owl:ObjectProperty>
+
+    <owl:DatatypeProperty rdf:about="apartment:position">
+        <rdfs:domain rdf:resource="apartment:Coordinate"/>
+        <rdfs:range rdf:resource="xsd:float"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="apartment:orientation">
+        <rdfs:domain rdf:resource="apartment:Coordinate"/>
+        <rdfs:range rdf:resource="xsd:float"/>
+    </owl:DatatypeProperty>
     <!--*********************************************-->
 
 
@@ -339,6 +350,33 @@
     <owl:Class rdf:about="apartment:ToiletPaper">
       <rdfs:subClassOf rdf:resource="apartment:PersonalHygieneItem"/>
     </owl:Class>
+    <!--*********************************************-->
+
+
+    <!--*********** Subproperty definitions ************-->
+    <owl:DatatypeProperty rdf:about="apartment:positionX">
+        <rdfs:subPropertyOf rdf:resource="apartment:position"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="apartment:positionY">
+        <rdfs:subPropertyOf rdf:resource="apartment:position"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="apartment:positionZ">
+        <rdfs:subPropertyOf rdf:resource="apartment:position"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="apartment:orientationRoll">
+        <rdfs:subPropertyOf rdf:resource="apartment:orientation"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="apartment:orientationPitch">
+        <rdfs:subPropertyOf rdf:resource="apartment:orientation"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="apartment:orientationYaw">
+        <rdfs:subPropertyOf rdf:resource="apartment:orientation"/>
+    </owl:DatatypeProperty>
     <!--*********************************************-->
 
 
