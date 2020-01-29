@@ -14,6 +14,8 @@
     <owl:Ontology rdf:about="http://apartment" />
 
     <!--************* Class definitions ************-->
+    <owl:Class rdf:about="apartment:Thing"/>
+
     <owl:Class rdf:about="apartment:Object"/>
     <owl:Class rdf:about="apartment:Plane"/>
     <owl:Class rdf:about="apartment:Room"/>
@@ -147,18 +149,31 @@
     </owl:ObjectProperty>
 
     <owl:DatatypeProperty rdf:about="apartment:position">
-        <rdfs:domain rdf:resource="apartment:Coordinate"/>
+        <rdfs:domain rdf:resource="apartment:Thing"/>
         <rdfs:range rdf:resource="xsd:float"/>
     </owl:DatatypeProperty>
 
     <owl:DatatypeProperty rdf:about="apartment:orientation">
-        <rdfs:domain rdf:resource="apartment:Coordinate"/>
+        <rdfs:domain rdf:resource="apartment:Thing"/>
         <rdfs:range rdf:resource="xsd:float"/>
     </owl:DatatypeProperty>
     <!--*********************************************-->
 
 
     <!--*********** Subclass definitions ************-->
+
+    <!-- Thing subclass definitions -->
+    <owl:Class rdf:about="apartment:Object">
+        <rdfs:subClassOf rdf:resource="apartment:Thing"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="apartment:Location">
+        <rdfs:subClassOf rdf:resource="apartment:Thing"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="apartment:Plane">
+        <rdfs:subClassOf rdf:resource="apartment:Thing"/>
+    </owl:Class>
 
     <!-- Location subclass definitions -->
     <owl:Class rdf:about="apartment:Room">
