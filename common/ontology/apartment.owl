@@ -21,6 +21,7 @@
     <owl:Class rdf:about="apartment:Room"/>
     <owl:Class rdf:about="apartment:Location"/>
     <owl:Class rdf:about="apartment:NamedPose"/>
+    <owl:Class rdf:about="apartment:GraspingStrategy"/>
 
     <!-- Furniture items -->
     <owl:Class rdf:about="apartment:Furniture"/>
@@ -158,6 +159,10 @@
         <rdfs:range rdf:resource="apartment:Location"/>
     </owl:ObjectProperty>
 
+    <owl:ObjectProperty rdf:about="apartment:preferredGraspingStrategy">
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:GraspingStrategy"/>
+    </owl:ObjectProperty>
 
     <owl:DatatypeProperty rdf:about="apartment:pose">
         <rdfs:domain rdf:resource="apartment:Thing"/>
@@ -182,6 +187,10 @@
     </owl:Class>
 
     <owl:Class rdf:about="apartment:NamedPose">
+        <rdfs:subClassOf rdf:resource="apartment:Thing"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="apartment:GraspingStrategy">
         <rdfs:subClassOf rdf:resource="apartment:Thing"/>
     </owl:Class>
 
@@ -508,5 +517,13 @@
             <owl:Class rdf:about="apartment:ToiletPaper"/>
         </owl:members>
     </owl:AllDisjointClasses>
+    <!--*********************************************-->
+
+
+    <!--****** Class assertions *******-->
+
+    <apartment:GraspingStrategy rdf:about="Sideways"/>
+    <apartment:GraspingStrategy rdf:about="TopDown"/>
+
     <!--*********************************************-->
 </rdf:RDF>
