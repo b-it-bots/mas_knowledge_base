@@ -273,6 +273,9 @@
     <owl:Class rdf:about="apartment:Cupboard">
       <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
+    <owl:Class rdf:about="apartment:Sink">
+      <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    </owl:Class>
 
     <!-- Kitchen item subclass definitions -->
     <owl:Class rdf:about="apartment:Fork">
@@ -330,11 +333,11 @@
     <owl:Class rdf:about="apartment:DrinkingGlass">
       <rdfs:subClassOf rdf:resource="apartment:Drinkware"/>
     </owl:Class>
-    <owl:Class rdf:about="apartment:DrinkingGlass">
-      <rdfs:subClassOf rdf:resource="apartment:ShotGlass"/>
+    <owl:Class rdf:about="apartment:ShotGlass">
+      <rdfs:subClassOf rdf:resource="apartment:DrinkingGlass"/>
     </owl:Class>
-    <owl:Class rdf:about="apartment:DrinkingGlass">
-      <rdfs:subClassOf rdf:resource="apartment:WineGlass"/>
+    <owl:Class rdf:about="apartment:WineGlass">
+      <rdfs:subClassOf rdf:resource="apartment:DrinkingGlass"/>
     </owl:Class>
 
     <!-- Food container subclass definitions -->
