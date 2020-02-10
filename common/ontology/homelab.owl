@@ -1,0 +1,475 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#"
+     xml:base="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="urn:absolute:homelab"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:above&apos; -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:above&apos;">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:below&apos;"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:below&apos; -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:below&apos;"/>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:canPlaceOn&apos; -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:canPlaceOn&apos;">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Plane&apos;"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:closeTo&apos; -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:closeTo&apos;">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:closeToWall&apos; -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:closeToWall&apos;">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Wall&apos;"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:connectedTo&apos; -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:connectedTo&apos;">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Room&apos;"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Room&apos;"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:defaultLocation&apos; -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:defaultLocation&apos;">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Furniture&apos;"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:hasDoor&apos; -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:hasDoor&apos;">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Furniture&apos;"/>
+        <rdfs:range>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:inside&apos; -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:inside&apos;">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:locatedAt&apos; -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:locatedAt&apos;">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Location&apos;"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:locatedInRoom&apos; -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:locatedInRoom&apos;">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Room&apos;"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:nextTo&apos; -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:nextTo&apos;">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:onTopOf&apos; -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:onTopOf&apos;">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:oppositeTo&apos; -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:oppositeTo&apos;">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:toTheLeftOf&apos; -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:toTheLeftOf&apos;">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:toTheRightOf&apos;"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:toTheRightOf&apos; -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:toTheRightOf&apos;"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Appliance&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Appliance&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Cabinet&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Cabinet&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Furniture&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Chair&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Chair&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Furniture&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:CoffeeTable&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:CoffeeTable&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Table&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Computer&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Computer&apos;">
+        <rdfs:subClassOf rdf:resource="urn:absolute:homelab#&apos;apartment:Equipment&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Container&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Container&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Couch&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Couch&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Furniture&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Counter&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Counter&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Furniture&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:DiningRoom&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:DiningRoom&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Room&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:DiningTable&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:DiningTable&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Table&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:DiningTableChair&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:DiningTableChair&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Chair&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Dishwasher&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Dishwasher&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Appliance&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Drinkware&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Drinkware&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Food&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Food&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Fridge&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Fridge&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Appliance&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Furniture&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Furniture&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Glass&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Glass&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Drinkware&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Kitchen&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Kitchen&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Room&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:LivingRoom&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:LivingRoom&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Room&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Location&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Location&apos;"/>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Mug&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Mug&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Drinkware&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Office&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Office&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Room&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:OfficeChair&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:OfficeChair&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Chair&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:OfficeTable&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:OfficeTable&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Table&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Oven&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Oven&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Appliance&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Plane&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Plane&apos;"/>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Robot&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Robot&apos;">
+        <rdfs:subClassOf rdf:resource="urn:absolute:homelab#&apos;apartment:Equipment&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Room&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Room&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Location&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Shelf&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Shelf&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Furniture&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Sideboard&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Sideboard&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Furniture&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Snacks&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Snacks&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Food&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Table&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Table&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Furniture&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Wall&apos; -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Wall&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Location&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- urn:absolute:homelab#&apos;apartment:Equipment&apos; -->
+
+    <owl:Class rdf:about="urn:absolute:homelab#&apos;apartment:Equipment&apos;">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/samuel/ontologies/2019/11/untitled-ontology-16#&apos;apartment:Object&apos;"/>
+    </owl:Class>
+    
+
+
+    <!-- urn:absolute:homelab#&apos;apartment:Robot&apos; -->
+
+    <owl:Class rdf:about="urn:absolute:homelab#&apos;apartment:Robot&apos;">
+        <rdfs:subClassOf rdf:resource="urn:absolute:homelab#&apos;apartment:Equipment&apos;"/>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
