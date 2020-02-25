@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<rdf:RDF xmlns="http://homelab#"
-     xml:base="http://homelab"
+<rdf:RDF xmlns="http://b-it-bots.de/ontologies/homelab.owl"
+     xml:base="http://b-it-bots.de/ontologies/homelab.owl"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
