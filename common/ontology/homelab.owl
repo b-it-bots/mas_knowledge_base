@@ -1,0 +1,464 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://b-it-bots.de/ontologies/homelab.owl"
+     xml:base="http://b-it-bots.de/ontologies/homelab.owl"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="urn:absolute:homelab"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!--    apartment:above   -->
+
+    <owl:ObjectProperty rdf:about="apartment:above">
+        <owl:inverseOf rdf:resource="apartment:below"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Object"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!--    apartment:below   -->
+
+    <owl:ObjectProperty rdf:about="apartment:below"/>
+    
+
+
+    <!--    apartment:canPlaceOn   -->
+
+    <owl:ObjectProperty rdf:about="apartment:canPlaceOn">
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Plane"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!--    apartment:closeTo   -->
+
+    <owl:ObjectProperty rdf:about="apartment:closeTo">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Object"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!--    apartment:closeToWall   -->
+
+    <owl:ObjectProperty rdf:about="apartment:closeToWall">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Wall"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!--    apartment:connectedTo   -->
+
+    <owl:ObjectProperty rdf:about="apartment:connectedTo">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="apartment:Room"/>
+        <rdfs:range rdf:resource="apartment:Room"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!--    apartment:defaultLocation   -->
+
+    <owl:ObjectProperty rdf:about="apartment:defaultLocation">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Furniture"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!--    apartment:hasDoor   -->
+
+    <owl:ObjectProperty rdf:about="apartment:hasDoor">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="apartment:Furniture"/>
+        <rdfs:range>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!--    apartment:inside   -->
+
+    <owl:ObjectProperty rdf:about="apartment:inside">
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Object"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!--    apartment:locatedAt   -->
+
+    <owl:ObjectProperty rdf:about="apartment:locatedAt">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Location"/>
+    </owl:ObjectProperty>   
+
+
+    <!--    apartment:nextTo   -->
+
+    <owl:ObjectProperty rdf:about="apartment:nextTo">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Object"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!--    apartment:onTopOf   -->
+
+    <owl:ObjectProperty rdf:about="apartment:onTopOf">
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Object"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!--    apartment:oppositeTo   -->
+
+    <owl:ObjectProperty rdf:about="apartment:oppositeTo">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Object"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!--    apartment:toTheLeftOf   -->
+
+    <owl:ObjectProperty rdf:about="apartment:toTheLeftOf">
+        <owl:inverseOf rdf:resource="apartment:toTheRightOf"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Object"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!--    apartment:toTheRightOf   -->
+
+    <owl:ObjectProperty rdf:about="apartment:toTheRightOf"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!--    apartment:Appliance   -->
+
+    <owl:Class rdf:about="apartment:Appliance">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Cabinet   -->
+
+    <owl:Class rdf:about="apartment:Cabinet">
+        <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Chair   -->
+
+    <owl:Class rdf:about="apartment:Chair">
+        <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:CoffeeTable   -->
+
+    <owl:Class rdf:about="apartment:CoffeeTable">
+        <rdfs:subClassOf rdf:resource="apartment:Table"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Computer   -->
+
+    <owl:Class rdf:about="apartment:Computer">
+        <rdfs:subClassOf rdf:resource="apartment:Equipment"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Container   -->
+
+    <owl:Class rdf:about="apartment:Container">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Couch   -->
+
+    <owl:Class rdf:about="apartment:Couch">
+        <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Counter   -->
+
+    <owl:Class rdf:about="apartment:Counter">
+        <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:DiningRoom   -->
+
+    <owl:Class rdf:about="apartment:DiningRoom">
+        <rdfs:subClassOf rdf:resource="apartment:Room"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:DiningTable   -->
+
+    <owl:Class rdf:about="apartment:DiningTable">
+        <rdfs:subClassOf rdf:resource="apartment:Table"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:DiningTableChair   -->
+
+    <owl:Class rdf:about="apartment:DiningTableChair">
+        <rdfs:subClassOf rdf:resource="apartment:Chair"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Dishwasher   -->
+
+    <owl:Class rdf:about="apartment:Dishwasher">
+        <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Drinkware   -->
+
+    <owl:Class rdf:about="apartment:Drinkware">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Food   -->
+
+    <owl:Class rdf:about="apartment:Food">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Fridge   -->
+
+    <owl:Class rdf:about="apartment:Fridge">
+        <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Furniture   -->
+
+    <owl:Class rdf:about="apartment:Furniture">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Glass   -->
+
+    <owl:Class rdf:about="apartment:Glass">
+        <rdfs:subClassOf rdf:resource="apartment:Drinkware"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Kitchen   -->
+
+    <owl:Class rdf:about="apartment:Kitchen">
+        <rdfs:subClassOf rdf:resource="apartment:Room"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:LivingRoom   -->
+
+    <owl:Class rdf:about="apartment:LivingRoom">
+        <rdfs:subClassOf rdf:resource="apartment:Room"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Location   -->
+
+    <owl:Class rdf:about="apartment:Location"/>
+    
+
+
+    <!--    apartment:Mug   -->
+
+    <owl:Class rdf:about="apartment:Mug">
+        <rdfs:subClassOf rdf:resource="apartment:Drinkware"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Object   -->
+
+    <owl:Class rdf:about="apartment:Object"/>
+    
+
+
+    <!--    apartment:Office   -->
+
+    <owl:Class rdf:about="apartment:Office">
+        <rdfs:subClassOf rdf:resource="apartment:Room"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:OfficeChair   -->
+
+    <owl:Class rdf:about="apartment:OfficeChair">
+        <rdfs:subClassOf rdf:resource="apartment:Chair"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:OfficeTable   -->
+
+    <owl:Class rdf:about="apartment:OfficeTable">
+        <rdfs:subClassOf rdf:resource="apartment:Table"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Oven   -->
+
+    <owl:Class rdf:about="apartment:Oven">
+        <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Plane   -->
+
+    <owl:Class rdf:about="apartment:Plane"/>
+    
+
+
+    <!--    apartment:Robot   -->
+
+    <owl:Class rdf:about="apartment:Robot">
+        <rdfs:subClassOf rdf:resource="apartment:Equipment"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Room   -->
+
+    <owl:Class rdf:about="apartment:Room">
+        <rdfs:subClassOf rdf:resource="apartment:Location"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Shelf   -->
+
+    <owl:Class rdf:about="apartment:Shelf">
+        <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Sideboard   -->
+
+    <owl:Class rdf:about="apartment:Sideboard">
+        <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Snacks   -->
+
+    <owl:Class rdf:about="apartment:Snacks">
+        <rdfs:subClassOf rdf:resource="apartment:Food"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Table   -->
+
+    <owl:Class rdf:about="apartment:Table">
+        <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    </owl:Class>
+    
+
+
+    <!--    apartment:Wall   -->
+
+    <owl:Class rdf:about="apartment:Wall">
+        <rdfs:subClassOf rdf:resource="apartment:Location"/>
+    </owl:Class>
+    
+
+
+    <!--  apartment:Equipment   -->
+
+    <owl:Class rdf:about="apartment:Equipment">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    </owl:Class>
+    
+
+
+    <!--  apartment:Robot   -->
+
+    <owl:Class rdf:about="apartment:Robot">
+        <rdfs:subClassOf rdf:resource="apartment:Equipment"/>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
