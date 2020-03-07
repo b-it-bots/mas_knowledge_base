@@ -3,6 +3,10 @@
 
 import rdflib
 
+class URIRefConstants(object):
+    RDF_TYPE = rdflib.term.URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')
+    OWL_OBJECT_PROPERTY = rdflib.term.URIRef('http://www.w3.org/2002/07/owl#ObjectProperty')
+
 class OntologyQueryInterface(object):
     '''Defines an interface for interacting with an OWL knowledge base.
 
@@ -14,11 +18,19 @@ class OntologyQueryInterface(object):
     @contact aleksandar.mitrevski@h-brs.de
 
     '''
+
     def __init__(self, ontology_file, class_prefix):
         self.knowledge_graph = rdflib.Graph()
         self.knowledge_graph.load(ontology_file)
         self.class_prefix = class_prefix
         self.ontology_url = ontology_file[0:ontology_file.rfind('/')]
+
+    def get_object_properties(self):
+        '''Returns a list with the names of all object properties in the ontology.
+        '''
+        return [self.__extract_class_name(triple[0]) for triple in self.knowledge_graph[:]
+                if triple[1] == URIRefConstants.RDF_TYPE and \
+                   triple[2] == URIRefConstants.OWL_OBJECT_PROPERTY]
 
     def is_instance_of(self, obj_name, class_name):
         '''Checks whether 'obj_name' is an instance of 'class_name'.
