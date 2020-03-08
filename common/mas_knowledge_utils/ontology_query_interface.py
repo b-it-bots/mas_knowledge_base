@@ -6,6 +6,7 @@ import rdflib
 class URIRefConstants(object):
     RDF_TYPE = rdflib.term.URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')
     OWL_OBJECT_PROPERTY = rdflib.term.URIRef('http://www.w3.org/2002/07/owl#ObjectProperty')
+    OWL_INVERSE_OF = rdflib.term.URIRef('http://www.w3.org/2002/07/owl#inverseOf')
     PROPERTY_DOMAIN = rdflib.term.URIRef('http://www.w3.org/2000/01/rdf-schema#domain')
     PROPERTY_RANGE = rdflib.term.URIRef('http://www.w3.org/2000/01/rdf-schema#range')
 
@@ -157,6 +158,9 @@ class OntologyQueryInterface(object):
                     prop_domain = self.__extract_class_name(triple[2])
                 elif triple[1] == URIRefConstants.PROPERTY_RANGE:
                     prop_range = self.__extract_class_name(triple[2])
+                elif triple[1] == URIRefConstants.OWL_INVERSE_OF:
+                    inverse_prop = self.__extract_class_name(self.__extract_obj_name(triple[2]))
+                    (prop_range, prop_domain) = self.get_property_domain_range(inverse_prop)
             if prop_domain and prop_range:
                 break
         return (prop_domain, prop_range)
