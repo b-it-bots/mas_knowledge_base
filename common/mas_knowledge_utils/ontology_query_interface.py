@@ -6,6 +6,8 @@ import rdflib
 class URIRefConstants(object):
     RDF_TYPE = rdflib.term.URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')
     OWL_OBJECT_PROPERTY = rdflib.term.URIRef('http://www.w3.org/2002/07/owl#ObjectProperty')
+    PROPERTY_DOMAIN = rdflib.term.URIRef('http://www.w3.org/2000/01/rdf-schema#domain')
+    PROPERTY_RANGE = rdflib.term.URIRef('http://www.w3.org/2000/01/rdf-schema#range')
 
 class OntologyQueryInterface(object):
     '''Defines an interface for interacting with an OWL knowledge base.
@@ -127,7 +129,7 @@ class OntologyQueryInterface(object):
         triple in the ontology.
 
         Keyword arguments:
-        prop: str -- name of a property
+        @param prop: str -- name of a property
 
         '''
         rdf_property = self.__format_class_name(prop)
@@ -137,6 +139,27 @@ class OntologyQueryInterface(object):
                            self.__extract_obj_name(x[1]))
                           for x in query_result]
         return subj_obj_pairs
+
+    def get_property_domain_range(self, prop):
+        '''Returns a pair in which the first element is the domain of the
+        given property and the second element is its range.
+
+        Keyword arguments:
+        @param prop: str -- name of a property
+
+        '''
+        prop_domain = None
+        prop_range = None
+        rdf_property = rdflib.URIRef(self.__format_class_name(prop))
+        for triple in self.knowledge_graph[:]:
+            if triple[0] == rdf_property:
+                if triple[1] == URIRefConstants.PROPERTY_DOMAIN:
+                    prop_domain = self.__extract_class_name(triple[2])
+                elif triple[1] == URIRefConstants.PROPERTY_RANGE:
+                    prop_range = self.__extract_class_name(triple[2])
+            if prop_domain and prop_range:
+                break
+        return (prop_domain, prop_range)
 
     def __format_class_name(self, class_name):
         '''Returns a string of the format "self.class_prefix:class_name".
