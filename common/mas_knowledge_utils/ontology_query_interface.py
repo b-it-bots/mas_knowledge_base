@@ -121,6 +121,23 @@ class OntologyQueryInterface(object):
         object_list = [self.__extract_obj_name(x[0]) for x in query_result]
         return object_list
 
+    def get_all_subjects_and_objects(self, prop):
+        '''Returns a list of pairs in which the first element is the subject
+        and the second element is the object of each (subject prop object)
+        triple in the ontology.
+
+        Keyword arguments:
+        prop: str -- name of a property
+
+        '''
+        rdf_property = self.__format_class_name(prop)
+        query_result = self.knowledge_graph.query('SELECT ?subj ?obj ' +
+                                                  'WHERE {?subj ' + rdf_property + ' ?obj}')
+        subj_obj_pairs = [(self.__extract_obj_name(x[0]),
+                           self.__extract_obj_name(x[1]))
+                          for x in query_result]
+        return subj_obj_pairs
+
     def __format_class_name(self, class_name):
         '''Returns a string of the format "self.class_prefix:class_name".
 
