@@ -5,6 +5,7 @@ import rdflib
 
 class URIRefConstants(object):
     RDF_TYPE = rdflib.term.URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')
+    OWL_CLASS = rdflib.term.URIRef('http://www.w3.org/2002/07/owl#Class')
     OWL_OBJECT_PROPERTY = rdflib.term.URIRef('http://www.w3.org/2002/07/owl#ObjectProperty')
     OWL_INVERSE_OF = rdflib.term.URIRef('http://www.w3.org/2002/07/owl#inverseOf')
     PROPERTY_DOMAIN = rdflib.term.URIRef('http://www.w3.org/2000/01/rdf-schema#domain')
@@ -27,6 +28,13 @@ class OntologyQueryInterface(object):
         self.knowledge_graph.load(ontology_file)
         self.class_prefix = class_prefix
         self.ontology_url = ontology_file[0:ontology_file.rfind('/')]
+
+    def get_classes(self):
+        '''Returns a list with the names of all classes in the ontology.
+        '''
+        return [self.__extract_class_name(triple[0]) for triple in self.knowledge_graph[:]
+                if triple[1] == URIRefConstants.RDF_TYPE and \
+                   triple[2] == URIRefConstants.OWL_CLASS]
 
     def get_object_properties(self):
         '''Returns a list with the names of all object properties in the ontology.
