@@ -53,6 +53,22 @@ class OntologyQueryInterface(object):
         '''
         return obj_name in self.get_instances_of(class_name)
 
+    def get_class_hierarchy(self):
+        '''Returns a dictionary in which each key is a class and the value
+        is a list of subclasses of that class. The dictionary thus represents
+        the hierarchy of classes in the ontology.
+        '''
+        classes = self.get_classes()
+        class_hierarchy = {}
+        for c in classes:
+            subclasses = self.get_subclasses_of(c)
+
+            # we remove the class from the list since a class is also a subclass of itself
+            subclasses.remove(c)
+
+            class_hierarchy[c] = subclasses
+        return class_hierarchy
+
     def get_instances_of(self, class_name):
         '''Returns a list of names of all instances belonging to 'class_name'.
 
