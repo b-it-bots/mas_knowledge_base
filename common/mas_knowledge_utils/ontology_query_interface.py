@@ -27,7 +27,12 @@ class OntologyQueryInterface(object):
         self.knowledge_graph = rdflib.Graph()
         self.knowledge_graph.load(ontology_file)
         self.class_prefix = class_prefix
+        self.ontology_file = ontology_file
         self.ontology_url = ontology_file[0:ontology_file.rfind('/')]
+
+        self.__class_names = None
+        self.__instance_names = None
+        self.__property_names = None
 
     def get_classes(self):
         '''Returns a list with the names of all classes in the ontology.
@@ -189,6 +194,125 @@ class OntologyQueryInterface(object):
                 break
         return (prop_domain, prop_range)
 
+    def is_class(self, class_name):
+        '''Checks whether 'class_name' is defined as a class in the ontology.
+
+        Keyword arguments:
+        class_name -- string representing the name of the class
+
+        '''
+        return class_name in self.__get_class_names()
+
+    def is_instance(self, instance_name):
+        '''Checks whether 'instance_name' is defined as a class instance in the ontology.
+
+        Keyword arguments:
+        instance_name -- string representing the name of the class instance
+
+        '''
+        return instance_name in self.__get_instance_names()
+
+    def is_property(self, property_name):
+        '''Checks whether 'property_name' is defined as a property in the ontology.
+
+        Keyword arguments:
+        property_name -- string representing the name of the property
+
+        '''
+        return property_name in self.__get_property_names()
+
+    def insert_class_assertion(self, class_name, instance_name):
+        ''' Adds a new instance of a class to the ontology
+
+        Keyword arguments:
+        class_name -- string representing the name of the class
+        instance_name -- string representing the name of the instance
+
+        '''
+        if self.is_class(class_name):
+            ns = rdflib.Namespace("http://{0}#".format(self.class_prefix))
+            self.knowledge_graph.add((rdflib.URIRef(self.__get_entity_url(instance_name)),
+                                      rdflib.RDF.type,
+                                      rdflib.URIRef(ns[class_name])))
+            # Reset instance names list to ensure that the newly added 
+            # instance is included in the next query to the instance_list
+            self.__instance_names = None
+        else:
+            raise ValueError("The \"{0}\" class does not exist in the ontology!".format(class_name))
+
+    def insert_property_assertion(self, property_name, instance):
+        ''' Adds a new predicate between a subject and an object to the ontology
+
+        Keyword arguments:
+        property_name -- string representing the name of the predicate
+        instance -- tuple(string, string) representing the subject and the object respectively
+
+        '''
+        if not self.is_instance(instance[0]):
+            raise ValueError("The subject \"{0}\" does not exist in the ontology as an instance of a class!".format(instance[0]))
+        elif not self.is_instance(instance[1]):
+            raise ValueError("The object \"{0}\" does not exist in the ontology as an instance of a class!".format(instance[1]))
+        elif not self.is_property(property_name):
+            raise ValueError("The property \"{0}\" is not defined in the ontology!".format(property_name))
+        else:
+            ns = rdflib.Namespace("http://{0}#".format(self.class_prefix))
+            self.knowledge_graph.add((rdflib.URIRef(self.__get_entity_url(instance[0])),
+                                      rdflib.URIRef(ns[property_name]),
+                                      rdflib.URIRef(self.__get_entity_url(instance[1]))))
+
+    def remove_class_assertion(self, class_name, instance_name):
+        ''' Removes an existing instance of a class from the ontology
+
+        Keyword arguments:
+        class_name -- string representing the name of the class
+        instance_name -- string representing the name of the instance
+
+        '''
+        if not self.is_class(class_name):
+            raise ValueError("The \"{0}\" class does not exist in the ontology!".format(class_name))
+        elif not self.is_instance(instance_name):
+            raise ValueError("The \"{0}\" instance does not exist in the ontology!".format(instance_name))
+        else:
+            ns = rdflib.Namespace("http://{0}#".format(self.class_prefix))
+            self.knowledge_graph.remove((rdflib.URIRef(self.__get_entity_url(instance_name)),
+                                      rdflib.RDF.type,
+                                      rdflib.URIRef(ns[class_name])))
+
+    def remove_property_assertion(self, property_name, instance):
+        ''' Removes an existing predicate between a subject and an object from the ontology
+
+        Keyword arguments:
+        property_name -- string representing the name of the predicate
+        instance -- tuple(string, string) representing the subject and the object respectively
+
+        '''
+        if not self.is_instance(instance[0]):
+            raise ValueError("The subject \"{0}\" does not exist in the ontology as an instance of a class!".format(instance[0]))
+        elif not self.is_instance(instance[1]):
+            raise ValueError("The object \"{0}\" does not exist in the ontology as an instance of a class!".format(instance[1]))
+        elif not self.is_property(property_name):
+            raise ValueError("The property \"{0}\" is not defined in the ontology!".format(property_name))
+        else:
+            ns = rdflib.Namespace("http://{0}#".format(self.class_prefix))
+            self.knowledge_graph.remove((rdflib.URIRef(self.__get_entity_url(instance[0])),
+                                      rdflib.URIRef(ns[property_name]),
+                                      rdflib.URIRef(self.__get_entity_url(instance[1]))))
+
+    def export(self, ontology_file, format='xml'):
+        '''Exports the ontology as an xml document.
+
+        Keyword arguments:
+        @param ontology_file -- full URL of the ontology file (of the form file://<absolute-path>)
+
+        '''
+        self.knowledge_graph.serialize(ontology_file, format=format)
+
+    def update(self, format='xml'):
+        '''Overwrites the loaded ontology file with the current version of the ontology.
+
+        '''
+        self.export(self.ontology_file, format=format)
+
     def __format_class_name(self, class_name):
         '''Returns a string of the format "self.class_prefix:class_name".
 
@@ -226,3 +350,57 @@ class OntologyQueryInterface(object):
 
         '''
         return obj_url[obj_url.rfind('/')+1:]
+
+    def __get_class_names(self):
+        ''' Returns a list of all the classes defined in the ontology
+
+        '''
+        if self.__class_names is not None:
+            return self.__class_names
+
+        subclasses = self.knowledge_graph.query('SELECT ?s ?o WHERE { ?s \
+                                                   rdfs:subClassOf ?o } \
+                                                   ORDER BY ?s')
+        instance_types = self.knowledge_graph.query('SELECT DISTINCT ?type \
+                                                    WHERE { ?s a ?type. \
+                                                    FILTER( STRSTARTS(STR(?type), \
+                                                    str(' + self.class_prefix + \
+                                                    ':)) ) }')
+        class_names = set()
+        for res in subclasses:
+            subj = res[0][res[0].find(':')+1:]
+            obj = res[1][res[1].find(':')+1:]
+            class_names.update((subj, obj))
+
+        for res in instance_types:
+            type_name = res[0][res[0].find('#')+1:]
+            class_names.add(type_name)
+
+        self.__class_names = sorted(list(class_names))
+        return self.__class_names
+
+    def __get_property_names(self):
+        ''' Returns a list of all the properties defined in the ontology
+
+        '''
+        if self.__property_names is not None:
+            return self.__property_names
+
+        query_result = self.knowledge_graph.query('SELECT DISTINCT ?p \
+                                                   WHERE { ?s ?p ?o } \
+                                                   ORDER BY ?p')
+        self.__property_names = [x[0][x[0].find('#')+1:] for x in query_result]
+        return self.__property_names
+
+    def __get_instance_names(self):
+        ''' Returns a list of all the instances defined in the ontology
+
+        '''
+        if self.__instance_names is not None:
+            return self.__instance_names
+
+        self.__instance_names = []
+        class_list = self.__get_class_names()
+        for c in class_list:
+            self.__instance_names.extend(self.get_instances_of(c))
+        return self.__instance_names
