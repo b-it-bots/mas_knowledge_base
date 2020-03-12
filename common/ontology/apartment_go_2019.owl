@@ -156,7 +156,7 @@
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:Cupboard">
+    <owl:Class rdf:about="apartment:CupBoard">
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
 
@@ -184,7 +184,7 @@
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:Coathanger">
+    <owl:Class rdf:about="apartment:CoatHanger">
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
 
