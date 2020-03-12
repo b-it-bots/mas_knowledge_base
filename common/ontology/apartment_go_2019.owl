@@ -99,10 +99,6 @@
         <rdfs:subClassOf rdf:resource="apartment:Room"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:Furniture">
-        <rdfs:subClassOf rdf:resource="apartment:Object"/>
-    </owl:Class>
-
     <!-- Furniture Subclass -->
     <owl:Class rdf:about="apartment:Bed">
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
