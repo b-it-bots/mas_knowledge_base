@@ -29,25 +29,35 @@ class OntologyQueryInterface(object):
         self.class_prefix = class_prefix
         self.ontology_url = ontology_file[0:ontology_file.rfind('/')]
         self.ontology_file = ontology_file
+
+        self.__class_names = None
         self.__instance_names = None
+        self.__property_names = None
 
     def get_classes(self):
         '''Returns a list with the names of all classes in the ontology.
         '''
-        return [self.__extract_class_name(triple[0]) for triple in self.knowledge_graph[:]
-                if triple[1] == URIRefConstants.RDF_TYPE and \
-                   triple[2] == URIRefConstants.OWL_CLASS]
+        if self.__class_names is not None:
+            return self.__class_names
+
+        self.__class_names = [self.__extract_class_name(triple[0]) for triple in self.knowledge_graph[:]
+                              if triple[1] == URIRefConstants.RDF_TYPE and \
+                              triple[2] == URIRefConstants.OWL_CLASS]
+        return self.__class_names
 
     def get_object_properties(self):
         '''Returns a list with the names of all object properties in the ontology.
         '''
-        return [self.__extract_class_name(triple[0]) for triple in self.knowledge_graph[:]
-                if triple[1] == URIRefConstants.RDF_TYPE and \
-                   triple[2] == URIRefConstants.OWL_OBJECT_PROPERTY]
+        if self.__property_names is not None:
+            return self.__property_names
+
+        self.__property_names = [self.__extract_class_name(triple[0]) for triple in self.knowledge_graph[:]
+                                 if triple[1] == URIRefConstants.RDF_TYPE and \
+                                 triple[2] == URIRefConstants.OWL_OBJECT_PROPERTY]
+        return self.__property_names
 
     def get_instances(self):
-        ''' Returns a list of all the instances defined in the ontology
-
+        '''Returns a list with the names of all instances in the ontology.
         '''
         if self.__instance_names is not None:
             return self.__instance_names
