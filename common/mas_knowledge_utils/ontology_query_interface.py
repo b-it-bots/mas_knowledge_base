@@ -68,6 +68,33 @@ class OntologyQueryInterface(object):
             self.__instance_names.extend(self.get_instances_of(c))
         return list(set(self.__instance_names))
 
+    def is_class(self, class_name):
+        '''Checks whether 'class_name' is defined as a class in the ontology.
+
+        Keyword arguments:
+        class_name -- string representing the name of the class
+
+        '''
+        return class_name in self.get_classes()
+
+    def is_instance(self, instance_name):
+        '''Checks whether 'instance_name' is defined as a class instance in the ontology.
+
+        Keyword arguments:
+        instance_name -- string representing the name of the class instance
+
+        '''
+        return instance_name in self.get_instances()
+
+    def is_property(self, property_name):
+        '''Checks whether 'property_name' is defined as a property in the ontology.
+
+        Keyword arguments:
+        property_name -- string representing the name of the property
+
+        '''
+        return property_name in self.get_object_properties()
+
     def is_instance_of(self, obj_name, class_name):
         '''Checks whether 'obj_name' is an instance of 'class_name'.
 
@@ -244,33 +271,6 @@ class OntologyQueryInterface(object):
             return (prop_domain, prop_range)
         else:
             raise ValueError("\"{0}\" does not exist as a property in the ontology!".format(prop))
-
-    def is_class(self, class_name):
-        '''Checks whether 'class_name' is defined as a class in the ontology.
-
-        Keyword arguments:
-        class_name -- string representing the name of the class
-
-        '''
-        return class_name in self.get_classes()
-
-    def is_instance(self, instance_name):
-        '''Checks whether 'instance_name' is defined as a class instance in the ontology.
-
-        Keyword arguments:
-        instance_name -- string representing the name of the class instance
-
-        '''
-        return instance_name in self.get_instances()
-
-    def is_property(self, property_name):
-        '''Checks whether 'property_name' is defined as a property in the ontology.
-
-        Keyword arguments:
-        property_name -- string representing the name of the property
-
-        '''
-        return property_name in self.get_object_properties()
 
     def insert_class_assertion(self, class_name, instance_name):
         ''' Adds a new instance of a class to the ontology
