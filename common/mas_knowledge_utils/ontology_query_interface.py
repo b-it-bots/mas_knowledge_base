@@ -27,12 +27,9 @@ class OntologyQueryInterface(object):
         self.knowledge_graph = rdflib.Graph()
         self.knowledge_graph.load(ontology_file)
         self.class_prefix = class_prefix
-        self.ontology_file = ontology_file
         self.ontology_url = ontology_file[0:ontology_file.rfind('/')]
-
-        self.__class_names = None
+        self.ontology_file = ontology_file
         self.__instance_names = None
-        self.__property_names = None
 
     def get_classes(self):
         '''Returns a list with the names of all classes in the ontology.
@@ -47,6 +44,19 @@ class OntologyQueryInterface(object):
         return [self.__extract_class_name(triple[0]) for triple in self.knowledge_graph[:]
                 if triple[1] == URIRefConstants.RDF_TYPE and \
                    triple[2] == URIRefConstants.OWL_OBJECT_PROPERTY]
+
+    def get_instances(self):
+        ''' Returns a list of all the instances defined in the ontology
+
+        '''
+        if self.__instance_names is not None:
+            return self.__instance_names
+
+        self.__instance_names = []
+        class_list = self.get_classes()
+        for c in class_list:
+            self.__instance_names.extend(self.get_instances_of(c))
+        return list(set(self.__instance_names))
 
     def is_instance_of(self, obj_name, class_name):
         '''Checks whether 'obj_name' is an instance of 'class_name'.
@@ -201,7 +211,7 @@ class OntologyQueryInterface(object):
         class_name -- string representing the name of the class
 
         '''
-        return class_name in self.__get_class_names()
+        return class_name in self.get_classes()
 
     def is_instance(self, instance_name):
         '''Checks whether 'instance_name' is defined as a class instance in the ontology.
@@ -210,7 +220,7 @@ class OntologyQueryInterface(object):
         instance_name -- string representing the name of the class instance
 
         '''
-        return instance_name in self.__get_instance_names()
+        return instance_name in self.get_instances()
 
     def is_property(self, property_name):
         '''Checks whether 'property_name' is defined as a property in the ontology.
@@ -219,7 +229,7 @@ class OntologyQueryInterface(object):
         property_name -- string representing the name of the property
 
         '''
-        return property_name in self.__get_property_names()
+        return property_name in self.get_object_properties()
 
     def insert_class_assertion(self, class_name, instance_name):
         ''' Adds a new instance of a class to the ontology
@@ -298,7 +308,6 @@ class OntologyQueryInterface(object):
                                       rdflib.URIRef(ns[property_name]),
                                       rdflib.URIRef(self.__get_entity_url(instance[1]))))
 
-    # TODO: default export file format?
     def export(self, ontology_file, format='xml'):
         '''Exports the ontology as an xml document.
 
@@ -351,57 +360,3 @@ class OntologyQueryInterface(object):
 
         '''
         return obj_url[obj_url.rfind('/')+1:]
-
-    def __get_class_names(self):
-        ''' Returns a list of all the classes defined in the ontology
-
-        '''
-        if self.__class_names is not None:
-            return self.__class_names
-
-        subclasses = self.knowledge_graph.query('SELECT ?s ?o WHERE { ?s \
-                                                   rdfs:subClassOf ?o } \
-                                                   ORDER BY ?s')
-        instance_types = self.knowledge_graph.query('SELECT DISTINCT ?type \
-                                                    WHERE { ?s a ?type. \
-                                                    FILTER( STRSTARTS(STR(?type), \
-                                                    str(' + self.class_prefix + \
-                                                    ':)) ) }')
-        class_names = set()
-        for res in subclasses:
-            subj = res[0][res[0].find(':')+1:]
-            obj = res[1][res[1].find(':')+1:]
-            class_names.update((subj, obj))
-
-        for res in instance_types:
-            type_name = res[0][res[0].find('#')+1:]
-            class_names.add(type_name)
-
-        self.__class_names = sorted(list(class_names))
-        return self.__class_names
-
-    def __get_property_names(self):
-        ''' Returns a list of all the properties defined in the ontology
-
-        '''
-        if self.__property_names is not None:
-            return self.__property_names
-
-        query_result = self.knowledge_graph.query('SELECT DISTINCT ?p \
-                                                   WHERE { ?s ?p ?o } \
-                                                   ORDER BY ?p')
-        self.__property_names = [x[0][x[0].find('#')+1:] for x in query_result]
-        return self.__property_names
-
-    def __get_instance_names(self):
-        ''' Returns a list of all the instances defined in the ontology
-
-        '''
-        if self.__instance_names is not None:
-            return self.__instance_names
-
-        self.__instance_names = []
-        class_list = self.__get_class_names()
-        for c in class_list:
-            self.__instance_names.extend(self.get_instances_of(c))
-        return self.__instance_names
