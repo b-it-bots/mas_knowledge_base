@@ -76,7 +76,13 @@ class OntologyQueryInterface(object):
         class_name -- string representing the name of a class
 
         '''
-        return obj_name in self.get_instances_of(class_name)
+        if not self.is_instance(obj_name):
+            raise ValueError("\"{0}\" does not exist as an instance in the ontology!".format(obj_name))
+        elif not self.is_class(class_name):
+            raise ValueError("\"{0}\" does not exist as a class in the ontology!".format(class_name))
+        else:
+            return obj_name in self.get_instances_of(class_name)
+        return False
 
     def get_class_hierarchy(self):
         '''Returns a dictionary in which each key is a class and the value
@@ -101,11 +107,14 @@ class OntologyQueryInterface(object):
         @param class_name -- string representing the name of a class
 
         '''
-        rdf_class = self.__format_class_name(class_name)
-        query_result = self.knowledge_graph.query('SELECT ?instance ' +
-                                                  'WHERE {?instance rdf:type ' + rdf_class + '}')
-        instances = [self.__extract_obj_name(x[0]) for x in query_result]
-        return instances
+        if self.is_class(class_name):
+            rdf_class = self.__format_class_name(class_name)
+            query_result = self.knowledge_graph.query('SELECT ?instance ' +
+                                                      'WHERE {?instance rdf:type ' + rdf_class + '}')
+            instances = [self.__extract_obj_name(x[0]) for x in query_result]
+            return instances
+        else:
+            raise ValueError("\"{0}\" does not exist as a class in the ontology!".format(class_name))
 
     def get_subclasses_of(self, class_name):
         '''Returns a list of all subclasses of 'class_name'.
@@ -114,12 +123,15 @@ class OntologyQueryInterface(object):
         @param class_name -- string representing the name of a class
 
         '''
-        rdf_class_uri = rdflib.URIRef(self.__format_class_name(class_name))
-        query_result = self.knowledge_graph.transitive_subjects(rdflib.RDFS.subClassOf,
-                                                                rdf_class_uri)
-        subclasses = [self.__extract_class_name(subclass)
-                      for subclass in [str(x) for x in query_result]]
-        return subclasses
+        if self.is_class(class_name):
+            rdf_class_uri = rdflib.URIRef(self.__format_class_name(class_name))
+            query_result = self.knowledge_graph.transitive_subjects(rdflib.RDFS.subClassOf,
+                                                                    rdf_class_uri)
+            subclasses = [self.__extract_class_name(subclass)
+                          for subclass in [str(x) for x in query_result]]
+            return subclasses
+        else:
+            raise ValueError("\"{0}\" does not exist as a class in the ontology!".format(class_name))
 
     def get_parent_classes_of(self, class_name):
         '''Returns a list of all parent classes of 'class_name'.
@@ -128,12 +140,15 @@ class OntologyQueryInterface(object):
         @param class_name -- string representing the name of a class
 
         '''
-        rdf_class_uri = rdflib.URIRef(self.__format_class_name(class_name))
-        query_result = self.knowledge_graph.transitive_objects(rdf_class_uri,
-                                                               rdflib.RDFS.subClassOf)
-        parent_classes = [self.__extract_class_name(parent_class)
-                          for parent_class in [str(x) for x in query_result]]
-        return parent_classes
+        if self.is_class(class_name):
+            rdf_class_uri = rdflib.URIRef(self.__format_class_name(class_name))
+            query_result = self.knowledge_graph.transitive_objects(rdf_class_uri,
+                                                                   rdflib.RDFS.subClassOf)
+            parent_classes = [self.__extract_class_name(parent_class)
+                              for parent_class in [str(x) for x in query_result]]
+            return parent_classes
+        else:
+            raise ValueError("\"{0}\" does not exist as a class in the ontology!".format(class_name))
 
     def get_subjects_of(self, prop, obj):
         '''Returns a list of subject of the relation involving the given object and property
@@ -146,13 +161,18 @@ class OntologyQueryInterface(object):
         @param object -- string representing an entity in the ontology
 
         '''
-        object_url = self.__get_entity_url(obj)
-        rdf_property = self.__format_class_name(prop)
-        query_result = self.knowledge_graph.query('SELECT ?subj ' +
-                                                  'WHERE {?subj ' + rdf_property +
-                                                  ' <' + object_url +  '>}')
-        subject_list = [self.__extract_obj_name(x[0]) for x in query_result]
-        return subject_list
+        if not self.is_property(prop):
+            raise ValueError("\"{0}\" does not exist as a property in the ontology!".format(prop))
+        elif not self.is_instance(obj):
+            raise ValueError("\"{0}\" does not exist as an instance in the ontology!".format(obj))
+        else:
+            object_url = self.__get_entity_url(obj)
+            rdf_property = self.__format_class_name(prop)
+            query_result = self.knowledge_graph.query('SELECT ?subj ' +
+                                                      'WHERE {?subj ' + rdf_property +
+                                                      ' <' + object_url +  '>}')
+            subject_list = [self.__extract_obj_name(x[0]) for x in query_result]
+            return subject_list
 
     def get_objects_of(self, prop, subject):
         '''Returns a list of objects of the relation involving the given subject and property
@@ -165,13 +185,18 @@ class OntologyQueryInterface(object):
         @param subject -- string representing an entity in the ontology
 
         '''
-        subject_url = self.__get_entity_url(subject)
-        rdf_property = self.__format_class_name(prop)
-        query_result = self.knowledge_graph.query('SELECT ?obj ' +
-                                                  'WHERE {<' + subject_url + '> ' +
-                                                  rdf_property + ' ?obj}')
-        object_list = [self.__extract_obj_name(x[0]) for x in query_result]
-        return object_list
+        if not self.is_property(prop):
+            raise ValueError("\"{0}\" does not exist as a property in the ontology!".format(prop))
+        elif not self.is_instance(subject):
+            raise ValueError("\"{0}\" does not exist as an instance in the ontology!".format(subject))
+        else:
+            subject_url = self.__get_entity_url(subject)
+            rdf_property = self.__format_class_name(prop)
+            query_result = self.knowledge_graph.query('SELECT ?obj ' +
+                                                      'WHERE {<' + subject_url + '> ' +
+                                                      rdf_property + ' ?obj}')
+            object_list = [self.__extract_obj_name(x[0]) for x in query_result]
+            return object_list
 
     def get_all_subjects_and_objects(self, prop):
         '''Returns a list of pairs in which the first element is the subject
@@ -182,13 +207,16 @@ class OntologyQueryInterface(object):
         @param prop: str -- name of a property
 
         '''
-        rdf_property = self.__format_class_name(prop)
-        query_result = self.knowledge_graph.query('SELECT ?subj ?obj ' +
-                                                  'WHERE {?subj ' + rdf_property + ' ?obj}')
-        subj_obj_pairs = [(self.__extract_obj_name(x[0]),
-                           self.__extract_obj_name(x[1]))
-                          for x in query_result]
-        return subj_obj_pairs
+        if self.is_property(prop):
+            rdf_property = self.__format_class_name(prop)
+            query_result = self.knowledge_graph.query('SELECT ?subj ?obj ' +
+                                                      'WHERE {?subj ' + rdf_property + ' ?obj}')
+            subj_obj_pairs = [(self.__extract_obj_name(x[0]),
+                               self.__extract_obj_name(x[1]))
+                              for x in query_result]
+            return subj_obj_pairs
+        else:
+            raise ValueError("\"{0}\" does not exist as a property in the ontology!".format(prop))
 
     def get_property_domain_range(self, prop):
         '''Returns a pair in which the first element is the domain of the
@@ -198,21 +226,24 @@ class OntologyQueryInterface(object):
         @param prop: str -- name of a property
 
         '''
-        prop_domain = None
-        prop_range = None
-        rdf_property = rdflib.URIRef(self.__format_class_name(prop))
-        for triple in self.knowledge_graph[:]:
-            if triple[0] == rdf_property:
-                if triple[1] == URIRefConstants.PROPERTY_DOMAIN:
-                    prop_domain = self.__extract_class_name(triple[2])
-                elif triple[1] == URIRefConstants.PROPERTY_RANGE:
-                    prop_range = self.__extract_class_name(triple[2])
-                elif triple[1] == URIRefConstants.OWL_INVERSE_OF:
-                    inverse_prop = self.__extract_class_name(self.__extract_obj_name(triple[2]))
-                    (prop_range, prop_domain) = self.get_property_domain_range(inverse_prop)
-            if prop_domain and prop_range:
-                break
-        return (prop_domain, prop_range)
+        if self.is_property(prop):
+            prop_domain = None
+            prop_range = None
+            rdf_property = rdflib.URIRef(self.__format_class_name(prop))
+            for triple in self.knowledge_graph[:]:
+                if triple[0] == rdf_property:
+                    if triple[1] == URIRefConstants.PROPERTY_DOMAIN:
+                        prop_domain = self.__extract_class_name(triple[2])
+                    elif triple[1] == URIRefConstants.PROPERTY_RANGE:
+                        prop_range = self.__extract_class_name(triple[2])
+                    elif triple[1] == URIRefConstants.OWL_INVERSE_OF:
+                        inverse_prop = self.__extract_class_name(self.__extract_obj_name(triple[2]))
+                        (prop_range, prop_domain) = self.get_property_domain_range(inverse_prop)
+                if prop_domain and prop_range:
+                    break
+            return (prop_domain, prop_range)
+        else:
+            raise ValueError("\"{0}\" does not exist as a property in the ontology!".format(prop))
 
     def is_class(self, class_name):
         '''Checks whether 'class_name' is defined as a class in the ontology.
