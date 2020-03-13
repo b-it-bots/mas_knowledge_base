@@ -3,8 +3,7 @@ import argparse
 import os
 from ontology_query_interface import OntologyQueryInterface
 
-# TODO: name of this class?
-class PopulateABox:
+class ABoxYAMLLoader:
     '''Updates an ontology with class and property assertions 
     that are specified in a yaml file.
 
@@ -130,5 +129,5 @@ if __name__ == '__main__':
     if args.export_file is not None:
         export_file_path = "file://" + os.path.join(ontology_dir, args.export_file + ".owl")
 
-    aBox = PopulateABox(ontology_file_path, args.class_prefix, assertions_file_path)
-    aBox.update_ontology(export_file_path)
+    loader = ABoxYAMLLoader(ontology_file_path, args.class_prefix, assertions_file_path)
+    loader.update_ontology(export_file_path)
