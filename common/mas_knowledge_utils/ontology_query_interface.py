@@ -298,6 +298,7 @@ class OntologyQueryInterface(object):
                                       rdflib.URIRef(ns[property_name]),
                                       rdflib.URIRef(self.__get_entity_url(instance[1]))))
 
+    # TODO: default export file format?
     def export(self, ontology_file, format='xml'):
         '''Exports the ontology as an xml document.
 
