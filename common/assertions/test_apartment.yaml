@@ -1,0 +1,23 @@
+class_assertions:
+    Male: [Alex, Sushant]
+    Female: [Argentina]
+    Room: [RopodLab, atWorkLab]
+    Chair: [AlexChair, ArgentinaChair, SushantChair]
+    HighTable: [RopodWorkDesk, atWorkDesk]
+property_assertions:
+    defaultLocation:
+        AlexChair: RopodLab
+        ArgentinaChair: RopodLab
+        SushantChair: RopodLab
+        RopodWorkDesk: RopodLab
+        atWorkDesk: atWorkLab
+    locatedAt:
+        AlexChair: RopodLab
+        ArgentinaChair: RopodLab
+        SushantChair: atWorkLab
+        RopodWorkDesk: RopodLab
+        atWorkDesk: atWorkLab
+    nextTo:
+        AlexChair: RopodWorkDesk
+        ArgentinaChair: RopodWorkDesk
+        SushantChair: atWorkDesk
