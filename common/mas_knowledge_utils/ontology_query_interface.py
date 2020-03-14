@@ -301,8 +301,10 @@ class OntologyQueryInterface(object):
         '''
         if not self.is_instance(instance[0]):
             raise ValueError('The subject "{0}" does not exist in the ontology as an instance of a class!'.format(instance[0]))
-        elif not self.is_instance(instance[1]):
-            raise ValueError('The object "{0}" does not exist in the ontology as an instance of a class!'.format(instance[1]))
+        # Skip the type-check for the object since it is not necessary to be a class
+        # For example, the heightOf property can be a float.
+        # elif not self.is_instance(instance[1]):
+        #     raise ValueError('The object "{0}" does not exist in the ontology as an instance of a class!'.format(instance[1]))
         elif not self.is_property(property_name):
             raise ValueError('The property "{0}" is not defined in the ontology!'.format(property_name))
         else:
@@ -323,11 +325,16 @@ class OntologyQueryInterface(object):
             raise ValueError('The "{0}" class does not exist in the ontology!'.format(class_name))
         elif not self.is_instance(instance_name):
             raise ValueError('The "{0}" instance does not exist in the ontology!'.format(instance_name))
+        elif not self.is_instance_of(instance_name, class_name):
+            raise ValueError('"{0}" is not an instance of {1}!'.format(instance_name, class_name))
         else:
             ns = rdflib.Namespace("http://{0}#".format(self.class_prefix))
             self.knowledge_graph.remove((rdflib.URIRef(self.__get_entity_url(instance_name)),
                                       rdflib.RDF.type,
                                       rdflib.URIRef(ns[class_name])))
+            # Reset instance names list to ensure that the removed instance is 
+            # not included in the next query to the instance_list
+            self.__instance_names = None
 
     def remove_property_assertion(self, property_name, instance):
         ''' Removes an existing predicate between a subject and an object from the ontology
@@ -339,8 +346,10 @@ class OntologyQueryInterface(object):
         '''
         if not self.is_instance(instance[0]):
             raise ValueError('The subject "{0}" does not exist in the ontology as an instance of a class!'.format(instance[0]))
-        elif not self.is_instance(instance[1]):
-            raise ValueError('The object "{0}" does not exist in the ontology as an instance of a class!'.format(instance[1]))
+        # Skip the type-check for the object since it is not necessary to be a class
+        # For example, the heightOf property can be a float.
+        # elif not self.is_instance(instance[1]):
+        #     raise ValueError('The object "{0}" does not exist in the ontology as an instance of a class!'.format(instance[1]))
         elif not self.is_property(property_name):
             raise ValueError('The property "{0}" is not defined in the ontology!'.format(property_name))
         else:
