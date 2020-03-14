@@ -3,10 +3,25 @@ sudo: required
 language: python
 
 before_install:
-  - sudo pip install rdflib catkin_pkg
+    # Install ROS
+  - sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list'
+  - sudo curl -sSL 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xC1CF6E31E6BADE8868B172B4F42ED6FBAB17C654' | sudo apt-key add -
+  - sudo apt-get update
+  - sudo apt-get install -y --no-install-recommends ros-kinetic-ros-base 
+  - sudo rosdep init
+  - rosdep update
+  - sudo apt install -y --no-install-recommends python-rosinstall python-rosinstall-generator python-wstool build-essential python-catkin-tools ros-kinetic-roslint
+  - sudo pip install catkin_pkg empy
+  - source /opt/ros/kinetic/setup.bash
+    # Install RDFLib
+  - sudo pip install rdflib
 
 install:
-  - sudo python setup.py install --user
+  - cd ../ && mkdir -p catkin_ws/src
+  - cp -r mas_knowledge_base catkin_ws/src/
+  - cd catkin_ws && catkin init && cd src && catkin build
+  - source ../devel/setup.bash
+  - cd mas_knowledge_base
 
 stages:
   - test
