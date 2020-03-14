@@ -81,15 +81,6 @@
 
     <!--************** Class Instances **************-->
 
-    <!-- Location instances -->
-    <!-- <apartment:Room rdf:about="Kitchen"/>
-    <apartment:Room rdf:about="Office"/> -->
-
-    <!-- Object Instances -->
-    <!-- <apartment:Table rdf:about="DiningTable"/>
-    <apartment:WorkTable rdf:about="StudyTable"/>
-    <apartment:Mug rdf:about="CoffeeMug"/> -->
-
     <apartment:Room rdf:about="HomeOffice"/>
     <apartment:WorkTable rdf:about="Desk"/>
     <apartment:Mug rdf:about="CoffeeMug"/>
