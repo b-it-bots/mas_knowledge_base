@@ -1,0 +1,18 @@
+sudo: required
+
+language: python
+
+before_install:
+  - sudo pip install rdflib catkin_pkg
+
+install:
+  - sudo python setup.py install --user
+
+stages:
+  - test
+
+jobs:
+  include:
+    - stage: test
+      script:
+        - python common/tests/ontology_query_interface_unit_tests.py
