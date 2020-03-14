@@ -90,21 +90,21 @@
     <apartment:WorkTable rdf:about="StudyTable"/>
     <apartment:Mug rdf:about="CoffeeMug"/> -->
 
-    <apartment:Room rdf:about="MyHomeOffice"/>
-    <apartment:WorkTable rdf:about="MyDesk"/>
-    <apartment:Mug rdf:about="MyCoffeeMug"/>
+    <apartment:Room rdf:about="HomeOffice"/>
+    <apartment:WorkTable rdf:about="Desk"/>
+    <apartment:Mug rdf:about="CoffeeMug"/>
     <!--*********************************************-->
 
 
     <!--************** Property Assertions **************-->
 
-    <rdf:Description rdf:about="MyDesk">
-        <apartment:locatedAt rdf:resource="MyHomeOffice"/>
+    <rdf:Description rdf:about="Desk">
+        <apartment:locatedAt rdf:resource="HomeOffice"/>
     </rdf:Description>
-    <rdf:Description rdf:about="MyCoffeeMug">
-        <apartment:defaultStoringLocation rdf:resource="MyDesk"/>
+    <rdf:Description rdf:about="CoffeeMug">
+        <apartment:defaultStoringLocation rdf:resource="Desk"/>
     </rdf:Description>
-    <rdf:Description rdf:about="MyDesk">
+    <rdf:Description rdf:about="Desk">
         <apartment:heightOf rdf:resource="0.7"/>
     </rdf:Description>
     <!--*********************************************-->
