@@ -104,9 +104,9 @@ class OntologyQueryInterface(object):
 
         '''
         if not self.is_instance(obj_name):
-            raise ValueError("\"{0}\" does not exist as an instance in the ontology!".format(obj_name))
+            raise ValueError('"{0}" does not exist as an instance in the ontology!'.format(obj_name))
         elif not self.is_class(class_name):
-            raise ValueError("\"{0}\" does not exist as a class in the ontology!".format(class_name))
+            raise ValueError('"{0}" does not exist as a class in the ontology!'.format(class_name))
         else:
             return obj_name in self.get_instances_of(class_name)
         return False
@@ -141,7 +141,7 @@ class OntologyQueryInterface(object):
             instances = [self.__extract_obj_name(x[0]) for x in query_result]
             return instances
         else:
-            raise ValueError("\"{0}\" does not exist as a class in the ontology!".format(class_name))
+            raise ValueError('"{0}" does not exist as a class in the ontology!'.format(class_name))
 
     def get_subclasses_of(self, class_name):
         '''Returns a list of all subclasses of 'class_name'.
@@ -158,7 +158,7 @@ class OntologyQueryInterface(object):
                           for subclass in [str(x) for x in query_result]]
             return subclasses
         else:
-            raise ValueError("\"{0}\" does not exist as a class in the ontology!".format(class_name))
+            raise ValueError('"{0}" does not exist as a class in the ontology!'.format(class_name))
 
     def get_parent_classes_of(self, class_name):
         '''Returns a list of all parent classes of 'class_name'.
@@ -175,7 +175,7 @@ class OntologyQueryInterface(object):
                               for parent_class in [str(x) for x in query_result]]
             return parent_classes
         else:
-            raise ValueError("\"{0}\" does not exist as a class in the ontology!".format(class_name))
+            raise ValueError('"{0}" does not exist as a class in the ontology!'.format(class_name))
 
     def get_subjects_of(self, prop, obj):
         '''Returns a list of subject of the relation involving the given object and property
@@ -189,9 +189,9 @@ class OntologyQueryInterface(object):
 
         '''
         if not self.is_property(prop):
-            raise ValueError("\"{0}\" does not exist as a property in the ontology!".format(prop))
+            raise ValueError('"{0}" does not exist as a property in the ontology!'.format(prop))
         elif not self.is_instance(obj):
-            raise ValueError("\"{0}\" does not exist as an instance in the ontology!".format(obj))
+            raise ValueError('"{0}" does not exist as an instance in the ontology!'.format(obj))
         else:
             object_url = self.__get_entity_url(obj)
             rdf_property = self.__format_class_name(prop)
@@ -213,9 +213,9 @@ class OntologyQueryInterface(object):
 
         '''
         if not self.is_property(prop):
-            raise ValueError("\"{0}\" does not exist as a property in the ontology!".format(prop))
+            raise ValueError('"{0}" does not exist as a property in the ontology!'.format(prop))
         elif not self.is_instance(subject):
-            raise ValueError("\"{0}\" does not exist as an instance in the ontology!".format(subject))
+            raise ValueError('"{0}" does not exist as an instance in the ontology!'.format(subject))
         else:
             subject_url = self.__get_entity_url(subject)
             rdf_property = self.__format_class_name(prop)
@@ -243,7 +243,7 @@ class OntologyQueryInterface(object):
                               for x in query_result]
             return subj_obj_pairs
         else:
-            raise ValueError("\"{0}\" does not exist as a property in the ontology!".format(prop))
+            raise ValueError('"{0}" does not exist as a property in the ontology!'.format(prop))
 
     def get_property_domain_range(self, prop):
         '''Returns a pair in which the first element is the domain of the
@@ -270,7 +270,7 @@ class OntologyQueryInterface(object):
                     break
             return (prop_domain, prop_range)
         else:
-            raise ValueError("\"{0}\" does not exist as a property in the ontology!".format(prop))
+            raise ValueError('"{0}" does not exist as a property in the ontology!'.format(prop))
 
     def insert_class_assertion(self, class_name, instance_name):
         ''' Adds a new instance of a class to the ontology
@@ -289,7 +289,7 @@ class OntologyQueryInterface(object):
             # instance is included in the next query to the instance_list
             self.__instance_names = None
         else:
-            raise ValueError("The \"{0}\" class does not exist in the ontology!".format(class_name))
+            raise ValueError('The "{0}" class does not exist in the ontology!'.format(class_name))
 
     def insert_property_assertion(self, property_name, instance):
         ''' Adds a new predicate between a subject and an object to the ontology
@@ -300,11 +300,11 @@ class OntologyQueryInterface(object):
 
         '''
         if not self.is_instance(instance[0]):
-            raise ValueError("The subject \"{0}\" does not exist in the ontology as an instance of a class!".format(instance[0]))
+            raise ValueError('The subject "{0}" does not exist in the ontology as an instance of a class!'.format(instance[0]))
         elif not self.is_instance(instance[1]):
-            raise ValueError("The object \"{0}\" does not exist in the ontology as an instance of a class!".format(instance[1]))
+            raise ValueError('The object "{0}" does not exist in the ontology as an instance of a class!'.format(instance[1]))
         elif not self.is_property(property_name):
-            raise ValueError("The property \"{0}\" is not defined in the ontology!".format(property_name))
+            raise ValueError('The property "{0}" is not defined in the ontology!'.format(property_name))
         else:
             ns = rdflib.Namespace("http://{0}#".format(self.class_prefix))
             self.knowledge_graph.add((rdflib.URIRef(self.__get_entity_url(instance[0])),
@@ -320,9 +320,9 @@ class OntologyQueryInterface(object):
 
         '''
         if not self.is_class(class_name):
-            raise ValueError("The \"{0}\" class does not exist in the ontology!".format(class_name))
+            raise ValueError('The "{0}" class does not exist in the ontology!'.format(class_name))
         elif not self.is_instance(instance_name):
-            raise ValueError("The \"{0}\" instance does not exist in the ontology!".format(instance_name))
+            raise ValueError('The "{0}" instance does not exist in the ontology!'.format(instance_name))
         else:
             ns = rdflib.Namespace("http://{0}#".format(self.class_prefix))
             self.knowledge_graph.remove((rdflib.URIRef(self.__get_entity_url(instance_name)),
@@ -338,11 +338,11 @@ class OntologyQueryInterface(object):
 
         '''
         if not self.is_instance(instance[0]):
-            raise ValueError("The subject \"{0}\" does not exist in the ontology as an instance of a class!".format(instance[0]))
+            raise ValueError('The subject "{0}" does not exist in the ontology as an instance of a class!'.format(instance[0]))
         elif not self.is_instance(instance[1]):
-            raise ValueError("The object \"{0}\" does not exist in the ontology as an instance of a class!".format(instance[1]))
+            raise ValueError('The object "{0}" does not exist in the ontology as an instance of a class!'.format(instance[1]))
         elif not self.is_property(property_name):
-            raise ValueError("The property \"{0}\" is not defined in the ontology!".format(property_name))
+            raise ValueError('The property "{0}" is not defined in the ontology!'.format(property_name))
         else:
             ns = rdflib.Namespace("http://{0}#".format(self.class_prefix))
             self.knowledge_graph.remove((rdflib.URIRef(self.__get_entity_url(instance[0])),
