@@ -1,7 +1,7 @@
 import yaml
 import argparse
 import os
-from ontology_query_interface import OntologyQueryInterface
+from mas_knowledge_utils.ontology_query_interface import OntologyQueryInterface
 
 class ABoxYAMLLoader:
     '''Updates an ontology with class and property assertions 
