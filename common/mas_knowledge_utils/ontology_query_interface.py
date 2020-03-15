@@ -278,6 +278,24 @@ class OntologyQueryInterface(object):
         else:
             raise ValueError('"{0}" does not exist as a property in the ontology!'.format(prop))
 
+    def get_property_types(self, prop):
+        '''Returns a list that specifies the types defined for the property.
+
+        Keyword arguments:
+        @param prop: str -- name of a property
+
+        '''
+        if self.is_property(prop):
+            prop_types = []
+            rdf_property = rdflib.URIRef(self.__format_class_name(prop))
+            for triple in self.knowledge_graph[:]:
+                if triple[0] == rdf_property and triple[1] == URIRefConstants.RDF_TYPE:
+                    type_uri = triple[2]
+                    prop_types.append(type_uri[type_uri.rfind('#')+1:])
+            return prop_types
+        else:
+            raise ValueError('"{0}" does not exist as a property in the ontology!'.format(prop))
+
     def insert_class_definition(self, class_name, parent_class_names=[]):
         '''Defines a new class in the ontology. If the class_name already exists, 
         and new parent classes are passed, only the sub_class relations between 
