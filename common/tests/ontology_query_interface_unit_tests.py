@@ -149,11 +149,52 @@ class ontology_query_interface_test(unittest.TestCase):
         self.assertTrue(self.ont_if.is_class(hybrid_class))
 
         # Verify if the hierarchy is properly established
-        self.assertTrue(len(self.ont_if.get_parent_classes_of(top_level_class)) == 1)
+        self.assertEqual(len(self.ont_if.get_parent_classes_of(top_level_class)), 1)
         self.assertTrue(sub_class_1 in self.ont_if.get_subclasses_of(top_level_class))
         self.assertTrue(sub_class_2 in self.ont_if.get_subclasses_of(top_level_class))
         self.assertTrue(hybrid_class in self.ont_if.get_subclasses_of(sub_class_1))
         self.assertTrue(hybrid_class in self.ont_if.get_subclasses_of(sub_class_2))
+
+    def test_insert_property_definition(self):
+        prop_1_name = "TestFuncProp"
+        prop_1_domain_ns = None
+        prop_1_domain = "Object"
+        prop_1_range_ns = None
+        prop_1_range = "Location"
+        prop_1_type = 'FunctionalProperty'
+
+        prop_2_name = "TestFloatProp"
+        prop_2_domain_ns = None
+        prop_2_domain = "Object"
+        prop_2_range_ns ='xsd'
+        prop_2_range = "float"
+        prop_2_type = None
+
+        # Ensure that the properties does not exist in the ontology
+        self.assertFalse(self.ont_if.is_property(prop_1_name))
+        self.assertFalse(self.ont_if.is_property(prop_2_name))
+
+        # Add the properties to the ontology
+        self.ont_if.insert_property_definition(prop_1_name, prop_1_domain,
+                                               prop_1_range, prop_1_type,
+                                               prop_1_domain_ns, prop_1_range_ns)
+        self.ont_if.insert_property_definition(prop_2_name, prop_2_domain,
+                                               prop_2_range, prop_2_type,
+                                               prop_2_domain_ns, prop_2_range_ns)
+
+        # Validate that the properties have been added to the ontology
+        self.assertTrue(self.ont_if.is_property(prop_1_name))
+        self.assertTrue(self.ont_if.is_property(prop_2_name))
+
+        # Validate the domain-range of the properties
+        self.assertEqual(("Object", "Location"), self.ont_if.get_property_domain_range(prop_1_name))
+        self.assertEqual(("Object", "float"), self.ont_if.get_property_domain_range(prop_2_name))
+
+        # Validate the property types
+        self.assertEqual(['FunctionalProperty', 'ObjectProperty'],
+                         sorted(self.ont_if.get_property_types(prop_1_name)))
+        self.assertEqual(['ObjectProperty'],
+                         sorted(self.ont_if.get_property_types(prop_2_name)))
 
     def test_insert_class_assertion(self):
         # Ensure that the instances don't already exist
