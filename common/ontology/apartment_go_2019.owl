@@ -521,7 +521,7 @@
         <rdfs:domain rdf:resource="apartment:Object"/>
         <rdfs:range rdf:resource="apartment:Furniture"/>
     </owl:ObjectProperty>
-    <!--  Maps furniture to rooms-->
+    <!--  Maps Object to rooms-->
     <owl:ObjectProperty rdf:about="apartment:locatedAt">
         <rdf:type rdf:resource="&owl;FunctionalProperty" />
         <rdfs:domain rdf:resource="apartment:Object"/>
@@ -549,11 +549,6 @@
     <owl:ObjectProperty rdf:about="apartment:closeToWall">
         <rdfs:domain rdf:resource="apartment:Object"/>
         <rdfs:range rdf:resource="apartment:Wall"/>
-    </owl:ObjectProperty>
-    <!-- Objects centered in the room -->
-    <owl:ObjectProperty rdf:about="apartment:locatedInRoom">
-        <rdfs:domain rdf:resource="apartment:Object"/>
-        <rdfs:range rdf:resource="apartment:Room"/>
     </owl:ObjectProperty>
 
     <!-- Placing Proberties -->
@@ -714,7 +709,7 @@
         <apartment:defaultLocation rdf:resource="BarTable"/>
     </rdf:Description>
     <rdf:Description rdf:about="KitchenStuff">
-        <apartment:efaultLocation rdf:resource="KitchenCabinet"/>
+        <apartment:defaultLocation rdf:resource="KitchenCabinet"/>
     </rdf:Description>
     <!--*********************************************-->
         <!--  Relative positons of objects at the bar -->
@@ -723,9 +718,6 @@
     </rdf:Description>
     <rdf:Description rdf:about="BarTableChair">
         <apartment:nextTo rdf:resource="BarTable"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="BarTable">
-        <apartment:locatedInRoom rdf:resource="Bar"/>
     </rdf:Description>
     <rdf:Description rdf:about="CupBoard">
         <apartment:closeToWall rdf:resource="BarNorthWall"/>
@@ -761,9 +753,6 @@
         <apartment:nextTo rdf:resource="KitchenTable"/>
     </rdf:Description>
 
-    <rdf:Description rdf:about="KitchenTable">
-        <apartment:locatedInRoom rdf:resource="Kitchen"/>
-    </rdf:Description>
     <rdf:Description rdf:about="TrashCan">
         <apartment:closeToWall rdf:resource="KitchenNorthWall"/>
     </rdf:Description>
