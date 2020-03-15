@@ -15,7 +15,6 @@ class ontology_query_interface_test(unittest.TestCase):
         # Get directory paths
         script_dir = os.path.abspath(os.path.dirname(__file__))
         ontology_dir = os.path.join(os.path.dirname(script_dir), "ontology")
-        assertions_dir = os.path.join(os.path.dirname(script_dir), "assertions")
 
         # Get the filepath and namespace for the ontology
         self.ontology_file_path = "file://" + os.path.join(ontology_dir, "sample.owl")
