@@ -278,6 +278,39 @@ class OntologyQueryInterface(object):
         else:
             raise ValueError('"{0}" does not exist as a property in the ontology!'.format(prop))
 
+    def insert_class_definition(self, class_name, parent_class_names=[]):
+        '''Defines a new class in the ontology. If the class_name already exists, 
+        and new parent classes are passed, only the sub_class relations between 
+        the class_name and new parent classes are established.
+
+        Keyword arguments:
+        class_name -- string representing the name of the new class
+        parent_class_name -- list(string) representing the optional names of the parent classes
+
+        '''
+        parent_classes_valid = True
+        for name in parent_class_names:
+            if not self.is_class(name):
+                raise ValueError('The parent class "{0}" does not exist in the ontology!'.format(name))
+                parent_classes_valid = False
+
+        if parent_classes_valid:
+            sub_class_uri = rdflib.URIRef('{0}:{1}'.format(self.class_prefix, class_name))
+            # Add the new class definition
+            self.knowledge_graph.add((sub_class_uri,
+                                      URIRefConstants.RDF_TYPE,
+                                      URIRefConstants.OWL_CLASS))
+            # Reset class names list to ensure that the newly added 
+            # class is included in the next query to the class_list
+            self.__class_names = None
+
+            # Add sub-class relations if parent classes are defined
+            for name in parent_class_names:
+                ns = rdflib.Namespace("{0}:".format(self.class_prefix))
+                self.knowledge_graph.add((sub_class_uri,
+                                          rdflib.RDFS.subClassOf,
+                                          rdflib.URIRef(ns[name])))
+
     def insert_class_assertion(self, class_name, instance_name):
         ''' Adds a new instance of a class to the ontology
 
