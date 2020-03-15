@@ -311,6 +311,66 @@ class OntologyQueryInterface(object):
                                           rdflib.RDFS.subClassOf,
                                           rdflib.URIRef(ns[name])))
 
+    def insert_property_definition(self, property_name, domain, range, 
+                                   prop_type='FunctionalProperty',
+                                   domain_ns=None, range_ns=None):
+        '''Defines a new property in the ontology
+
+        Keyword arguments:
+        property_name -- string representing the name of the new property
+        domain -- string representing the domain of the new property
+        range -- string representing the range of the new property
+        prop_type -- string/None representing the type of the new property (default: FunctionalProperty). 
+                     If 'None', the property will have only the default ObjectProperty 
+                     type and no additional type will be added.
+        domain_ns -- string representing the optional namespace for the domain.
+                     By default the class_prefix is used as the namespace.
+        range_ns -- string representing the optional namespace for the range.
+                     By default the class_prefix is used as the namespace.
+
+        '''
+        if self.is_property(property_name):
+            raise ValueError('"{0}" already exists as a property in the ontology!'.format(property_name))
+        elif not self.is_class(domain):
+            raise ValueError('The domain "{0}" is not defined as a class in the ontology!'.format(domain))
+        # Some range types may not be a class (such as float)
+        # elif not self.is_class(range):
+        #     raise ValueError('The range "{0}" is not defined as a class in the ontology!'.format(range))
+        else:
+            # Add property as Object property by default
+            prop_uri = rdflib.URIRef('{0}:{1}'.format(self.class_prefix, property_name))
+            self.knowledge_graph.add((prop_uri, URIRefConstants.RDF_TYPE,
+                                      URIRefConstants.OWL_OBJECT_PROPERTY))
+
+            # Add domain of the property
+            if domain_ns is None:
+                prop_domain_ns = rdflib.Namespace("{0}:".format(self.class_prefix))
+            else:
+                prop_domain_ns = rdflib.Namespace("{0}:".format(domain_ns))
+            domain_uri = rdflib.URIRef(prop_domain_ns[domain])
+            self.knowledge_graph.add((prop_uri, URIRefConstants.PROPERTY_DOMAIN,
+                                      domain_uri))
+
+            # Add range of the property
+            if range_ns is None:
+                prop_range_ns = rdflib.Namespace("{0}:".format(self.class_prefix))
+            else:
+                prop_range_ns = rdflib.Namespace("{0}:".format(range_ns))
+            range_uri = rdflib.URIRef(prop_range_ns[range])
+            self.knowledge_graph.add((prop_uri, URIRefConstants.PROPERTY_RANGE,
+                                      range_uri))
+
+            # Add the optional property type.
+            # Not required for properties with some range types such as float
+            if prop_type is not None:
+                prop_type_uri = rdflib.term.URIRef('http://www.w3.org/2002/07/owl#{0}'.format(prop_type))
+                self.knowledge_graph.add((prop_uri, URIRefConstants.RDF_TYPE,
+                                          prop_type_uri))
+
+            # Reset property names list to ensure that the newly added 
+            # property is included in the next query to the property_list
+            self.__property_names = None
+
     def insert_class_assertion(self, class_name, instance_name):
         ''' Adds a new instance of a class to the ontology
 
