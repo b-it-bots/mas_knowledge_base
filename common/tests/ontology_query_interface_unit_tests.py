@@ -124,6 +124,37 @@ class ontology_query_interface_test(unittest.TestCase):
         self.assertFalse(self.ont_if.is_instance("Table"))
         self.assertFalse(self.ont_if.is_instance("locatedAt"))
 
+    def test_insert_class_definition(self):
+        top_level_class = "TopLevelClass"
+        sub_class_1 = "SubClass1"
+        sub_class_2 = "SubClass2"
+        hybrid_class = "HybridClass"
+
+        # Ensure that the classes does not exist in the ontology
+        self.assertFalse(self.ont_if.is_class(top_level_class))
+        self.assertFalse(self.ont_if.is_class(sub_class_1))
+        self.assertFalse(self.ont_if.is_class(sub_class_2))
+        self.assertFalse(self.ont_if.is_class(hybrid_class))
+
+        # Add the classes to the ontology
+        self.ont_if.insert_class_definition(top_level_class)
+        self.ont_if.insert_class_definition(sub_class_1, [top_level_class])
+        self.ont_if.insert_class_definition(sub_class_2, [top_level_class])
+        self.ont_if.insert_class_definition(hybrid_class, [sub_class_1, sub_class_2])
+
+        # Verify if the class names have been added to the ontology
+        self.assertTrue(self.ont_if.is_class(top_level_class))
+        self.assertTrue(self.ont_if.is_class(sub_class_1))
+        self.assertTrue(self.ont_if.is_class(sub_class_2))
+        self.assertTrue(self.ont_if.is_class(hybrid_class))
+
+        # Verify if the hierarchy is properly established
+        self.assertTrue(len(self.ont_if.get_parent_classes_of(top_level_class)) == 1)
+        self.assertTrue(sub_class_1 in self.ont_if.get_subclasses_of(top_level_class))
+        self.assertTrue(sub_class_2 in self.ont_if.get_subclasses_of(top_level_class))
+        self.assertTrue(hybrid_class in self.ont_if.get_subclasses_of(sub_class_1))
+        self.assertTrue(hybrid_class in self.ont_if.get_subclasses_of(sub_class_2))
+
     def test_insert_class_assertion(self):
         # Ensure that the instances don't already exist
         self.assertFalse(self.ont_if.is_instance("Kitchen"))
