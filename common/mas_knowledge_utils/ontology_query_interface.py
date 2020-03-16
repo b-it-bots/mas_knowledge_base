@@ -285,7 +285,7 @@ class OntologyQueryInterface(object):
             self.knowledge_graph.add((rdflib.URIRef(self.__get_entity_url(instance_name)),
                                       rdflib.RDF.type,
                                       rdflib.URIRef(ns[class_name])))
-            # Reset instance names list to ensure that the newly added 
+            # Reset instance names list to ensure that the newly added
             # instance is included in the next query to the instance_list
             self.__instance_names = None
         else:
@@ -332,7 +332,7 @@ class OntologyQueryInterface(object):
             self.knowledge_graph.remove((rdflib.URIRef(self.__get_entity_url(instance_name)),
                                       rdflib.RDF.type,
                                       rdflib.URIRef(ns[class_name])))
-            # Reset instance names list to ensure that the removed instance is 
+            # Reset instance names list to ensure that the removed instance is
             # not included in the next query to the instance_list
             self.__instance_names = None
 
@@ -374,13 +374,16 @@ class OntologyQueryInterface(object):
         self.export(self.ontology_file, format=format)
 
     def __format_class_name(self, class_name):
-        '''Returns a string of the format "self.class_prefix:class_name".
+        '''Returns a string of the format "self.class_prefix:class_name",
+        or "class_name" if self.class_prefix is empty.
 
         Keyword arguments:
         @param class_name -- string representing the name of a class
 
         '''
-        return '{0}:{1}'.format(self.class_prefix, class_name)
+        if self.class_prefix:
+            return '{0}:{1}'.format(self.class_prefix, class_name)
+        return class_name
 
     def __get_entity_url(self, entity):
         '''Returns a string of the format "self.ontology_url/entity"
@@ -394,12 +397,15 @@ class OntologyQueryInterface(object):
     def __extract_class_name(self, rdf_class):
         '''Extracts the name of a class given a string
         of the format "self.class_prefix:class_name".
+        Returns "rdf_class" if self.class_prefix is empty.
 
         Keyword arguments:
         @param rdf_class -- string of the form "prefix:class"
 
         '''
-        return rdf_class[rdf_class.find(':')+1:]
+        if self.class_prefix:
+            return rdf_class[rdf_class.find(':')+1:]
+        return rdf_class
 
     def __extract_obj_name(self, obj_url):
         '''Extracts the name of an object from the given full URL,
