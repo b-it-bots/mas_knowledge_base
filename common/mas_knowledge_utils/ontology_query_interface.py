@@ -135,7 +135,7 @@ class OntologyQueryInterface(object):
 
         '''
         if self.is_class(class_name):
-            rdf_class = self.__format_class_name(class_name, as_sparql_url=True)
+            rdf_class = self.__format_class_name(class_name, sparql_url_hint=True)
             query_result = self.knowledge_graph.query('SELECT ?instance ' +
                                                       'WHERE {?instance rdf:type ' + rdf_class + '}')
             instances = [self.__extract_obj_name(x[0]) for x in query_result]
@@ -194,7 +194,7 @@ class OntologyQueryInterface(object):
             raise ValueError('"{0}" does not exist as an instance in the ontology!'.format(obj))
         else:
             object_url = self.__get_entity_url(obj)
-            rdf_property = self.__format_class_name(prop, as_sparql_url=True)
+            rdf_property = self.__format_class_name(prop, sparql_url_hint=True)
             query_result = self.knowledge_graph.query('SELECT ?subj ' +
                                                       'WHERE {?subj ' + rdf_property +
                                                       ' <' + object_url +  '>}')
@@ -218,7 +218,7 @@ class OntologyQueryInterface(object):
             raise ValueError('"{0}" does not exist as an instance in the ontology!'.format(subject))
         else:
             subject_url = self.__get_entity_url(subject)
-            rdf_property = self.__format_class_name(prop, as_sparql_url=True)
+            rdf_property = self.__format_class_name(prop, sparql_url_hint=True)
             query_result = self.knowledge_graph.query('SELECT ?obj ' +
                                                       'WHERE {<' + subject_url + '> ' +
                                                       rdf_property + ' ?obj}')
@@ -235,7 +235,7 @@ class OntologyQueryInterface(object):
 
         '''
         if self.is_property(prop):
-            rdf_property = self.__format_class_name(prop, as_sparql_url=True)
+            rdf_property = self.__format_class_name(prop, sparql_url_hint=True)
             query_result = self.knowledge_graph.query('SELECT ?subj ?obj ' +
                                                       'WHERE {?subj ' + rdf_property + ' ?obj}')
             subj_obj_pairs = [(self.__extract_obj_name(x[0]),
@@ -369,17 +369,21 @@ class OntologyQueryInterface(object):
         '''
         self.export(self.ontology_file, format=format)
 
-    def __format_class_name(self, class_name, as_sparql_url=False):
+    def __format_class_name(self, class_name, sparql_url_hint=False):
         '''Returns a string of the format "self.class_prefix:class_name",
         or "class_name" if self.class_prefix is empty.
 
         Keyword arguments:
         @param class_name -- string representing the name of a class
+        @param sparql_url_hint -- boolean representing if the class name url
+                                  should be returned as <url> to support
+                                  SPARQL queries. This flag only takes effect if
+                                  the class_prefix is not defined.
 
         '''
         if self.class_prefix:
             return '{0}:{1}'.format(self.class_prefix, class_name)
-        elif as_sparql_url:
+        elif sparql_url_hint:
             return '<' + self.__get_entity_url(class_name) + '>'
         else:
             return self.__get_entity_url(class_name)
@@ -409,7 +413,8 @@ class OntologyQueryInterface(object):
     def __extract_class_name(self, rdf_class):
         '''Extracts the name of a class given a string
         of the format "self.class_prefix:class_name".
-        Returns "rdf_class" if self.class_prefix is empty.
+        If the class_prefix is undefined, the API assumes the rdf_class is a URL
+        and returns the last element in the URL as the class name
 
         Keyword arguments:
         @param rdf_class -- string of the form "prefix:class"
