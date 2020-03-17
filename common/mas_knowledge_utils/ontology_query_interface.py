@@ -281,10 +281,9 @@ class OntologyQueryInterface(object):
 
         '''
         if self.is_class(class_name):
-            ns = rdflib.Namespace("http://{0}#".format(self.class_prefix))
             self.knowledge_graph.add((rdflib.URIRef(self.__get_entity_url(instance_name)),
                                       rdflib.RDF.type,
-                                      rdflib.URIRef(ns[class_name])))
+                                      self.__get_entity_uriref(class_name)))
             # Reset instance names list to ensure that the newly added
             # instance is included in the next query to the instance_list
             self.__instance_names = None
@@ -308,9 +307,8 @@ class OntologyQueryInterface(object):
         elif not self.is_property(property_name):
             raise ValueError('The property "{0}" is not defined in the ontology!'.format(property_name))
         else:
-            ns = rdflib.Namespace("http://{0}#".format(self.class_prefix))
             self.knowledge_graph.add((rdflib.URIRef(self.__get_entity_url(instance[0])),
-                                      rdflib.URIRef(ns[property_name]),
+                                      self.__get_entity_uriref(property_name),
                                       rdflib.URIRef(self.__get_entity_url(instance[1]))))
 
     def remove_class_assertion(self, class_name, instance_name):
@@ -328,10 +326,9 @@ class OntologyQueryInterface(object):
         elif not self.is_instance_of(instance_name, class_name):
             raise ValueError('"{0}" is not an instance of {1}!'.format(instance_name, class_name))
         else:
-            ns = rdflib.Namespace("http://{0}#".format(self.class_prefix))
             self.knowledge_graph.remove((rdflib.URIRef(self.__get_entity_url(instance_name)),
                                       rdflib.RDF.type,
-                                      rdflib.URIRef(ns[class_name])))
+                                      self.__get_entity_uriref(class_name)))
             # Reset instance names list to ensure that the removed instance is
             # not included in the next query to the instance_list
             self.__instance_names = None
@@ -353,9 +350,8 @@ class OntologyQueryInterface(object):
         elif not self.is_property(property_name):
             raise ValueError('The property "{0}" is not defined in the ontology!'.format(property_name))
         else:
-            ns = rdflib.Namespace("http://{0}#".format(self.class_prefix))
             self.knowledge_graph.remove((rdflib.URIRef(self.__get_entity_url(instance[0])),
-                                      rdflib.URIRef(ns[property_name]),
+                                      self.__get_entity_uriref(property_name),
                                       rdflib.URIRef(self.__get_entity_url(instance[1]))))
 
     def export(self, ontology_file, format='xml'):
@@ -396,6 +392,19 @@ class OntologyQueryInterface(object):
 
         '''
         return '{0}/{1}'.format(self.ontology_url, entity)
+
+    def __get_entity_uriref(self, entity):
+        '''Returns a rdflib.URIRef object for the entity.
+
+        Keyword arguments:
+        @param entity -- string representing the name of an entity in the ontology
+
+        '''
+        if self.class_prefix:
+            ns = rdflib.Namespace("http://{0}#".format(self.class_prefix))
+            return rdflib.URIRef(ns[entity])
+        else:
+            return rdflib.URIRef(self.__get_entity_url(entity))
 
     def __extract_class_name(self, rdf_class):
         '''Extracts the name of a class given a string
