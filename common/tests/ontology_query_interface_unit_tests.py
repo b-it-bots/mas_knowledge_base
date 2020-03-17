@@ -182,5 +182,28 @@ class ontology_query_interface_test(unittest.TestCase):
         self.assertEqual(self.ont_if.get_objects_of("locatedAt", "Desk"), [])
         self.assertEqual(self.ont_if.get_objects_of("heightOf", "Desk"), [])
 
+class ontology_query_interface_test_no_class_prefix(ontology_query_interface_test):
+    '''Implements unit tests for the OntologyQueryInterface APIs
+    using an ontology that has no namespace (or class_prefix)
+
+    @author Sushant Chavan
+    @contact sushant.chavan@smail.inf.h-brs.de
+
+    '''
+
+    def setUp(self):
+        # Get directory paths
+        script_dir = os.path.abspath(os.path.dirname(__file__))
+        ontology_dir = os.path.join(os.path.dirname(script_dir), "ontology")
+
+        # Get the filepath for the ontology
+        self.ontology_file_path = "file://" + os.path.join(ontology_dir, "sample_no_namespace.owl")
+        # This ontology does not have a namespace, hence None
+        self.ontology_ns = None
+
+        # Create an instance of the ontology interface
+        self.ont_if = OntologyQueryInterface(ontology_file=self.ontology_file_path,
+                                             class_prefix=self.ontology_ns)
+
 if __name__ == '__main__':
     unittest.main()
