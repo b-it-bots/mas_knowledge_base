@@ -300,6 +300,21 @@ class OntologyQueryInterface(object):
         else:
             raise ValueError('"{0}" does not exist as a property in the ontology!'.format(prop))
 
+    def get_associated_properties(self, class_name):
+        '''Returns a list of properties that contain the class name either as 
+        the domain or the range of the property.
+
+        Keyword arguments:
+        @param class_name: str -- name of a class
+
+        '''
+        associated_properties = []
+        for prop in self.get_object_properties():
+            domain_range_tuple = self.get_property_domain_range(prop)
+            if class_name in domain_range_tuple:
+                associated_properties.append(prop)
+        return associated_properties
+
     def insert_class_definition(self, class_name, parent_class_names=[]):
         '''Defines a new class in the ontology. If the class_name already exists, 
         and new parent classes are passed, only the sub_class relations between 
