@@ -187,8 +187,12 @@ class ontology_query_interface_test(unittest.TestCase):
         self.assertTrue(self.ont_if.is_property(prop_2_name))
 
         # Validate the domain-range of the properties
-        self.assertEqual(("Object", "Location"), self.ont_if.get_property_domain_range(prop_1_name))
-        self.assertEqual(("Object", "float"), self.ont_if.get_property_domain_range(prop_2_name))
+        self.assertEqual(("Object", "Location"), 
+                         self.ont_if.get_property_domain_range(prop_1_name, 
+                                domain_ns=prop_1_domain_ns, range_ns=prop_1_range_ns))
+        self.assertEqual(("Object", "float"),
+                         self.ont_if.get_property_domain_range(prop_2_name, 
+                                domain_ns=prop_2_domain_ns, range_ns=prop_2_range_ns))
 
         # Validate the property types
         self.assertEqual(['FunctionalProperty', 'ObjectProperty'],
