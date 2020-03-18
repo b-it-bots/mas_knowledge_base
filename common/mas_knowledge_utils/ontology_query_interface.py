@@ -251,12 +251,14 @@ class OntologyQueryInterface(object):
         else:
             raise ValueError('"{0}" does not exist as a property in the ontology!'.format(prop))
 
-    def get_property_domain_range(self, prop):
+    def get_property_domain_range(self, prop, domain_ns=None, range_ns=None):
         '''Returns a pair in which the first element is the domain of the
         given property and the second element is its range.
 
         Keyword arguments:
         @param prop: str -- name of a property
+        @param domain_ns: str -- optional custom namespace of the domain (such as 'xsd' for float)
+        @param range_ns: str -- optional custom namespace of the range (such as 'xsd' for float)
 
         '''
         if self.is_property(prop):
@@ -266,12 +268,14 @@ class OntologyQueryInterface(object):
             for triple in self.knowledge_graph[:]:
                 if triple[0] == rdf_property:
                     if triple[1] == URIRefConstants.PROPERTY_DOMAIN:
-                        prop_domain = self.__extract_class_name(triple[2])
+                        prop_domain = self.__extract_class_name(triple[2], class_prefix=domain_ns)
                     elif triple[1] == URIRefConstants.PROPERTY_RANGE:
-                        prop_range = self.__extract_class_name(triple[2])
+                        prop_range = self.__extract_class_name(triple[2], class_prefix=range_ns)
                     elif triple[1] == URIRefConstants.OWL_INVERSE_OF:
                         inverse_prop = self.__extract_class_name(self.__extract_obj_name(triple[2]))
-                        (prop_range, prop_domain) = self.get_property_domain_range(inverse_prop)
+                        (prop_range, prop_domain) = self.get_property_domain_range(inverse_prop,
+                                                                                   domain_ns=range_ns,
+                                                                                   range_ns=domain_ns)
                 if prop_domain and prop_range:
                     break
             return (prop_domain, prop_range)
@@ -313,7 +317,7 @@ class OntologyQueryInterface(object):
                 parent_classes_valid = False
 
         if parent_classes_valid:
-            sub_class_uri = rdflib.URIRef('{0}:{1}'.format(self.class_prefix, class_name))
+            sub_class_uri = rdflib.URIRef(self.__format_class_name(class_name))
             # Add the new class definition
             self.knowledge_graph.add((sub_class_uri,
                                       URIRefConstants.RDF_TYPE,
@@ -324,10 +328,10 @@ class OntologyQueryInterface(object):
 
             # Add sub-class relations if parent classes are defined
             for name in parent_class_names:
-                ns = rdflib.Namespace("{0}:".format(self.class_prefix))
+                parent_class_uri = rdflib.URIRef(self.__format_class_name(name))
                 self.knowledge_graph.add((sub_class_uri,
                                           rdflib.RDFS.subClassOf,
-                                          rdflib.URIRef(ns[name])))
+                                          parent_class_uri))
 
     def insert_property_definition(self, property_name, domain, range, 
                                    prop_type='FunctionalProperty',
@@ -356,25 +360,17 @@ class OntologyQueryInterface(object):
         #     raise ValueError('The range "{0}" is not defined as a class in the ontology!'.format(range))
         else:
             # Add property as Object property by default
-            prop_uri = rdflib.URIRef('{0}:{1}'.format(self.class_prefix, property_name))
+            prop_uri = rdflib.URIRef(self.__format_class_name(property_name))
             self.knowledge_graph.add((prop_uri, URIRefConstants.RDF_TYPE,
                                       URIRefConstants.OWL_OBJECT_PROPERTY))
 
             # Add domain of the property
-            if domain_ns is None:
-                prop_domain_ns = rdflib.Namespace("{0}:".format(self.class_prefix))
-            else:
-                prop_domain_ns = rdflib.Namespace("{0}:".format(domain_ns))
-            domain_uri = rdflib.URIRef(prop_domain_ns[domain])
+            domain_uri = rdflib.URIRef(self.__format_class_name(domain, class_prefix=domain_ns))
             self.knowledge_graph.add((prop_uri, URIRefConstants.PROPERTY_DOMAIN,
                                       domain_uri))
 
             # Add range of the property
-            if range_ns is None:
-                prop_range_ns = rdflib.Namespace("{0}:".format(self.class_prefix))
-            else:
-                prop_range_ns = rdflib.Namespace("{0}:".format(range_ns))
-            range_uri = rdflib.URIRef(prop_range_ns[range])
+            range_uri = rdflib.URIRef(self.__format_class_name(range, class_prefix=range_ns))
             self.knowledge_graph.add((prop_uri, URIRefConstants.PROPERTY_RANGE,
                                       range_uri))
 
@@ -486,19 +482,24 @@ class OntologyQueryInterface(object):
         '''
         self.export(self.ontology_file, format=format)
 
-    def __format_class_name(self, class_name, sparql_url_hint=False):
+    def __format_class_name(self, class_name, class_prefix=None, sparql_url_hint=False):
         '''Returns a string of the format "self.class_prefix:class_name",
         or "class_name" if self.class_prefix is empty.
 
         Keyword arguments:
         @param class_name -- string representing the name of a class
+        @param class_prefix -- string/None representing the optional custom class_prefix.
+                               If 'None', self.class_prefix will be used as the namespace
         @param sparql_url_hint -- boolean representing if the class name url
                                   should be returned as <url> to support
-                                  SPARQL queries. This flag only takes effect if
-                                  the class_prefix is not defined.
+                                  SPARQL queries. This flag only takes effect
+                                  if both, the class_prefix and self.class_prefix,
+                                  are not defined.
 
         '''
-        if self.class_prefix:
+        if class_prefix:
+            return '{0}:{1}'.format(class_prefix, class_name)
+        elif self.class_prefix:
             return '{0}:{1}'.format(self.class_prefix, class_name)
         elif sparql_url_hint:
             return '<' + self.__get_entity_url(class_name) + '>'
@@ -527,7 +528,7 @@ class OntologyQueryInterface(object):
         else:
             return rdflib.URIRef(self.__get_entity_url(entity))
 
-    def __extract_class_name(self, rdf_class):
+    def __extract_class_name(self, rdf_class, class_prefix=None):
         '''Extracts the name of a class given a string
         of the format "self.class_prefix:class_name".
         If the class_prefix is undefined, the API assumes the rdf_class is a URL
@@ -537,7 +538,7 @@ class OntologyQueryInterface(object):
         @param rdf_class -- string of the form "prefix:class"
 
         '''
-        if self.class_prefix:
+        if self.class_prefix or class_prefix:
             return rdf_class[rdf_class.find(':')+1:]
         return self.__extract_obj_name(rdf_class)
 
