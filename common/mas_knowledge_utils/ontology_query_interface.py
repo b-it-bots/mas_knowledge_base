@@ -435,6 +435,64 @@ class OntologyQueryInterface(object):
                                       self.__get_entity_uriref(property_name),
                                       rdflib.URIRef(self.__get_entity_url(instance[1]))))
 
+    def remove_class_definition(self, class_name, verbose=False):
+        '''Removes an existing class from the ontology. If the class_name already exists, 
+        and new parent classes are passed, only the sub_class relations between 
+        the class_name and new parent classes are established.
+
+        Keyword arguments:
+        class_name -- string representing the name of the new class
+        parent_class_name -- list(string) representing the optional names of the parent classes
+
+        '''
+        if not self.is_class(class_name):
+            raise ValueError('The class "{0}" does not exist in the ontology!'.format(class_name))
+            return
+
+        self.__verbose_print('Removing entities related to the class "{0}"'.format(class_name), verbose)
+
+        # Delete all instances of this class
+        instance_list = self.get_instances_of(class_name)
+        self.__verbose_print("Removed instances: {0}".format(instance_list), verbose)
+        for instance in instance_list:
+            self.remove_class_assertion(class_name, instance)
+
+        # Delete all properties associated with this class
+        prop_list = self.get_associated_properties(class_name)
+        self.__verbose_print("Removed properties: {0}".format(prop_list), verbose)
+        for prop in prop_list:
+            self.remove_property_definition(prop)
+
+        # Collect all triples in the knowledge graph containing the class_name
+        del_list = []
+        for triple in self.knowledge_graph[:]:
+            if self.__contains_name(class_name, triple[0]) or \
+               self.__contains_name(class_name, triple[2]):
+                del_list.append(triple)
+        # Delete all triples from the delete list
+        for triple in del_list:
+            self.knowledge_graph.remove(triple)
+
+        self.__verbose_print('Class "{0}" successfully removed from ontology'.format(class_name), verbose)
+
+    def remove_property_definition(self, property_name):
+        '''Removes an existing property from the ontology
+
+        Keyword arguments:
+        property_name -- string representing the name of the property
+
+        '''
+        if self.is_property(property_name):
+            del_list = []
+            for triple in self.knowledge_graph[:]:
+                if self.__contains_name(property_name, triple[0]) or \
+                   self.__contains_name(property_name, triple[1]):
+                    del_list.append(triple)
+            for triple in del_list:
+                self.knowledge_graph.remove(triple)
+        else:
+            raise ValueError('"{0}" does not exists as a property in the ontology!'.format(property_name))
+
     def remove_class_assertion(self, class_name, instance_name):
         ''' Removes an existing instance of a class from the ontology
 
@@ -539,7 +597,7 @@ class OntologyQueryInterface(object):
         else:
             return rdflib.URIRef(self.__get_entity_url(entity))
 
-    def __extract_class_name(self, rdf_class, class_prefix=None):
+    def __extract_class_name(self, rdf_class, class_prefix=None, delimiter=':'):
         '''Extracts the name of a class given a string
         of the format "self.class_prefix:class_name".
         If the class_prefix is undefined, the API assumes the rdf_class is a URL
@@ -550,7 +608,7 @@ class OntologyQueryInterface(object):
 
         '''
         if self.class_prefix or class_prefix:
-            return rdf_class[rdf_class.find(':')+1:]
+            return rdf_class[rdf_class.find(delimiter)+1:]
         return self.__extract_obj_name(rdf_class)
 
     def __extract_obj_name(self, obj_url):
@@ -562,3 +620,11 @@ class OntologyQueryInterface(object):
 
         '''
         return obj_url[obj_url.rfind('/')+1:]
+
+    def __contains_name(self, name, uri_ref):
+        return self.__extract_class_name(uri_ref) == name or \
+               self.__extract_class_name(uri_ref, delimiter='#') == name
+
+    def __verbose_print(self, text, verbose=False):
+        if verbose:
+            print("[OntologyQueryInterface] {0}".format(text))
