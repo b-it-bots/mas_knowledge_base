@@ -325,28 +325,24 @@ class OntologyQueryInterface(object):
         parent_class_name -- list(string) representing the optional names of the parent classes
 
         '''
-        parent_classes_valid = True
         for name in parent_class_names:
             if not self.is_class(name):
                 raise ValueError('The parent class "{0}" does not exist in the ontology!'.format(name))
-                parent_classes_valid = False
+                return
 
-        if parent_classes_valid:
-            sub_class_uri = rdflib.URIRef(self.__format_class_name(class_name))
-            # Add the new class definition
-            self.knowledge_graph.add((sub_class_uri,
-                                      URIRefConstants.RDF_TYPE,
-                                      URIRefConstants.OWL_CLASS))
-            # Reset class names list to ensure that the newly added 
-            # class is included in the next query to the class_list
-            self.__class_names = None
+        sub_class_uri = rdflib.URIRef(self.__format_class_name(class_name))
+        # Add the new class definition
+        self.knowledge_graph.add((sub_class_uri, URIRefConstants.RDF_TYPE,
+                                  URIRefConstants.OWL_CLASS))
+        # Reset class names list to ensure that the newly added 
+        # class is included in the next query to the class_list
+        self.__class_names = None
 
-            # Add sub-class relations if parent classes are defined
-            for name in parent_class_names:
-                parent_class_uri = rdflib.URIRef(self.__format_class_name(name))
-                self.knowledge_graph.add((sub_class_uri,
-                                          rdflib.RDFS.subClassOf,
-                                          parent_class_uri))
+        # Add sub-class relations if parent classes are defined
+        for name in parent_class_names:
+            parent_class_uri = rdflib.URIRef(self.__format_class_name(name))
+            self.knowledge_graph.add((sub_class_uri, rdflib.RDFS.subClassOf,
+                                      parent_class_uri))
 
     def insert_property_definition(self, property_name, domain, range, 
                                    prop_type='FunctionalProperty',
