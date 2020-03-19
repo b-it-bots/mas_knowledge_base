@@ -68,9 +68,25 @@ class ontology_query_interface_test(unittest.TestCase):
         acquired_data = self.ont_if.get_subclasses_of("Furniture")
         self.assertEqual(acquired_data, validation_data)
 
+        validation_data = ['Table']
+        acquired_data = self.ont_if.get_subclasses_of("Furniture", only_children=True)
+        self.assertEqual(acquired_data, validation_data)
+
+        validation_data = ['Drinkware', 'Furniture']
+        acquired_data = sorted(self.ont_if.get_subclasses_of("Object", only_children=True))
+        self.assertEqual(acquired_data, validation_data)
+
     def test_get_parent_classes_of(self):
         validation_data = ['Table', 'Furniture', 'Object']
         acquired_data = self.ont_if.get_parent_classes_of("Table")
+        self.assertEqual(acquired_data, validation_data)
+
+        validation_data = ['Furniture']
+        acquired_data = self.ont_if.get_parent_classes_of("Table", only_parents=True)
+        self.assertEqual(acquired_data, validation_data)
+
+        validation_data = []
+        acquired_data = self.ont_if.get_parent_classes_of("Object", only_parents=True)
         self.assertEqual(acquired_data, validation_data)
 
     def test_get_objects_of(self):
