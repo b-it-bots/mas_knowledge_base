@@ -22,6 +22,9 @@ class OntologyQueryInterface(object):
     @author Alex Mitrevski
     @contact aleksandar.mitrevski@h-brs.de
 
+    @author Sushant Chavan
+    @contact sushant.chavan@smail.inf.h-brs.de
+
     '''
 
     def __init__(self, ontology_file, class_prefix, verbose=False):
@@ -329,19 +332,20 @@ class OntologyQueryInterface(object):
                 raise ValueError('The parent class "{0}" does not exist in the ontology!'.format(name))
                 return
 
-        sub_class_uri = rdflib.URIRef(self.__format_class_name(class_name))
+        class_uri = rdflib.URIRef(self.__format_class_name(class_name))
         # Add the new class definition
-        self.knowledge_graph.add((sub_class_uri, URIRefConstants.RDF_TYPE,
+        self.knowledge_graph.add((class_uri, URIRefConstants.RDF_TYPE,
                                   URIRefConstants.OWL_CLASS))
-        # Reset class names list to ensure that the newly added 
-        # class is included in the next query to the class_list
-        self.__class_names = None
 
         # Add sub-class relations if parent classes are defined
         for name in parent_class_names:
             parent_class_uri = rdflib.URIRef(self.__format_class_name(name))
-            self.knowledge_graph.add((sub_class_uri, rdflib.RDFS.subClassOf,
+            self.knowledge_graph.add((class_uri, rdflib.RDFS.subClassOf,
                                       parent_class_uri))
+
+        # Reset class names list to ensure that the newly added 
+        # class is included in the next query to the class_list
+        self.__class_names = None
 
     def insert_property_definition(self, property_name, domain, range, 
                                    prop_type='FunctionalProperty',
@@ -435,13 +439,13 @@ class OntologyQueryInterface(object):
                                       rdflib.URIRef(self.__get_entity_url(instance[1]))))
 
     def remove_class_definition(self, class_name):
-        '''Removes an existing class from the ontology. If the class_name already exists, 
-        and new parent classes are passed, only the sub_class relations between 
-        the class_name and new parent classes are established.
+        '''Removes an existing class from the ontology. 
+        Additionally, also removes all instances of this class and 
+        all property definitions which contain this class as domain/range and 
+        all their assertions
 
         Keyword arguments:
         class_name -- string representing the name of the new class
-        parent_class_name -- list(string) representing the optional names of the parent classes
 
         '''
         if not self.is_class(class_name):
@@ -452,15 +456,15 @@ class OntologyQueryInterface(object):
 
         # Delete all instances of this class
         instance_list = self.get_instances_of(class_name)
-        self.__verbose("Removed instances: {0}".format(instance_list))
         for instance in instance_list:
             self.remove_class_assertion(class_name, instance)
+        self.__verbose("Removed instances: {0}".format(instance_list))
 
         # Delete all properties associated with this class
         prop_list = self.get_associated_properties(class_name)
-        self.__verbose("Removed properties: {0}".format(prop_list))
         for prop in prop_list:
             self.remove_property_definition(prop)
+        self.__verbose("Removed properties: {0}".format(prop_list))
 
         # Collect all triples in the knowledge graph containing the class_name
         del_list = []
@@ -480,7 +484,8 @@ class OntologyQueryInterface(object):
         self.__verbose('Class "{0}" successfully removed from ontology'.format(class_name))
 
     def remove_property_definition(self, property_name):
-        '''Removes an existing property from the ontology
+        '''Removes an existing property from the ontology 
+        along with all its assertions
 
         Keyword arguments:
         property_name -- string representing the name of the property

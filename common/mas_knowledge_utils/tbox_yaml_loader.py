@@ -19,7 +19,7 @@ class TBoxYAMLLoader:
     '''
     def __init__(self, ontology_file, ontology_class_prefix, definitions_file, verbose=False):
         self.ontology_if = OntologyQueryInterface(ontology_file=ontology_file,
-                                    class_prefix=ontology_class_prefix)
+                                    class_prefix=ontology_class_prefix, verbose=verbose)
         self.class_definitions = None
         self.property_definitions = None
         self.prefix = ontology_class_prefix
@@ -194,5 +194,6 @@ if __name__ == '__main__':
     if args.export_file is not None:
         export_file_path = "file://" + os.path.join(ontology_dir, args.export_file + ".owl")
 
-    loader = TBoxYAMLLoader(ontology_file_path, args.class_prefix, definitions_file_path, verbose=args.verbose)
+    loader = TBoxYAMLLoader(ontology_file_path, args.class_prefix, 
+                            definitions_file_path, verbose=args.verbose)
     loader.update_ontology(export_file_path)
