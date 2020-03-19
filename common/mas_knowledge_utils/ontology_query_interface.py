@@ -143,34 +143,40 @@ class OntologyQueryInterface(object):
         else:
             raise ValueError('"{0}" does not exist as a class in the ontology!'.format(class_name))
 
-    def get_subclasses_of(self, class_name):
+    def get_subclasses_of(self, class_name, only_children=False):
         '''Returns a list of all subclasses of 'class_name'.
 
         Keyword arguments:
         @param class_name -- string representing the name of a class
+        @param only_children -- boolean if set to True, only the immediate 
+                                children of class_name will be returned
 
         '''
         if self.is_class(class_name):
             rdf_class_uri = rdflib.URIRef(self.__format_class_name(class_name))
-            query_result = self.knowledge_graph.transitive_subjects(rdflib.RDFS.subClassOf,
-                                                                    rdf_class_uri)
+            query_func = self.knowledge_graph.subjects if only_children else \
+                         self.knowledge_graph.transitive_subjects
+            query_result = query_func(rdflib.RDFS.subClassOf, rdf_class_uri)
             subclasses = [self.__extract_class_name(subclass)
                           for subclass in [str(x) for x in query_result]]
             return subclasses
         else:
             raise ValueError('"{0}" does not exist as a class in the ontology!'.format(class_name))
 
-    def get_parent_classes_of(self, class_name):
+    def get_parent_classes_of(self, class_name, only_parents=False):
         '''Returns a list of all parent classes of 'class_name'.
 
         Keyword arguments:
         @param class_name -- string representing the name of a class
+        @param only_parents -- boolean if set to True, only the immediate 
+                               parents of class_name will be returned
 
         '''
         if self.is_class(class_name):
             rdf_class_uri = rdflib.URIRef(self.__format_class_name(class_name))
-            query_result = self.knowledge_graph.transitive_objects(rdf_class_uri,
-                                                                   rdflib.RDFS.subClassOf)
+            query_func = self.knowledge_graph.objects if only_parents else \
+                         self.knowledge_graph.transitive_objects
+            query_result = query_func(rdf_class_uri, rdflib.RDFS.subClassOf)
             parent_classes = [self.__extract_class_name(parent_class)
                               for parent_class in [str(x) for x in query_result]]
             return parent_classes
