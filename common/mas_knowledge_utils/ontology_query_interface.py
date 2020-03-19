@@ -17,18 +17,20 @@ class OntologyQueryInterface(object):
     Constructor arguments:
     @param ontology_file -- full URL of an ontology file (of the form file://<absolute-path>)
     @param class_prefix -- class prefix of the items in the given ontology
+    @param verbose -- boolean to enable debug console logging, which is disabled by default.
 
     @author Alex Mitrevski
     @contact aleksandar.mitrevski@h-brs.de
 
     '''
 
-    def __init__(self, ontology_file, class_prefix):
+    def __init__(self, ontology_file, class_prefix, verbose=False):
         self.knowledge_graph = rdflib.Graph()
         self.knowledge_graph.load(ontology_file)
         self.class_prefix = class_prefix
         self.ontology_url = ontology_file[0:ontology_file.rfind('/')]
         self.ontology_file = ontology_file
+        self.verbose = verbose
 
         self.__class_names = None
         self.__instance_names = None
@@ -252,14 +254,12 @@ class OntologyQueryInterface(object):
         else:
             raise ValueError('"{0}" does not exist as a property in the ontology!'.format(prop))
 
-    def get_property_domain_range(self, prop, domain_ns=None, range_ns=None):
+    def get_property_domain_range(self, prop):
         '''Returns a pair in which the first element is the domain of the
         given property and the second element is its range.
 
         Keyword arguments:
         @param prop: str -- name of a property
-        @param domain_ns: str -- optional custom namespace of the domain (such as 'xsd' for float)
-        @param range_ns: str -- optional custom namespace of the range (such as 'xsd' for float)
 
         '''
         if self.is_property(prop):
@@ -269,14 +269,12 @@ class OntologyQueryInterface(object):
             for triple in self.knowledge_graph[:]:
                 if triple[0] == rdf_property:
                     if triple[1] == URIRefConstants.PROPERTY_DOMAIN:
-                        prop_domain = self.__extract_class_name(triple[2], class_prefix=domain_ns)
+                        prop_domain = self.__extract_class_name(triple[2])
                     elif triple[1] == URIRefConstants.PROPERTY_RANGE:
-                        prop_range = self.__extract_class_name(triple[2], class_prefix=range_ns)
+                        prop_range = self.__extract_class_name(triple[2])
                     elif triple[1] == URIRefConstants.OWL_INVERSE_OF:
                         inverse_prop = self.__extract_class_name(self.__extract_obj_name(triple[2]))
-                        (prop_range, prop_domain) = self.get_property_domain_range(inverse_prop,
-                                                                                   domain_ns=range_ns,
-                                                                                   range_ns=domain_ns)
+                        (prop_range, prop_domain) = self.get_property_domain_range(inverse_prop)
                 if prop_domain and prop_range:
                     break
             return (prop_domain, prop_range)
@@ -436,7 +434,7 @@ class OntologyQueryInterface(object):
                                       self.__get_entity_uriref(property_name),
                                       rdflib.URIRef(self.__get_entity_url(instance[1]))))
 
-    def remove_class_definition(self, class_name, verbose=False):
+    def remove_class_definition(self, class_name):
         '''Removes an existing class from the ontology. If the class_name already exists, 
         and new parent classes are passed, only the sub_class relations between 
         the class_name and new parent classes are established.
@@ -450,17 +448,17 @@ class OntologyQueryInterface(object):
             raise ValueError('The class "{0}" does not exist in the ontology!'.format(class_name))
             return
 
-        self.__verbose_print('Removing entities related to the class "{0}"'.format(class_name), verbose)
+        self.__verbose('Removing entities related to the class "{0}"'.format(class_name))
 
         # Delete all instances of this class
         instance_list = self.get_instances_of(class_name)
-        self.__verbose_print("Removed instances: {0}".format(instance_list), verbose)
+        self.__verbose("Removed instances: {0}".format(instance_list))
         for instance in instance_list:
             self.remove_class_assertion(class_name, instance)
 
         # Delete all properties associated with this class
         prop_list = self.get_associated_properties(class_name)
-        self.__verbose_print("Removed properties: {0}".format(prop_list), verbose)
+        self.__verbose("Removed properties: {0}".format(prop_list))
         for prop in prop_list:
             self.remove_property_definition(prop)
 
@@ -479,7 +477,7 @@ class OntologyQueryInterface(object):
         self.__instance_names = None
         self.__property_names = None
 
-        self.__verbose_print('Class "{0}" successfully removed from ontology'.format(class_name), verbose)
+        self.__verbose('Class "{0}" successfully removed from ontology'.format(class_name))
 
     def remove_property_definition(self, property_name):
         '''Removes an existing property from the ontology
@@ -605,19 +603,22 @@ class OntologyQueryInterface(object):
         else:
             return rdflib.URIRef(self.__get_entity_url(entity))
 
-    def __extract_class_name(self, rdf_class, class_prefix=None, delimiter=':'):
-        '''Extracts the name of a class given a string
-        of the format "self.class_prefix:class_name".
-        If the class_prefix is undefined, the API assumes the rdf_class is a URL
-        and returns the last element in the URL as the class name
+    def __extract_class_name(self, rdf_class, delimiter=':'):
+        '''Extracts the name of a class given a string of the format 
+        "class_prefix:class_name" or "class_prefix#class_name". 
+        However, if the rdf_class is a URL the function returns the last 
+        element in the URL as the class name
 
         Keyword arguments:
         @param rdf_class -- string of the form "prefix:class"
+        @param delimiter -- char representing the delimiter between the 
+                            class_prefix and the class_name
 
         '''
-        if self.class_prefix or class_prefix:
-            return rdf_class[rdf_class.find(delimiter)+1:]
-        return self.__extract_obj_name(rdf_class)
+        if self.__is_url(rdf_class):
+            return self.__extract_obj_name(rdf_class)
+        return rdf_class[rdf_class.find(delimiter)+1:]
+
 
     def __extract_obj_name(self, obj_url):
         '''Extracts the name of an object from the given full URL,
@@ -629,10 +630,35 @@ class OntologyQueryInterface(object):
         '''
         return obj_url[obj_url.rfind('/')+1:]
 
-    def __contains_name(self, name, uri_ref):
-        return self.__extract_class_name(uri_ref) == name or \
-               self.__extract_class_name(uri_ref, delimiter='#') == name
+    def __is_url(self, rdf_class):
+        '''Returns True if the rdf_class is specified as a URL and False if the 
+        rdf_class is specified in the form of class_prefix:class_name
 
-    def __verbose_print(self, text, verbose=False):
-        if verbose:
-            print("[OntologyQueryInterface] {0}".format(text))
+        Keyword arguments:
+        @param rdf_class -- string representing the rdf_class path
+
+        '''
+        return '/' in rdf_class
+
+    def __contains_name(self, class_name, uri_ref_path):
+        '''Returns True if the class_name is present in the uri_ref_path
+
+        Keyword arguments:
+        @param class_name -- string representing the name of the class
+        @param uri_ref_path -- string representing the uri in which the
+                               class_name is to be searched
+
+        '''
+        return self.__extract_class_name(uri_ref_path) == class_name or \
+               self.__extract_class_name(uri_ref_path, delimiter='#') == class_name
+
+    def __verbose(self, content):
+        '''Console debug logger to print the content along with the
+        '[OntologyQueryInterface]' tag only if the self.verbose flag is set
+
+        Keyword arguments:
+        @param content -- string representing the content to be printed
+
+        '''
+        if self.verbose:
+            print("[OntologyQueryInterface] {0}".format(content))
