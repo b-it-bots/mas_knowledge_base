@@ -124,6 +124,20 @@ class ontology_query_interface_test(unittest.TestCase):
         self.assertFalse(self.ont_if.is_instance("Table"))
         self.assertFalse(self.ont_if.is_instance("locatedAt"))
 
+    def test_get_property_types(self):
+        self.assertEqual(sorted(self.ont_if.get_property_types("locatedAt")),
+                         ['FunctionalProperty', 'ObjectProperty'])
+        self.assertEqual(sorted(self.ont_if.get_property_types("heightOf")),
+                         ['ObjectProperty'])
+
+    def test_get_associated_properties(self):
+        self.assertEqual(sorted(self.ont_if.get_associated_properties("Object")),
+                         ["defaultStoringLocation", "heightOf", "locatedAt"])
+        self.assertEqual(sorted(self.ont_if.get_associated_properties("Furniture")),
+                         ["defaultStoringLocation"])
+        self.assertEqual(sorted(self.ont_if.get_associated_properties("Room")),
+                         ["locatedAt"])
+
     def test_insert_class_definition(self):
         top_level_class = "TopLevelClass"
         sub_class_1 = "SubClass1"
@@ -241,6 +255,64 @@ class ontology_query_interface_test(unittest.TestCase):
         self.assertEqual(self.ont_if.get_objects_of("defaultStoringLocation", "Cup"), ["DiningTable"])
         self.assertEqual(self.ont_if.get_objects_of("locatedAt", "DiningTable"), ["Kitchen"])
         self.assertEqual(self.ont_if.get_objects_of("heightOf", "DiningTable"), ['1.0'])
+
+    def test_remove_class_definition(self):
+        class_1 = "Furniture"
+        class_2 = "Mug"
+
+        # Ensure that the classes exist
+        self.assertTrue(self.ont_if.is_class(class_1))
+        self.assertTrue(self.ont_if.is_class(class_2))
+        # Ensure that the right instances are loaded for the classes
+        self.assertEqual(self.ont_if.get_instances_of(class_1), [])
+        self.assertEqual(self.ont_if.get_instances_of(class_2), ["CoffeeMug"])
+        # Ensure that the right properties are associated with the classes
+        self.assertEqual(self.ont_if.get_associated_properties(class_1), ["defaultStoringLocation"])
+        self.assertEqual(self.ont_if.get_associated_properties(class_2), [])
+        # Ensure that the loaded instances and properties exist in the ontology
+        self.assertTrue(self.ont_if.is_instance("CoffeeMug"))
+        self.assertTrue(self.ont_if.is_property("defaultStoringLocation"))
+
+        # Get a superset of all the sub classes of the classes to be removed
+        sub_classes = self.ont_if.get_subclasses_of(class_1)
+        sub_classes.extend(self.ont_if.get_subclasses_of(class_2))
+        sub_classes.remove(class_1)
+        sub_classes.remove(class_2)
+
+        # Remove the classes
+        self.ont_if.remove_class_definition(class_1)
+        self.ont_if.remove_class_definition(class_2)
+
+        # Validate that the classes has been removed
+        self.assertFalse(self.ont_if.is_class(class_1))
+        self.assertFalse(self.ont_if.is_class(class_2))
+        # Validate that the related instances and properties have been removed from the ontology
+        self.assertFalse(self.ont_if.is_instance("CoffeeMug"))
+        self.assertFalse(self.ont_if.is_property("defaultStoringLocation"))
+        # Validate that no sub-classes have been removed
+        for name in sub_classes:
+            self.assertTrue(self.ont_if.is_class(name))
+
+    def test_remove_property_definition(self):
+        prop_list = ["defaultStoringLocation", "heightOf", "locatedAt"]
+        subj_list = ["Desk"]
+
+        # Ensure that the properties exist in the ontology
+        for p in prop_list:
+            self.assertTrue(self.ont_if.is_property(p))
+        self.assertEqual(sorted(self.ont_if.get_associated_properties("Object")), prop_list)
+
+        # Remove some properties from the ontology
+        self.ont_if.remove_property_definition(prop_list[1])
+        self.ont_if.remove_property_definition(prop_list[2])
+
+        # Validate that only the specified properties have been removed from the ontology
+        self.assertTrue(self.ont_if.is_property(prop_list[0]))
+        self.assertFalse(self.ont_if.is_property(prop_list[1]))
+        self.assertFalse(self.ont_if.is_property(prop_list[2]))
+
+        # Validate that the domain and range relations of the property have been removed
+        self.assertEqual(sorted(self.ont_if.get_associated_properties("Object")), ["defaultStoringLocation"])
 
     def test_remove_class_assertion(self):
         # Ensure that the instances already exist
