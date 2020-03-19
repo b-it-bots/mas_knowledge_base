@@ -196,8 +196,9 @@ class OntologyQueryInterface(object):
         '''
         if not self.is_property(prop):
             raise ValueError('"{0}" does not exist as a property in the ontology!'.format(prop))
-        elif not self.is_instance(obj):
-            raise ValueError('"{0}" does not exist as an instance in the ontology!'.format(obj))
+        # Some Object types may not be a class (such as float)
+        # elif not self.is_instance(obj):
+        #     raise ValueError('"{0}" does not exist as an instance in the ontology!'.format(obj))
         else:
             object_url = self.__get_entity_url(obj)
             rdf_property = self.__format_class_name(prop, sparql_url_hint=True)
@@ -473,6 +474,11 @@ class OntologyQueryInterface(object):
         for triple in del_list:
             self.knowledge_graph.remove(triple)
 
+        # Reset caches
+        self.__class_names = None
+        self.__instance_names = None
+        self.__property_names = None
+
         self.__verbose_print('Class "{0}" successfully removed from ontology'.format(class_name), verbose)
 
     def remove_property_definition(self, property_name):
@@ -490,6 +496,8 @@ class OntologyQueryInterface(object):
                     del_list.append(triple)
             for triple in del_list:
                 self.knowledge_graph.remove(triple)
+            # Reset the property names cache
+            self.__property_names = None
         else:
             raise ValueError('"{0}" does not exists as a property in the ontology!'.format(property_name))
 
