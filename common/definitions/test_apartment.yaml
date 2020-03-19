@@ -1,0 +1,15 @@
+class_definitions:
+    Person: []
+    Male: [Person]
+    Female: [Person]
+    Chair: [Furniture]
+    HighTable: [Furniture]
+property_definitions:
+    nextTo:
+        domain: [None, Object]
+        range: [None, Object]
+        type: SymmetricProperty
+    age:
+        domain: [None, Person]
+        range: [xsd, integer]
+        type: None
