@@ -11,16 +11,18 @@ class ABoxYAMLLoader:
     @param ontology_file -- full URL of an ontology file (of the form file://<absolute-path>)
     @param ontology_class_prefix -- class prefix of the items in the given ontology
     @param assertions_file -- absolute-path to the yaml file containing assertions
+    @param verbose -- boolean to enable debug console logging, which is disabled by default.
 
     @author Sushant Chavan
     @contact sushant.chavan@smail.inf.h-brs.de
 
     '''
-    def __init__(self, ontology_file, ontology_class_prefix, assertions_file):
+    def __init__(self, ontology_file, ontology_class_prefix, assertions_file, verbose=False):
         self.ontology_if = OntologyQueryInterface(ontology_file=ontology_file,
-                                    class_prefix=ontology_class_prefix)
+                                    class_prefix=ontology_class_prefix, verbose=verbose)
         self.class_assertions = None
         self.property_assertions = None
+        self.verbose = verbose
 
         self.__load_assertions(assertions_file)
 
@@ -48,7 +50,8 @@ class ABoxYAMLLoader:
             instance_names = self.class_assertions[class_name]
             for instance_name in instance_names:
                 self.ontology_if.insert_class_assertion(class_name, instance_name)
-                #print("Inserting class assertion: {0}, {1}".format(class_name, instance_name))
+                self.__verbose("Inserting class assertion: {0}, {1}".format(
+                               class_name, instance_name))
 
     def process_property_assertions(self):
         '''Inserts the property assertions into the loaded ontology.
@@ -60,7 +63,8 @@ class ABoxYAMLLoader:
         for property_name in self.property_assertions.keys():
             for subj, obj in self.property_assertions[property_name].items():
                 self.ontology_if.insert_property_assertion(property_name, (subj, obj))
-                #print("Inserting property assertion: {0}, {1}, {2}".format(subj, property_name, obj))
+                self.__verbose("Inserting property assertion: {0}, {1}, {2}".format(
+                               subj, property_name, obj))
 
     def export_ontology(self, export_path):
         '''Updates/exports the ontology.
@@ -73,11 +77,11 @@ class ABoxYAMLLoader:
         '''
         if export_path is None:
             # Overwrite the existing ontology file with the updated ontology
-            print("No export filepath specified. Updating the loaded ontology.")
+            self.__verbose("No export filepath specified. Updating the loaded ontology.")
             self.ontology_if.update()
         else:
             # Save the updated ontology at the given file location
-            print("Exporting the ontology to", export_path)
+            self.__verbose("Exporting the ontology to {0}".format(export_path))
             self.ontology_if.export(export_path)
 
     def __load_assertions(self, assertions_file):
@@ -98,6 +102,17 @@ class ABoxYAMLLoader:
             self.class_assertions = assertions['class_assertions']
             self.property_assertions = assertions['property_assertions']
 
+    def __verbose(self, content):
+        '''Console debug logger to print the content along with the
+        '[ABoxYAMLLoader]' tag only if the self.verbose flag is set
+
+        Keyword arguments:
+        @param content -- string representing the content to be printed
+
+        '''
+        if self.verbose:
+            print("[ABoxYAMLLoader] {0}".format(content))
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('asserts', type=str, 
@@ -115,6 +130,8 @@ if __name__ == '__main__':
                               (eg.: apartment_go_2019_updated). If not \
                                specified, the loaded ontology will be updated.",
                         default=None)
+    parser.add_argument('-v', '--verbose', action='store_true',
+                        help="Enable debug console logs")
 
     args = parser.parse_args()
 
@@ -129,5 +146,6 @@ if __name__ == '__main__':
     if args.export_file is not None:
         export_file_path = "file://" + os.path.join(ontology_dir, args.export_file + ".owl")
 
-    loader = ABoxYAMLLoader(ontology_file_path, args.class_prefix, assertions_file_path)
+    loader = ABoxYAMLLoader(ontology_file_path, args.class_prefix, 
+                            assertions_file_path, verbose=args.verbose)
     loader.update_ontology(export_file_path)
