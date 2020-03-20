@@ -92,7 +92,22 @@ class TBoxYAMLLoader:
 
     def __get_independent_classes(self):
         '''Returns a list of class_names in the loaded class_definitions whose 
-        parent classes have already been defined in the ontology
+        parent classes have already been defined in the ontology, i.e. they are 
+        not dependent on any classes in the self.class_definitions which are yet
+        to be inserted in the ontology.
+
+        For example, consider the following class definitions:
+        class_definitions:
+            Person: []
+            Male: [Person]
+            Female: [Person]
+        Here, it is necessary that the Person class is inserted into the ontology 
+        before the Male and Female classes to avoid triggering an assert that 
+        verifies if the parent classes exist in the ontology. However, since the
+        class_definitions are loaded as a dictionary, the order of the classes 
+        cannot be maintaine. The first call to this method therefore returns only
+        the Person class. Once it is inserted into the ontology, the next call to
+        this method will return the Male and Female classes.
         '''
         independent_classes = []
         for name, parents in self.class_definitions.items():
@@ -103,7 +118,7 @@ class TBoxYAMLLoader:
                     break
             if is_independent:
                 independent_classes.append(name)
-        if len(independent_classes) == 0 and len(self.class_definitions):
+        if not independent_classes and self.class_definitions:
             raise Exception('Could not find indpendent class names from the loaded class descriptions!')
         return independent_classes
 
@@ -129,18 +144,18 @@ class TBoxYAMLLoader:
             for property_name in self.property_definitions.keys():
                 domain = []
                 for d in self.property_definitions[property_name]['domain']:
-                    domain.append(self.__check_none(d))
+                    domain.append(self.__maybe_none(d))
                 self.property_definitions[property_name]['domain'] = domain
 
                 range = []
                 for r in self.property_definitions[property_name]['range']:
-                    range.append(self.__check_none(r))
+                    range.append(self.__maybe_none(r))
                 self.property_definitions[property_name]['range'] = range
 
                 self.property_definitions[property_name]['type'] = \
-                    self.__check_none(self.property_definitions[property_name]['type'])
+                    self.__maybe_none(self.property_definitions[property_name]['type'])
     
-    def __check_none(self, value):
+    def __maybe_none(self, value):
         '''Returns None datatype if the value is equal to 'None',
         otherwise returns the value without modifications
 
