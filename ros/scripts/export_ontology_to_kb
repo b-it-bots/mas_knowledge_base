@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+import rospy
+
+from mas_knowledge_utils.ontology_query_interface import OntologyQueryInterface
+from mas_knowledge_base.knowledge_base_interface import KnowledgeBaseInterface
+
+class OntologyExporter(object):
+    def __init__(self):
+        ontology_uri = rospy.get_param('/ontology_url', None)
+        if not ontology_uri:
+            raise RuntimeError('ontology_url not set')
+        ontology_class_prefix = rospy.get_param('/ontology_class_prefix', '')
+        self.ont_query_interface = OntologyQueryInterface(ontology_uri, ontology_class_prefix)
+        self.kb_interface = KnowledgeBaseInterface()
+
+    def export_ontology_to_kb(self):
+        '''Inserts all property assertions in the ontology as facts in the
+        knowledge base. For every property, the domain and range are used
+        as names for the variables in the facts; an exception to this is the
+        case in which the domain and range are the same, when 0 and 1 are
+        appended to the variable names to prevent name clashes.
+
+        Example: Let's assume that we have a property
+            objectAt: Object -> Location
+        and an assertion of this property
+            MyBottle objectAt Kitchen
+        In this case, a fact of the form
+            objectAt (MyBottle: Object, Kitchen: Location)
+        will be inserted in the knowledge base.
+
+        Example 2: Let's assume that we have a property
+            on: Object -> Object
+        and an assertion of the property
+            MyBottle on DiningTable
+        Here, a fact of the form
+            on (MyBottle: Object0, Table: Object1)
+        will be inserted in the knowledge base, where 0 and 1 have been appended
+        to Object to prevent name ambiguities.
+
+        '''
+        object_properties = self.ont_query_interface.get_object_properties()
+        facts_to_add = []
+        for obj_property in object_properties:
+            (prop_domain, prop_range) = self.ont_query_interface.get_property_domain_range(obj_property)
+            subj_obj_pairs = self.ont_query_interface.get_all_subjects_and_objects(obj_property)
+
+            for subj, obj in subj_obj_pairs:
+                fact = None
+                if prop_range == 'boolean':
+                    if obj.lower() == 'true':
+                        fact = [obj_property, [(prop_domain, subj)]]
+                # we don't insert numeric values in the knowledge base
+                elif prop_range == 'integer' or prop_range == 'float':
+                    continue
+                else:
+                    if prop_domain != prop_range:
+                        fact = [obj_property, [(prop_domain, subj),
+                                               (prop_range, obj)]]
+                    else:
+                        fact = [obj_property, [(prop_domain + '0', subj),
+                                               (prop_range + '1', obj)]]
+                facts_to_add.append(fact)
+        self.kb_interface.insert_facts(facts_to_add)
+
+if __name__ == '__main__':
+    rospy.init_node('ontology_exporter')
+    ONTOLOGY_EXPORTER = OntologyExporter()
+    ONTOLOGY_EXPORTER.export_ontology_to_kb()

@@ -99,10 +99,6 @@
         <rdfs:subClassOf rdf:resource="apartment:Room"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:Furniture">
-        <rdfs:subClassOf rdf:resource="apartment:Object"/>
-    </owl:Class>
-
     <!-- Furniture Subclass -->
     <owl:Class rdf:about="apartment:Bed">
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
@@ -160,7 +156,7 @@
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:Cupboard">
+    <owl:Class rdf:about="apartment:CupBoard">
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
 
@@ -188,7 +184,7 @@
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
 
-    <owl:Class rdf:about="apartment:Coathanger">
+    <owl:Class rdf:about="apartment:CoatHanger">
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
 
