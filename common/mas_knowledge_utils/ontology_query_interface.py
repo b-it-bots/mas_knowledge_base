@@ -196,14 +196,13 @@ class OntologyQueryInterface(object):
 
         Keyword arguments:
         @param prop -- string representing the name of a property
-        @param object -- string representing an entity in the ontology
+        @param object -- string representing an entity in the ontology. 
+                         This could either be an instance of a class or a value 
+                         of a specific data-type (such as a float).
 
         '''
         if not self.is_property(prop):
             raise ValueError('"{0}" does not exist as a property in the ontology!'.format(prop))
-        # Some Object types may not be a class (such as float)
-        # elif not self.is_instance(obj):
-        #     raise ValueError('"{0}" does not exist as an instance in the ontology!'.format(obj))
         else:
             object_url = self.__get_entity_url(obj)
             rdf_property = self.__format_class_name(prop, sparql_url_hint=True)
@@ -285,7 +284,8 @@ class OntologyQueryInterface(object):
             raise ValueError('"{0}" does not exist as a property in the ontology!'.format(prop))
 
     def get_property_types(self, prop):
-        '''Returns a list that specifies the types defined for the property.
+        '''Returns a list that specifies the types (such as FunctionalProperty) 
+        defined for the property.
 
         Keyword arguments:
         @param prop: str -- name of a property
@@ -347,16 +347,16 @@ class OntologyQueryInterface(object):
         # class is included in the next query to the class_list
         self.__class_names = None
 
-    def insert_property_definition(self, property_name, domain, range, 
-                                   prop_type='FunctionalProperty',
-                                   domain_ns=None, range_ns=None):
+    def insert_property_definition(self, property_name, domain, range,
+                                   prop_type=None, domain_ns=None, range_ns=None):
         '''Defines a new property in the ontology
 
         Keyword arguments:
         property_name -- string representing the name of the new property
         domain -- string representing the domain of the new property
-        range -- string representing the range of the new property
-        prop_type -- string/None representing the type of the new property (default: FunctionalProperty). 
+        range -- string representing the range of the new property. 
+                 This could be a class or a data type (such as float)
+        prop_type -- string/None representing the type (such as FunctionalProperty). 
                      If 'None', the property will have only the default ObjectProperty 
                      type and no additional type will be added.
         domain_ns -- string representing the optional namespace for the domain.
@@ -369,9 +369,6 @@ class OntologyQueryInterface(object):
             raise ValueError('"{0}" already exists as a property in the ontology!'.format(property_name))
         elif not self.is_class(domain):
             raise ValueError('The domain "{0}" is not defined as a class in the ontology!'.format(domain))
-        # Some range types may not be a class (such as float)
-        # elif not self.is_class(range):
-        #     raise ValueError('The range "{0}" is not defined as a class in the ontology!'.format(range))
         else:
             # Add property as Object property by default
             prop_uri = rdflib.URIRef(self.__format_class_name(property_name))
@@ -390,7 +387,7 @@ class OntologyQueryInterface(object):
 
             # Add the optional property type.
             # Not required for properties with some range types such as float
-            if prop_type is not None:
+            if prop_type:
                 prop_type_uri = rdflib.term.URIRef('http://www.w3.org/2002/07/owl#{0}'.format(prop_type))
                 self.knowledge_graph.add((prop_uri, URIRefConstants.RDF_TYPE,
                                           prop_type_uri))
@@ -422,15 +419,13 @@ class OntologyQueryInterface(object):
 
         Keyword arguments:
         property_name -- string representing the name of the predicate
-        instance -- tuple(string, string) representing the subject and the object respectively
+        instance -- tuple(string, string) representing the subject and the object respectively.
+                    While the subject has to be an instance of a class, the object could be 
+                    an instance of a class or a value of a data-type (such as float)
 
         '''
         if not self.is_instance(instance[0]):
             raise ValueError('The subject "{0}" does not exist in the ontology as an instance of a class!'.format(instance[0]))
-        # Skip the type-check for the object since it is not necessary to be a class
-        # For example, the heightOf property can be a float.
-        # elif not self.is_instance(instance[1]):
-        #     raise ValueError('The object "{0}" does not exist in the ontology as an instance of a class!'.format(instance[1]))
         elif not self.is_property(property_name):
             raise ValueError('The property "{0}" is not defined in the ontology!'.format(property_name))
         else:
@@ -531,15 +526,13 @@ class OntologyQueryInterface(object):
 
         Keyword arguments:
         property_name -- string representing the name of the predicate
-        instance -- tuple(string, string) representing the subject and the object respectively
+        instance -- tuple(string, string) representing the subject and the object respectively.
+                    While the subject has to be an instance of a class, the object could be 
+                    an instance of a class or a value of a data-type (such as float)
 
         '''
         if not self.is_instance(instance[0]):
             raise ValueError('The subject "{0}" does not exist in the ontology as an instance of a class!'.format(instance[0]))
-        # Skip the type-check for the object since it is not necessary to be a class
-        # For example, the heightOf property can be a float.
-        # elif not self.is_instance(instance[1]):
-        #     raise ValueError('The object "{0}" does not exist in the ontology as an instance of a class!'.format(instance[1]))
         elif not self.is_property(property_name):
             raise ValueError('The property "{0}" is not defined in the ontology!'.format(property_name))
         else:
