@@ -105,7 +105,7 @@ class TBoxYAMLLoader:
         before the Male and Female classes to avoid triggering an assert that 
         verifies if the parent classes exist in the ontology. However, since the
         class_definitions are loaded as a dictionary, the order of the classes 
-        cannot be maintaine. The first call to this method therefore returns only
+        cannot be maintained. The first call to this method therefore returns only
         the Person class. Once it is inserted into the ontology, the next call to
         this method will return the Male and Female classes.
         '''
