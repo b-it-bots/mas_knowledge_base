@@ -1,6 +1,8 @@
 '''Module defining interfaces for knowledge base interactions
 specific to domestic applications.
 '''
+import numpy as np
+import tf
 
 from mas_knowledge_base.knowledge_base_interface import KnowledgeBaseInterface
 
@@ -14,6 +16,8 @@ class DomesticKBInterface(KnowledgeBaseInterface):
     '''
     def __init__(self):
         super(DomesticKBInterface, self).__init__()
+
+        self.tf_listener = tf.TransformListener()
 
     ############################################################################
     #--------------------------- Symbolic knowledge ---------------------------#
@@ -295,6 +299,27 @@ class DomesticKBInterface(KnowledgeBaseInterface):
     ############################################################################
     #------------------------------ Data storage ------------------------------#
     ############################################################################
+    def get_objects_within_distance(self, base_link_frame_name, obj_type, distance_threshold_m):
+        '''Returns a list of objects of a given type that are at a certain distance from the robot.
+
+        @param base_link_frame_name: str -- name of the robot's base link frame
+        @param obj_type: str -- type of the objects that need to be considered
+        @param distance_threshold_m: float -- threshold (in meters) within which objects
+                                              are considered
+
+        '''
+        objects = self.get_all_objects(obj_type)
+        objects_within_distance = []
+        for obj in objects:
+            pose_base_link = self.tf_listener.transformPose(base_link_frame_name,
+                                                            obj.pose)
+            position_base_link = np.array([pose_base_link.pose.position.x,
+                                           pose_base_link.pose.position.y,
+                                           pose_base_link.pose.position.z])
+            if np.linalg.norm(position_base_link) < distance_threshold_m:
+                objects_within_distance.append(obj)
+        return objects_within_distance
+
     def get_surface_object_pose_map(self, surface_object_map, obj_type):
         '''Returns a dictionary of surfaces and object poses, namely each key
         is a surface from the given dictionary and each value is a dictionary of
