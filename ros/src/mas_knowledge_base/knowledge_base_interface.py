@@ -263,6 +263,20 @@ class KnowledgeBaseInterface(object):
         '''
         self.msg_store_client.delete_named(obj_name, obj_type)
 
+    def get_all_objects(self, obj_type):
+        '''Returns a list of all objects of the given type:
+
+        Keyword arguments:
+        @param obj_type: str -- type of the objects to be retrieved
+
+        '''
+        try:
+            objects, _ = self.msg_store_client.query(obj_type)
+            return objects
+        except:
+            rospy.logerr('[kb_interface] Error retrieving knowledge about objects of type %s', obj_type)
+            return []
+
     def get_objects(self, object_names, obj_type):
         '''Returns a list of named object instances from the knowledge base.
 
