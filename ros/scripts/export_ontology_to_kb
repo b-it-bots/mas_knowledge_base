@@ -40,6 +40,7 @@ class OntologyExporter(object):
         '''
         object_properties = self.ont_query_interface.get_object_properties()
         facts_to_add = []
+        instances_to_add = []
         for obj_property in object_properties:
             (prop_domain, prop_range) = self.ont_query_interface.get_property_domain_range(obj_property)
             subj_obj_pairs = self.ont_query_interface.get_all_subjects_and_objects(obj_property)
@@ -59,8 +60,24 @@ class OntologyExporter(object):
                     else:
                         fact = [obj_property, [(prop_domain + '0', subj),
                                                (prop_range + '1', obj)]]
+
+                    subj_instance = (prop_domain, subj)
+                    obj_instance = (prop_range, obj)
+
+                    if subj_instance not in instances_to_add:
+                        instances_to_add.append(subj_instance)
+                    if obj_instance not in instances_to_add:
+                        instances_to_add.append(obj_instance)
+
                 facts_to_add.append(fact)
+
+        print('Inserting instances')
+        self.kb_interface.insert_instances(instances_to_add)
+
+        print('Inserting facts')
         self.kb_interface.insert_facts(facts_to_add)
+
+        print('Ontology export complete')
 
 if __name__ == '__main__':
     rospy.init_node('ontology_exporter')
