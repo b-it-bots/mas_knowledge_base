@@ -120,6 +120,48 @@ class KnowledgeBaseInterface(object):
         rospy.loginfo('[kb_interface] Removing facts from the knowledge base')
         self.remove_facts(facts_to_remove)
 
+    def insert_instances(self, instances):
+        '''Inserts the given instances into the knowledge base.
+
+        Keyword arguments:
+        @param instances: Sequence[(str, str)] -- instances to be inserted; each instance
+                                                  is represented as a tuple of the format
+                                                  (instance_type, instance_name)
+
+        '''
+        try:
+            for (instance_type, instance_name) in instances:
+                request = rosplan_srvs.KnowledgeUpdateServiceRequest()
+                request.update_type = KnowledgeUpdateTypes.INSERT
+                request.knowledge.knowledge_type = 0
+                request.knowledge.instance_type = instance_type
+                request.knowledge.instance_name = instance_name
+                self.knowledge_update_client(request)
+        except Exception as exc:
+            rospy.logerr('[kb_interface] %s', str(exc))
+            raise KBException('Instances could not be inserted into the knowledge base')
+
+    def remove_instances(self, instances):
+        '''Removes the given instances from the knowledge base.
+
+        Keyword arguments:
+        @param instances: Sequence[(str, str)] -- instances to be removed; each instance
+                                                  is represented as a tuple of the format
+                                                  (instance_type, instance_name)
+
+        '''
+        try:
+            for (instance_type, instance_name) in instances:
+                request = rosplan_srvs.KnowledgeUpdateServiceRequest()
+                request.update_type = KnowledgeUpdateTypes.REMOVE
+                request.knowledge.knowledge_type = 0
+                request.knowledge.instance_type = instance_type
+                request.knowledge.instance_name = instance_name
+                self.knowledge_update_client(request)
+        except Exception as exc:
+            rospy.logerr('[kb_interface] %s', str(exc))
+            raise KBException('Instances could not be removed from the knowledge base')
+
     def insert_facts(self, fact_list):
         '''Inserts the facts in the given list into the knowledge base.
 
