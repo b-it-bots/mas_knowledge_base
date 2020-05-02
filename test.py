@@ -1,3 +1,0 @@
-from mas_tools.ros_utils import get_package_path
-from mas_knowledge_utils.domestic_ontology_interface import DomesticOntologyInterface
-from mas_knowledge_base.domestic_kb_interface import DomesticKBInterface
