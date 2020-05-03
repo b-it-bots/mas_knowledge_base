@@ -25,6 +25,7 @@
     <!-- apartment:above -->
 
     <owl:ObjectProperty rdf:about="apartment:above">
+        <owl:inverseOf rdf:resource="apartment:below"/>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
         <rdfs:domain rdf:resource="apartment:Object"/>
         <rdfs:range rdf:resource="apartment:Object"/>
@@ -34,9 +35,7 @@
 
     <!-- apartment:below -->
 
-    <owl:ObjectProperty rdf:about="apartment:below">
-        <owl:inverseOf rdf:resource="file:/home/samuel/Documents/MAS/b-it-bots/mas_knowledge_base/common/ontology/apartment.owl#apartment:above"/>
-    </owl:ObjectProperty>
+    <owl:ObjectProperty rdf:about="apartment:below"/>
     
 
 
@@ -109,6 +108,7 @@
     <!-- apartment:toTheLeftOf -->
 
     <owl:ObjectProperty rdf:about="apartment:toTheLeftOf">
+        <owl:inverseOf rdf:resource="apartment:toTheRightOf"/>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
         <rdfs:domain rdf:resource="apartment:Object"/>
         <rdfs:range rdf:resource="apartment:Object"/>
@@ -118,21 +118,7 @@
 
     <!-- apartment:toTheRightOf -->
 
-    <owl:ObjectProperty rdf:about="apartment:toTheRightOf">
-        <owl:inverseOf rdf:resource="file:/home/samuel/Documents/MAS/b-it-bots/mas_knowledge_base/common/ontology/apartment.owl#apartment:toTheLeftOf"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- file:/home/samuel/Documents/MAS/b-it-bots/mas_knowledge_base/common/ontology/apartment.owl#apartment:above -->
-
-    <owl:ObjectProperty rdf:about="file:/home/samuel/Documents/MAS/b-it-bots/mas_knowledge_base/common/ontology/apartment.owl#apartment:above"/>
-    
-
-
-    <!-- file:/home/samuel/Documents/MAS/b-it-bots/mas_knowledge_base/common/ontology/apartment.owl#apartment:toTheLeftOf -->
-
-    <owl:ObjectProperty rdf:about="file:/home/samuel/Documents/MAS/b-it-bots/mas_knowledge_base/common/ontology/apartment.owl#apartment:toTheLeftOf"/>
+    <owl:ObjectProperty rdf:about="apartment:toTheRightOf"/>
     
 
 
