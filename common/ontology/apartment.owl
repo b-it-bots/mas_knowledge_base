@@ -77,6 +77,24 @@
     
 
 
+    <!-- apartment:isAtLocation -->
+
+    <owl:ObjectProperty rdf:about="apartment:isAtLocation">
+        <rdfs:domain rdf:resource="apartment:NamedPose"/>
+        <rdfs:range rdf:resource="apartment:Location"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- apartment:isAtNamedPose -->
+
+    <owl:ObjectProperty rdf:about="apartment:isAtNamedPose">
+        <rdfs:domain rdf:resource="apartment:Thing"/>
+        <rdfs:range rdf:resource="apartment:NamedPose"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- apartment:likelyLocation -->
 
     <owl:ObjectProperty rdf:about="apartment:likelyLocation">
@@ -105,6 +123,88 @@
     
 
 
+    <!-- apartment:orientation -->
+
+    <owl:ObjectProperty rdf:about="apartment:orientation">
+        <rdfs:subPropertyOf rdf:resource="apartment:pose"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- apartment:orientationPitch -->
+
+    <owl:ObjectProperty rdf:about="apartment:orientationPitch">
+        <rdfs:subPropertyOf rdf:resource="apartment:orientation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- apartment:orientationRoll -->
+
+    <owl:ObjectProperty rdf:about="apartment:orientationRoll">
+        <rdfs:subPropertyOf rdf:resource="apartment:orientation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- apartment:orientationYaw -->
+
+    <owl:ObjectProperty rdf:about="apartment:orientationYaw">
+        <rdfs:subPropertyOf rdf:resource="apartment:orientation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- apartment:pose -->
+
+    <owl:ObjectProperty rdf:about="apartment:pose">
+        <rdfs:domain rdf:resource="apartment:Thing"/>
+        <rdfs:range rdf:resource="xsd:float"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- apartment:position -->
+
+    <owl:ObjectProperty rdf:about="apartment:position">
+        <rdfs:subPropertyOf rdf:resource="apartment:pose"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- apartment:positionX -->
+
+    <owl:ObjectProperty rdf:about="apartment:positionX">
+        <rdfs:subPropertyOf rdf:resource="apartment:position"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- apartment:positionY -->
+
+    <owl:ObjectProperty rdf:about="apartment:positionY">
+        <rdfs:subPropertyOf rdf:resource="apartment:position"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- apartment:positionZ -->
+
+    <owl:ObjectProperty rdf:about="apartment:positionZ">
+        <rdfs:subPropertyOf rdf:resource="apartment:position"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- apartment:preferredGraspingStrategy -->
+
+    <owl:ObjectProperty rdf:about="apartment:preferredGraspingStrategy">
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:GraspingStrategy"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- apartment:toTheLeftOf -->
 
     <owl:ObjectProperty rdf:about="apartment:toTheLeftOf">
@@ -119,6 +219,71 @@
     <!-- apartment:toTheRightOf -->
 
     <owl:ObjectProperty rdf:about="apartment:toTheRightOf"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- apartment:orientation -->
+
+    <owl:DatatypeProperty rdf:about="apartment:orientation"/>
+    
+
+
+    <!-- apartment:orientationPitch -->
+
+    <owl:DatatypeProperty rdf:about="apartment:orientationPitch"/>
+    
+
+
+    <!-- apartment:orientationRoll -->
+
+    <owl:DatatypeProperty rdf:about="apartment:orientationRoll"/>
+    
+
+
+    <!-- apartment:orientationYaw -->
+
+    <owl:DatatypeProperty rdf:about="apartment:orientationYaw"/>
+    
+
+
+    <!-- apartment:pose -->
+
+    <owl:DatatypeProperty rdf:about="apartment:pose"/>
+    
+
+
+    <!-- apartment:position -->
+
+    <owl:DatatypeProperty rdf:about="apartment:position"/>
+    
+
+
+    <!-- apartment:positionX -->
+
+    <owl:DatatypeProperty rdf:about="apartment:positionX"/>
+    
+
+
+    <!-- apartment:positionY -->
+
+    <owl:DatatypeProperty rdf:about="apartment:positionY"/>
+    
+
+
+    <!-- apartment:positionZ -->
+
+    <owl:DatatypeProperty rdf:about="apartment:positionZ"/>
     
 
 
@@ -431,6 +596,14 @@
     
 
 
+    <!-- apartment:DrinkingGlass -->
+
+    <owl:Class rdf:about="apartment:DrinkingGlass">
+        <rdfs:subClassOf rdf:resource="apartment:Drinkware"/>
+    </owl:Class>
+    
+
+
     <!-- apartment:Drinkware -->
 
     <owl:Class rdf:about="apartment:Drinkware">
@@ -516,6 +689,14 @@
 
     <owl:Class rdf:about="apartment:Grain">
         <rdfs:subClassOf rdf:resource="apartment:FoodOrDrink"/>
+    </owl:Class>
+    
+
+
+    <!-- apartment:GraspingStrategy -->
+
+    <owl:Class rdf:about="apartment:GraspingStrategy">
+        <rdfs:subClassOf rdf:resource="apartment:Thing"/>
     </owl:Class>
     
 
@@ -610,7 +791,9 @@
 
     <!-- apartment:Location -->
 
-    <owl:Class rdf:about="apartment:Location"/>
+    <owl:Class rdf:about="apartment:Location">
+        <rdfs:subClassOf rdf:resource="apartment:Thing"/>
+    </owl:Class>
     
 
 
@@ -678,9 +861,19 @@
     
 
 
+    <!-- apartment:NamedPose -->
+
+    <owl:Class rdf:about="apartment:NamedPose">
+        <rdfs:subClassOf rdf:resource="apartment:Thing"/>
+    </owl:Class>
+    
+
+
     <!-- apartment:Object -->
 
-    <owl:Class rdf:about="apartment:Object"/>
+    <owl:Class rdf:about="apartment:Object">
+        <rdfs:subClassOf rdf:resource="apartment:Thing"/>
+    </owl:Class>
     
 
 
@@ -782,7 +975,9 @@
 
     <!-- apartment:Plane -->
 
-    <owl:Class rdf:about="apartment:Plane"/>
+    <owl:Class rdf:about="apartment:Plane">
+        <rdfs:subClassOf rdf:resource="apartment:Thing"/>
+    </owl:Class>
     
 
 
@@ -893,7 +1088,7 @@
     <!-- apartment:ShotGlass -->
 
     <owl:Class rdf:about="apartment:ShotGlass">
-        <rdfs:subClassOf rdf:resource="apartment:Drinkware"/>
+        <rdfs:subClassOf rdf:resource="apartment:DrinkingGlass"/>
     </owl:Class>
     
 
@@ -918,6 +1113,7 @@
 
     <owl:Class rdf:about="apartment:Sink">
         <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
+        <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
     </owl:Class>
     
 
@@ -1000,6 +1196,12 @@
     <owl:Class rdf:about="apartment:TeaSpoon">
         <rdfs:subClassOf rdf:resource="apartment:Cutlery"/>
     </owl:Class>
+    
+
+
+    <!-- apartment:Thing -->
+
+    <owl:Class rdf:about="apartment:Thing"/>
     
 
 
@@ -1086,7 +1288,7 @@
     <!-- apartment:WineGlass -->
 
     <owl:Class rdf:about="apartment:WineGlass">
-        <rdfs:subClassOf rdf:resource="apartment:Drinkware"/>
+        <rdfs:subClassOf rdf:resource="apartment:DrinkingGlass"/>
     </owl:Class>
     
 
@@ -1118,6 +1320,31 @@
     <!-- xsd:boolean -->
 
     <owl:Class rdf:about="xsd:boolean"/>
+    
+
+
+    <!-- xsd:float -->
+
+    <owl:Class rdf:about="xsd:float"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:NamedIndividual rdf:about="apartment:Sideways">
+        <rdf:type rdf:resource="apartment:GraspingStrategy"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="apartment:TopDown">
+        <rdf:type rdf:resource="apartment:GraspingStrategy"/>
+    </owl:NamedIndividual>
     
 
 

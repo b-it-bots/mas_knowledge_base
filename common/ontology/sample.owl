@@ -1,0 +1,104 @@
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#">
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#">
+]>
+
+<rdf:RDF
+    xmlns:apartment="http://apartment#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+
+    <owl:Ontology rdf:about="http://apartment" />
+
+    <!--************* Class definitions ************-->
+    <owl:Class rdf:about="apartment:Object"/>
+    <owl:Class rdf:about="apartment:Location"/>
+
+    <!-- Location items -->
+    <owl:Class rdf:about="apartment:Room"/>
+
+    <!-- Furniture items -->
+    <owl:Class rdf:about="apartment:Furniture"/>
+    <owl:Class rdf:about="apartment:Table"/>
+    <owl:Class rdf:about="apartment:WorkTable"/>
+
+    <!-- Drinkware -->
+    <owl:Class rdf:about="apartment:Drinkware"/>
+    <owl:Class rdf:about="apartment:Mug"/>
+    <!--*********************************************-->
+
+    <!--*********** Subclass definitions ************-->
+
+    <!-- Location subclass definitions -->
+    <owl:Class rdf:about="apartment:Room">
+        <rdfs:subClassOf rdf:resource="apartment:Location"/>
+    </owl:Class>
+
+    <!-- Object subclass definitions -->
+    <owl:Class rdf:about="apartment:Furniture">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="apartment:Table">
+        <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    </owl:Class>
+    <owl:Class rdf:about="apartment:WorkTable">
+        <rdfs:subClassOf rdf:resource="apartment:Table"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="apartment:Drinkware">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    </owl:Class>
+    <owl:Class rdf:about="apartment:Mug">
+        <rdfs:subClassOf rdf:resource="apartment:Drinkware"/>
+    </owl:Class>
+    <!--*********************************************-->
+
+
+    <!--************ Property definitions ***********-->
+
+    <owl:ObjectProperty rdf:about="apartment:locatedAt">
+        <rdf:type rdf:resource="&owl;FunctionalProperty" />
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Room"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="apartment:defaultStoringLocation">
+        <rdf:type rdf:resource="&owl;FunctionalProperty" />
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="apartment:Furniture"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="apartment:heightOf">
+        <rdfs:domain rdf:resource="apartment:Object"/>
+        <rdfs:range rdf:resource="xsd:float"/>
+    </owl:ObjectProperty>
+    <!--*********************************************-->
+
+
+    <!--************** Class Instances **************-->
+
+    <apartment:Room rdf:about="HomeOffice"/>
+    <apartment:WorkTable rdf:about="Desk"/>
+    <apartment:Mug rdf:about="CoffeeMug"/>
+    <!--*********************************************-->
+
+
+    <!--************** Property Assertions **************-->
+
+    <rdf:Description rdf:about="Desk">
+        <apartment:locatedAt rdf:resource="HomeOffice"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="CoffeeMug">
+        <apartment:defaultStoringLocation rdf:resource="Desk"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="Desk">
+        <apartment:heightOf rdf:resource="0.7"/>
+    </rdf:Description>
+    <!--*********************************************-->
+
+
+</rdf:RDF>
