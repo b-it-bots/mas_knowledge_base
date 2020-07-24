@@ -355,6 +355,94 @@
 
 
 
+    <!-- apartment:FoodOrDrinkContainer -->
+
+    <owl:Class rdf:about="apartment:FoodOrDrinkContainer">
+        <rdfs:subClassOf rdf:resource="apartment:Container"/>
+    </owl:Class>
+
+
+
+    <!-- apartment:ChipsCan -->
+
+    <owl:Class rdf:about="apartment:ChipsCan">
+        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    </owl:Class>
+
+
+
+    <!-- apartment:CoffeeCan -->
+
+    <owl:Class rdf:about="apartment:CoffeeCan">
+        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    </owl:Class>
+
+
+
+    <!-- apartment:CrackerBox -->
+
+    <owl:Class rdf:about="apartment:CrackerBox">
+        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    </owl:Class>
+
+
+
+    <!-- apartment:SugarBox -->
+
+    <owl:Class rdf:about="apartment:SugarBox">
+        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    </owl:Class>
+
+
+
+    <!-- apartment:SoupCan -->
+
+    <owl:Class rdf:about="apartment:SoupCan">
+        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    </owl:Class>
+
+
+
+    <!-- apartment:MustartContainer -->
+
+    <owl:Class rdf:about="apartment:MustardContainer">
+        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    </owl:Class>
+
+
+
+    <!-- apartment:MeatCan -->
+
+    <owl:Class rdf:about="apartment:MeatCan">
+        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    </owl:Class>
+
+
+
+    <!-- apartment:FishCan -->
+
+    <owl:Class rdf:about="apartment:FishCan">
+        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    </owl:Class>
+
+
+
+    <!-- apartment:PuddingBox -->
+
+    <owl:Class rdf:about="apartment:PuddingBox">
+        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    </owl:Class>
+
+
+
+    <!-- apartment:GelatinBox -->
+
+    <owl:Class rdf:about="apartment:GelatinBox">
+        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    </owl:Class>
+
+
+
     <!-- apartment:Cookie -->
 
     <owl:Class rdf:about="apartment:Cookie">
