@@ -1444,6 +1444,30 @@
 
 
 
+    <!-- apartment:CleaningItem -->
+
+    <owl:Class rdf:about="apartment:CleaningItem">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    </owl:Class>
+
+
+
+    <!-- apartment:ClassCleaner -->
+
+    <owl:Class rdf:about="apartment:GlassCleaner">
+        <rdfs:subClassOf rdf:resource="apartment:CleaningItem"/>
+    </owl:Class>
+
+
+
+    <!-- apartment:DishSoap -->
+
+    <owl:Class rdf:about="apartment:DishSoap">
+        <rdfs:subClassOf rdf:resource="apartment:CleaningItem"/>
+    </owl:Class>
+
+
+
     <!-- xsd:boolean -->
 
     <owl:Class rdf:about="xsd:boolean"/>
