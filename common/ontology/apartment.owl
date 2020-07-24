@@ -718,7 +718,7 @@
     <!-- apartment:Drinkware -->
 
     <owl:Class rdf:about="apartment:Drinkware">
-        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
     </owl:Class>
 
 
