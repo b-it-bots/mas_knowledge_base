@@ -473,6 +473,30 @@
 
 
 
+    <!-- apartment:LunchBox -->
+
+    <owl:Class rdf:about="apartment:LunchBox">
+        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    </owl:Class>
+
+
+
+    <!-- apartment:Pitcher -->
+
+    <owl:Class rdf:about="apartment:Pitcher">
+        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    </owl:Class>
+
+
+
+    <!-- apartment:Bottle -->
+
+    <owl:Class rdf:about="apartment:Bottle">
+        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    </owl:Class>
+
+
+
     <!-- apartment:ChipsCan -->
 
     <owl:Class rdf:about="apartment:ChipsCan">
@@ -872,14 +896,6 @@
 
     <owl:Class rdf:about="apartment:Location">
         <rdfs:subClassOf rdf:resource="apartment:Thing"/>
-    </owl:Class>
-
-
-
-    <!-- apartment:LunchBox -->
-
-    <owl:Class rdf:about="apartment:LunchBox">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
     </owl:Class>
 
 
