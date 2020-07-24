@@ -727,6 +727,38 @@
 
 
 
+    <!-- apartment:Lemon -->
+
+    <owl:Class rdf:about="apartment:Lemon">
+        <rdfs:subClassOf rdf:resource="apartment:Fruit"/>
+    </owl:Class>
+
+
+
+    <!-- apartment:Peach -->
+
+    <owl:Class rdf:about="apartment:Peach">
+        <rdfs:subClassOf rdf:resource="apartment:Fruit"/>
+    </owl:Class>
+
+
+
+    <!-- apartment:Strawberry -->
+
+    <owl:Class rdf:about="apartment:Strawberry">
+        <rdfs:subClassOf rdf:resource="apartment:Fruit"/>
+    </owl:Class>
+
+
+
+    <!-- apartment:Plum -->
+
+    <owl:Class rdf:about="apartment:Plum">
+        <rdfs:subClassOf rdf:resource="apartment:Fruit"/>
+    </owl:Class>
+
+
+
     <!-- apartment:Oven -->
 
     <owl:Class rdf:about="apartment:Oven">
