@@ -34,6 +34,9 @@ class KnowledgeBaseInterface(object):
         # a mongodb_store.message_store.MessageStoreProxy instance
         self.msg_store_client = None
 
+        # a mongodb_store.message_store.MessageStoreProxy for permanent data
+        self.msg_store_permanent_data_client = None
+
         # name of the host robot; value read from the knowledge base
         self.robot_name = ''
 
@@ -76,6 +79,7 @@ class KnowledgeBaseInterface(object):
         rospy.loginfo('[kb_interface] Creating a message store client')
         try:
             self.msg_store_client = MessageStoreProxy()
+            self.msg_store_permanent_data_client = MessageStoreProxy(collection='permanent_store')
         except:
             print('Could not create a mongodb_store proxy.\n' +
                   'Please spawn mongodb_store/message_store_node.py')
@@ -245,108 +249,146 @@ class KnowledgeBaseInterface(object):
     ############################################################################
     #------------------------------ Data storage ------------------------------#
     ############################################################################
-    def insert_objects(self, object_list):
+    def insert_objects(self, object_list, permanent_storage=False):
         '''Inserts the objects in the given list into the knowledge base.
 
         Keyword arguments:
         @param object_list -- a list of (obj_name, obj) tuples
+        @param permanent_storage: bool -- indicates whether the objects should be stored permanently
 
         '''
+        client = self.__get_message_store_client(permanent_storage)
         for obj_name, obj in object_list:
-            self.msg_store_client.insert_named(obj_name, obj)
+            client.insert_named(obj_name, obj)
 
-    def insert_obj_instance(self, obj_name, obj):
+    def insert_obj_instance(self, obj_name, obj, permanent_storage=False):
         '''Inserts a named object instance into the knowledge base.
 
         Keyword arguments:
         @param obj_name -- name of the object instance
         @param obj -- object to insert
+        @param permanent_storage: bool -- indicates whether the object should be stored permanently
 
         '''
-        self.msg_store_client.insert_named(obj_name, obj)
+        client = self.__get_message_store_client(permanent_storage)
+        client.insert_named(obj_name, obj)
 
-    def update_objects(self, object_list):
+    def update_objects(self, object_list, permanent_storage=False):
         '''Updates the knowledge about the objects in the given list.
 
         Keyword arguments:
         @param object_list -- a list of (obj_name, obj) tuples
+        @param permanent_storage: bool -- indicates whether the objects should be
+                                          updated in permanent storage
 
         '''
+        client = self.__get_message_store_client(permanent_storage)
         for obj_name, obj in object_list:
-            self.msg_store_client.update_named(obj_name, obj)
+            client.update_named(obj_name, obj)
 
-    def update_obj_instance(self, obj_name, obj):
+    def update_obj_instance(self, obj_name, obj, permanent_storage=False):
         '''Updates the knowledge about the given named object.
 
         Keyword arguments:
         @param obj_name -- name of the object instance
         @param obj -- object to insert
+        @param permanent_storage: bool -- indicates whether the object should be
+                                          updated in permanent storage
 
         '''
-        self.msg_store_client.update_named(obj_name, obj)
+        client = self.__get_message_store_client(permanent_storage)
+        client.update_named(obj_name, obj)
 
-    def remove_objects(self, object_list):
+    def remove_objects(self, object_list, permanent_storage=False):
         '''Removes the objects in the given list from the knowledge base.
 
         Keyword arguments:
         @param object_list -- a list of (obj_name, obj_type) tuples
+        @param permanent_storage: bool -- indicates whether the objects should be
+                                          removed from permanent storage
 
         '''
+        client = self.__get_message_store_client(permanent_storage)
         for obj_name, obj_type in object_list:
-            self.msg_store_client.delete_named(obj_name, obj_type)
+            client.delete_named(obj_name, obj_type)
 
-    def remove_obj_instance(self, obj_name, obj_type):
+    def remove_obj_instance(self, obj_name, obj_type, permanent_storage=False):
         '''Removes a named object instance from the knowledge base.
 
         Keyword arguments:
         @param obj_name -- name of the object instance
         @param obj_type -- instance type (the value of the object's "_type" field)
+        @param permanent_storage: bool -- indicates whether the object should be
+                                          removed from permanent storage
 
         '''
-        self.msg_store_client.delete_named(obj_name, obj_type)
+        client = self.__get_message_store_client(permanent_storage)
+        client.delete_named(obj_name, obj_type)
 
-    def get_all_objects(self, obj_type):
+    def get_all_objects(self, obj_type, permanent_storage=False):
         '''Returns a list of all objects of the given type:
 
         Keyword arguments:
         @param obj_type: str -- type of the objects to be retrieved
+        @param permanent_storage: bool -- indicates whether the object should be
+                                          retrieved from permanent storage
 
         '''
         try:
-            objects, _ = self.msg_store_client.query(obj_type)
+            client = self.__get_message_store_client(permanent_storage)
+            objects, _ = client.query(obj_type)
             return objects
         except:
             rospy.logerr('[kb_interface] Error retrieving knowledge about objects of type %s', obj_type)
             return []
 
-    def get_objects(self, object_names, obj_type):
+    def get_objects(self, object_names, obj_type, permanent_storage=False):
         '''Returns a list of named object instances from the knowledge base.
 
         @param object_names -- a list of strings representing object names
         @param obj_type -- type of the objects to be retrieved
+        @param permanent_storage: bool -- indicates whether the object should be
+                                          retrieved from permanent storage
 
         '''
         objects = list()
         for obj_name in object_names:
-            obj = self.get_obj_instance(obj_name, obj_type)
+            obj = self.get_obj_instance(obj_name, obj_type, permanent_storage)
             if obj is not None:
                 objects.append(obj)
         return objects
 
-    def get_obj_instance(self, obj_name, obj_type):
+    def get_obj_instance(self, obj_name, obj_type, permanent_storage=False):
         '''Retrieves a named object instance from the knowledge base.
 
         Keyword arguments:
         @param obj_name -- name of the object instance
         @param obj_type -- instance type (the value of the object's "_type" field)
+        @param permanent_storage: bool -- indicates whether the object should be
+                                          retrieved from permanent storage
 
         '''
         try:
-            obj = self.msg_store_client.query_named(obj_name, obj_type)[0]
+            client = self.__get_message_store_client(permanent_storage)
+            obj = client.query_named(obj_name, obj_type)[0]
             return obj
         except:
             rospy.logerr('[kb_interface] Error retriving knowledge about %s', obj_name)
             return None
+
+    def __get_message_store_client(self, permanent_storage):
+        '''Returns either self.msg_store_permanent_data_client or
+        self.msg_store_client depending on whether "permanent_storage"
+        is True or False respectively.
+
+        Keyword arguments:
+        permanent_storage: bool
+
+        '''
+        if permanent_storage:
+            return self.msg_store_permanent_data_client
+        else:
+            return self.msg_store_client
 
 class KBException(Exception):
     '''A custom knowledge base exception.
