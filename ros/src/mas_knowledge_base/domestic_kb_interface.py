@@ -339,3 +339,35 @@ class DomesticKBInterface(KnowledgeBaseInterface):
                 if obj:
                     object_poses[surface][obj_name] = obj.pose
         return object_poses
+
+    def recognise_person(self, person_to_recognise_name,
+                         person_type='mas_perception_msgs/Person',
+                         recognition_threshold=0.5):
+        '''Attempts to recognise a person by calculating the distance between the embedding
+        of its face and the embeddings of known people. If a match is found, returns
+        the message corresponding to the recognised person; returns None if none of the
+        face embeddings are within the given distance threshold.
+
+        Note: The messages of known people are assumed to be stored in permanent storage; the
+        person to be recognised is assumed to be stored in temporary storage.
+
+        Keyword arguments:
+        person_to_recognise_name: str -- name of the stored message of the person to be recognised
+        person_type: str -- type of a person message - the value of the object's "_type" field
+                            (default "mas_perception_msgs/Person")
+        recognition_threshold: float -- threshold for the distance between the person embeddings
+
+        '''
+        known_people = self.get_all_objects(person_type, permanent_storage=True)
+        unknown_person = self.get_obj_instance(person_to_recognise_name, person_type)
+
+        unknown_person_embedding = np.array(unknown_person.face.views[0].embedding.embedding)
+        embedding_distances = np.zeros(len(known_people))
+        for i, known_person in enumerate(known_people):
+            distance = np.linalg.norm(np.array(known_person.face.views[0].embedding.embedding) - \
+                                      unknown_person_embedding)
+            embedding_distances[i] = distance
+        min_distance_idx = np.argmin(embedding_distances)
+        if embedding_distances[min_distance_idx] < recognition_threshold:
+            return known_people[min_distance_idx]
+        return None
