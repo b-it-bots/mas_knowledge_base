@@ -364,9 +364,9 @@ class DomesticKBInterface(KnowledgeBaseInterface):
         unknown_person_embedding = np.array(unknown_person.face.views[0].embedding.embedding)
         embedding_distances = np.zeros(len(known_people))
         for i, known_person in enumerate(known_people):
-            distance = np.linalg.norm(np.array(known_person.face.views[0].embedding.embedding) - \
-                                      unknown_person_embedding)
-            embedding_distances[i] = distance
+            person_distances = [np.linalg.norm(np.array(view.embedding.embedding) - unknown_person_embedding)
+                                for view in known_person.face.views]
+            embedding_distances[i] = np.mean(person_distances)
         min_distance_idx = np.argmin(embedding_distances)
         if embedding_distances[min_distance_idx] < recognition_threshold:
             return known_people[min_distance_idx]
