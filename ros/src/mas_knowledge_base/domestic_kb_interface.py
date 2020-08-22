@@ -364,6 +364,10 @@ class DomesticKBInterface(KnowledgeBaseInterface):
             return None
 
         unknown_person = self.get_obj_instance(person_to_recognise_name, person_type)
+        if not unknown_person.face.views[0].embedding.embedding:
+            print('[recognise_person] Could not recognise person; face not seen')
+            return None
+
         unknown_person_embedding = np.array(unknown_person.face.views[0].embedding.embedding)
         embedding_distances = np.zeros(len(known_people))
         for i, known_person in enumerate(known_people):
