@@ -553,6 +553,14 @@
     
 
 
+    <!-- apartment:Clothes -->
+
+    <owl:Class rdf:about="apartment:Clothes">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    </owl:Class>
+    
+
+
     <!-- apartment:CoffeeCan -->
 
     <owl:Class rdf:about="apartment:CoffeeCan">
@@ -804,15 +812,18 @@
     
 
 
-     <!-- apartment:Glass -->
-
-    <owl:Class rdf:about="apartment:Glass">
-        <rdfs:subClassOf rdf:resource="apartment:Drinkware"/>
-    </owl:Class>
     <!-- apartment:GelatinBox -->
 
     <owl:Class rdf:about="apartment:GelatinBox">
         <rdfs:subClassOf rdf:resource="apartment:FoodContainer"/>
+    </owl:Class>
+    
+
+
+    <!-- apartment:Glass -->
+
+    <owl:Class rdf:about="apartment:Glass">
+        <rdfs:subClassOf rdf:resource="apartment:Drinkware"/>
     </owl:Class>
     
 
@@ -825,16 +836,18 @@
     
 
 
-    <!-- apartment:Grater -->
-
-    <owl:Class rdf:about="apartment:Grater">
-        <rdfs:subClassOf rdf:resource="apartment:KitchenUtensil"/>
-    </owl:Class>
-    
     <!-- apartment:GraspingStrategy -->
 
     <owl:Class rdf:about="apartment:GraspingStrategy">
         <rdfs:subClassOf rdf:resource="apartment:Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- apartment:Grater -->
+
+    <owl:Class rdf:about="apartment:Grater">
+        <rdfs:subClassOf rdf:resource="apartment:KitchenUtensil"/>
     </owl:Class>
     
 
@@ -947,6 +960,14 @@
 
     <owl:Class rdf:about="apartment:LunchBox">
         <rdfs:subClassOf rdf:resource="apartment:FoodContainer"/>
+    </owl:Class>
+    
+
+
+    <!-- apartment:Marker -->
+
+    <owl:Class rdf:about="apartment:Marker">
+        <rdfs:subClassOf rdf:resource="apartment:Stationery"/>
     </owl:Class>
     
 
@@ -1095,6 +1116,22 @@
     
 
 
+    <!-- apartment:Paper -->
+
+    <owl:Class rdf:about="apartment:Paper">
+        <rdfs:subClassOf rdf:resource="apartment:Stationery"/>
+    </owl:Class>
+    
+
+
+    <!-- apartment:PaperClip -->
+
+    <owl:Class rdf:about="apartment:PaperClip">
+        <rdfs:subClassOf rdf:resource="apartment:Stationery"/>
+    </owl:Class>
+    
+
+
     <!-- apartment:Pasta -->
 
     <owl:Class rdf:about="apartment:Pasta">
@@ -1123,6 +1160,22 @@
 
     <owl:Class rdf:about="apartment:Pear">
         <rdfs:subClassOf rdf:resource="apartment:Fruit"/>
+    </owl:Class>
+    
+
+
+    <!-- apartment:Pen -->
+
+    <owl:Class rdf:about="apartment:Pen">
+        <rdfs:subClassOf rdf:resource="apartment:Stationery"/>
+    </owl:Class>
+    
+
+
+    <!-- apartment:Pencil -->
+
+    <owl:Class rdf:about="apartment:Pencil">
+        <rdfs:subClassOf rdf:resource="apartment:Stationery"/>
     </owl:Class>
     
 
@@ -1255,6 +1308,14 @@
     
 
 
+    <!-- apartment:Shoes -->
+
+    <owl:Class rdf:about="apartment:Shoes">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    </owl:Class>
+    
+
+
     <!-- apartment:ShotGlass -->
 
     <owl:Class rdf:about="apartment:ShotGlass">
@@ -1283,6 +1344,14 @@
 
     <owl:Class rdf:about="apartment:Sink">
         <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    </owl:Class>
+    
+
+
+    <!-- apartment:Slippers -->
+
+    <owl:Class rdf:about="apartment:Slippers">
+        <rdfs:subClassOf rdf:resource="apartment:Shoes"/>
     </owl:Class>
     
 
@@ -1323,6 +1392,22 @@
 
     <owl:Class rdf:about="apartment:Spinach">
         <rdfs:subClassOf rdf:resource="apartment:Vegetable"/>
+    </owl:Class>
+    
+
+
+    <!-- apartment:Stapler -->
+
+    <owl:Class rdf:about="apartment:Stapler">
+        <rdfs:subClassOf rdf:resource="apartment:Stationery"/>
+    </owl:Class>
+    
+
+
+    <!-- apartment:Stationery -->
+
+    <owl:Class rdf:about="apartment:Stationery">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
     </owl:Class>
     
 
@@ -1480,6 +1565,14 @@
     
 
 
+    <!-- apartment:Tape -->
+
+    <owl:Class rdf:about="apartment:Tape">
+        <rdfs:subClassOf rdf:resource="apartment:Stationery"/>
+    </owl:Class>
+    
+
+
     <!-- apartment:TeaSpoon -->
 
     <owl:Class rdf:about="apartment:TeaSpoon">
@@ -1514,6 +1607,14 @@
 
     <owl:Class rdf:about="apartment:Toothpaste">
         <rdfs:subClassOf rdf:resource="apartment:PersonalHygieneItem"/>
+    </owl:Class>
+    
+
+
+    <!-- apartment:Toys -->
+
+    <owl:Class rdf:about="apartment:Toys">
+        <rdfs:subClassOf rdf:resource="apartment:Object"/>
     </owl:Class>
     
 
@@ -1594,6 +1695,14 @@
 
     <owl:Class rdf:about="apartment:Yogurt">
         <rdfs:subClassOf rdf:resource="apartment:Dairy"/>
+    </owl:Class>
+    
+
+
+    <!-- http://homelab#Sockes -->
+
+    <owl:Class rdf:about="http://homelab#Sockes">
+        <rdfs:subClassOf rdf:resource="apartment:Clothes"/>
     </owl:Class>
     
 
