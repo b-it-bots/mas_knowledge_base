@@ -1,6 +1,7 @@
 '''Module defining interfaces for interacting with an OWL ontology.
 '''
 
+import owlready2
 import rdflib
 
 class URIRefConstants(object):
@@ -28,8 +29,10 @@ class OntologyQueryInterface(object):
     '''
 
     def __init__(self, ontology_file, class_prefix, verbose=False):
-        self.knowledge_graph = rdflib.Graph()
-        self.knowledge_graph.load(ontology_file)
+        self.world = owlready2.World()
+        self.ontology = self.world.get_ontology(ontology_file).load()
+        self.knowledge_graph = self.world.as_rdflib_graph()
+
         self.class_prefix = class_prefix
         self.ontology_url = ontology_file[0:ontology_file.rfind('/')]
         self.ontology_file = ontology_file
