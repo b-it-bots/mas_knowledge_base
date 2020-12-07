@@ -348,6 +348,14 @@
     
 
 
+    <!-- http://apartment#Baking -->
+
+    <owl:Class rdf:about="http://apartment#Baking">
+        <rdfs:subClassOf rdf:resource="http://apartment#Utility"/>
+    </owl:Class>
+    
+
+
     <!-- http://apartment#Banana -->
 
     <owl:Class rdf:about="http://apartment#Banana">
@@ -540,10 +548,32 @@
     
 
 
+    <!-- http://apartment#Cooking -->
+
+    <owl:Class rdf:about="http://apartment#Cooking">
+        <rdfs:subClassOf rdf:resource="http://apartment#Utility"/>
+    </owl:Class>
+    
+
+
     <!-- http://apartment#CookingUtensil -->
 
     <owl:Class rdf:about="http://apartment#CookingUtensil">
         <rdfs:subClassOf rdf:resource="http://apartment#Object"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://apartment#usedFor"/>
+                <owl:someValuesFrom rdf:resource="http://apartment#Cooking"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://apartment#Cooling -->
+
+    <owl:Class rdf:about="http://apartment#Cooling">
+        <rdfs:subClassOf rdf:resource="http://apartment#Utility"/>
     </owl:Class>
     
 
@@ -662,6 +692,14 @@
     
 
 
+    <!-- http://apartment#Drinking -->
+
+    <owl:Class rdf:about="http://apartment#Drinking">
+        <rdfs:subClassOf rdf:resource="http://apartment#Utility"/>
+    </owl:Class>
+    
+
+
     <!-- http://apartment#DrinkingGlass -->
 
     <owl:Class rdf:about="http://apartment#DrinkingGlass">
@@ -674,6 +712,12 @@
 
     <owl:Class rdf:about="http://apartment#Drinkware">
         <rdfs:subClassOf rdf:resource="http://apartment#Object"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://apartment#usedFor"/>
+                <owl:someValuesFrom rdf:resource="http://apartment#Drinking"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -706,6 +750,12 @@
 
     <owl:Class rdf:about="http://apartment#FoodContainer">
         <rdfs:subClassOf rdf:resource="http://apartment#Object"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://apartment#usedFor"/>
+                <owl:someValuesFrom rdf:resource="http://apartment#StoringFood"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -722,6 +772,12 @@
 
     <owl:Class rdf:about="http://apartment#Fridge">
         <rdfs:subClassOf rdf:resource="http://apartment#Appliance"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://apartment#usedFor"/>
+                <owl:someValuesFrom rdf:resource="http://apartment#Cooling"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -939,6 +995,18 @@
 
     <owl:Class rdf:about="http://apartment#MicrowaveOven">
         <rdfs:subClassOf rdf:resource="http://apartment#Appliance"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://apartment#usedFor"/>
+                <owl:someValuesFrom rdf:resource="http://apartment#Cooking"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://apartment#usedFor"/>
+                <owl:someValuesFrom rdf:resource="http://apartment#Heating"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1003,6 +1071,12 @@
 
     <owl:Class rdf:about="http://apartment#ObjectContainer">
         <rdfs:subClassOf rdf:resource="http://apartment#Object"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://apartment#usedFor"/>
+                <owl:someValuesFrom rdf:resource="http://apartment#Storing"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1051,6 +1125,12 @@
 
     <owl:Class rdf:about="http://apartment#Oven">
         <rdfs:subClassOf rdf:resource="http://apartment#Appliance"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://apartment#usedFor"/>
+                <owl:someValuesFrom rdf:resource="http://apartment#Baking"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1475,6 +1555,18 @@
 
     <owl:Class rdf:about="http://apartment#Stove">
         <rdfs:subClassOf rdf:resource="http://apartment#Appliance"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://apartment#usedFor"/>
+                <owl:someValuesFrom rdf:resource="http://apartment#Cooking"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://apartment#usedFor"/>
+                <owl:someValuesFrom rdf:resource="http://apartment#Heating"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1604,6 +1696,12 @@
 
     <owl:Class rdf:about="http://apartment#WaterBoiler">
         <rdfs:subClassOf rdf:resource="http://apartment#Appliance"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://apartment#usedFor"/>
+                <owl:someValuesFrom rdf:resource="http://apartment#Boiling"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1705,9 +1803,8 @@
         <owl:members rdf:parseType="Collection">
             <rdf:Description rdf:about="http://apartment#Cup"/>
             <rdf:Description rdf:about="http://apartment#DrinkingGlass"/>
+            <rdf:Description rdf:about="http://apartment#Glass"/>
             <rdf:Description rdf:about="http://apartment#Mug"/>
-            <rdf:Description rdf:about="http://apartment#ShotGlass"/>
-            <rdf:Description rdf:about="http://apartment#WineGlass"/>
         </owl:members>
     </rdf:Description>
     <rdf:Description>
@@ -1734,14 +1831,6 @@
             <rdf:Description rdf:about="http://apartment#ToiletPaper"/>
             <rdf:Description rdf:about="http://apartment#Toothbrush"/>
             <rdf:Description rdf:about="http://apartment#Toothpaste"/>
-        </owl:members>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
-        <owl:members rdf:parseType="Collection">
-            <rdf:Description rdf:about="http://apartment#Location"/>
-            <rdf:Description rdf:about="http://apartment#Object"/>
-            <rdf:Description rdf:about="http://apartment#Plane"/>
         </owl:members>
     </rdf:Description>
 </rdf:RDF>
