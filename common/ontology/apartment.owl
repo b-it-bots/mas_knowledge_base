@@ -1447,6 +1447,22 @@
     
 
 
+    <!-- http://apartment#StoringBooks -->
+
+    <owl:Class rdf:about="http://apartment#StoringBooks">
+        <rdfs:subClassOf rdf:resource="http://apartment#Storing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://apartment#StoringBottles -->
+
+    <owl:Class rdf:about="http://apartment#StoringBottles">
+        <rdfs:subClassOf rdf:resource="http://apartment#Storing"/>
+    </owl:Class>
+    
+
+
     <!-- http://apartment#StoringBowls -->
 
     <owl:Class rdf:about="http://apartment#StoringBowls">
@@ -1482,6 +1498,14 @@
     <!-- http://apartment#StoringFood -->
 
     <owl:Class rdf:about="http://apartment#StoringFood">
+        <rdfs:subClassOf rdf:resource="http://apartment#Storing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://apartment#StoringKitchenUtensil -->
+
+    <owl:Class rdf:about="http://apartment#StoringKitchenUtensil">
         <rdfs:subClassOf rdf:resource="http://apartment#Storing"/>
     </owl:Class>
     
@@ -1535,6 +1559,14 @@
     
 
 
+    <!-- http://apartment#StoringSnacks -->
+
+    <owl:Class rdf:about="http://apartment#StoringSnacks">
+        <rdfs:subClassOf rdf:resource="http://apartment#Storing"/>
+    </owl:Class>
+    
+
+
     <!-- http://apartment#StoringTableCoaster -->
 
     <owl:Class rdf:about="http://apartment#StoringTableCoaster">
@@ -1543,9 +1575,9 @@
     
 
 
-    <!-- http://apartment#StoringUtensil -->
+    <!-- http://apartment#StoringToys -->
 
-    <owl:Class rdf:about="http://apartment#StoringUtensil">
+    <owl:Class rdf:about="http://apartment#StoringToys">
         <rdfs:subClassOf rdf:resource="http://apartment#Storing"/>
     </owl:Class>
     
