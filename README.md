@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/b-it-bots/mas_knowledge_base.svg?branch=master)](https://travis-ci.com/github/b-it-bots/mas_knowledge_base)
+
 # ``mas_knowledge_base``
 
 # Table of Contents

@@ -116,6 +116,36 @@ class OntologyQueryInterface(object):
             return obj_name in self.get_instances_of(class_name)
         return False
 
+    def is_subclass_of(self, class1, class2):
+        '''Returns True if class1 is a subclass of class2; returns False otherwise.
+        Raises a ValueError if either class1 or class2 is not a valid class in the ontology.
+
+        Keyword arguments:
+        class1: str -- name of a class
+        class2: str -- name of a hypothesised parent class
+
+        '''
+        if not self.is_class(class1):
+            raise ValueError('"{0}" does not exist as a class in the ontology!'.format(class1))
+        if not self.is_class(class2):
+            raise ValueError('"{0}" does not exist as a class in the ontology!'.format(class2))
+        return class1 in self.get_subclasses_of(class2)
+
+    def is_parent_class_of(self, class1, class2):
+        '''Returns True if class1 is a parent class of class2; returns False otherwise.
+        Raises a ValueError if either class1 or class2 is not a valid class in the ontology.
+
+        Keyword arguments:
+        class1: str -- name of a class
+        class2: str -- name of a hypothesised subclass
+
+        '''
+        if not self.is_class(class1):
+            raise ValueError('"{0}" does not exist as a class in the ontology!'.format(class1))
+        if not self.is_class(class2):
+            raise ValueError('"{0}" does not exist as a class in the ontology!'.format(class2))
+        return class2 in self.get_subclasses_of(class1)
+
     def get_class_hierarchy(self):
         '''Returns a dictionary in which each key is a class and the value
         is a list of subclasses of that class. The dictionary thus represents
@@ -153,7 +183,7 @@ class OntologyQueryInterface(object):
 
         Keyword arguments:
         @param class_name -- string representing the name of a class
-        @param only_children -- boolean if set to True, only the immediate 
+        @param only_children -- boolean if set to True, only the immediate
                                 children of class_name will be returned
 
         '''
@@ -173,7 +203,7 @@ class OntologyQueryInterface(object):
 
         Keyword arguments:
         @param class_name -- string representing the name of a class
-        @param only_parents -- boolean if set to True, only the immediate 
+        @param only_parents -- boolean if set to True, only the immediate
                                parents of class_name will be returned
 
         '''
@@ -196,8 +226,8 @@ class OntologyQueryInterface(object):
 
         Keyword arguments:
         @param prop -- string representing the name of a property
-        @param object -- string representing an entity in the ontology. 
-                         This could either be an instance of a class or a value 
+        @param object -- string representing an entity in the ontology.
+                         This could either be an instance of a class or a value
                          of a specific data-type (such as a float).
 
         '''
@@ -284,7 +314,7 @@ class OntologyQueryInterface(object):
             raise ValueError('"{0}" does not exist as a property in the ontology!'.format(prop))
 
     def get_property_types(self, prop):
-        '''Returns a list that specifies the types (such as FunctionalProperty) 
+        '''Returns a list that specifies the types (such as FunctionalProperty)
         defined for the property.
 
         Keyword arguments:
@@ -303,7 +333,7 @@ class OntologyQueryInterface(object):
             raise ValueError('"{0}" does not exist as a property in the ontology!'.format(prop))
 
     def get_associated_properties(self, class_name):
-        '''Returns a list of properties that contain the class name either as 
+        '''Returns a list of properties that contain the class name either as
         the domain or the range of the property.
 
         Keyword arguments:
@@ -318,8 +348,8 @@ class OntologyQueryInterface(object):
         return associated_properties
 
     def insert_class_definition(self, class_name, parent_class_names=[]):
-        '''Defines a new class in the ontology. If the class_name already exists, 
-        and new parent classes are passed, only the sub_class relations between 
+        '''Defines a new class in the ontology. If the class_name already exists,
+        and new parent classes are passed, only the sub_class relations between
         the class_name and new parent classes are established.
 
         Keyword arguments:
@@ -343,7 +373,7 @@ class OntologyQueryInterface(object):
             self.knowledge_graph.add((class_uri, rdflib.RDFS.subClassOf,
                                       parent_class_uri))
 
-        # Reset class names list to ensure that the newly added 
+        # Reset class names list to ensure that the newly added
         # class is included in the next query to the class_list
         self.__class_names = None
 
@@ -354,10 +384,10 @@ class OntologyQueryInterface(object):
         Keyword arguments:
         property_name -- string representing the name of the new property
         domain -- string representing the domain of the new property
-        range -- string representing the range of the new property. 
+        range -- string representing the range of the new property.
                  This could be a class or a data type (such as float)
-        prop_type -- string/None representing the type (such as FunctionalProperty). 
-                     If 'None', the property will have only the default ObjectProperty 
+        prop_type -- string/None representing the type (such as FunctionalProperty).
+                     If 'None', the property will have only the default ObjectProperty
                      type and no additional type will be added.
         domain_ns -- string representing the optional namespace for the domain.
                      By default the class_prefix is used as the namespace.
@@ -392,7 +422,7 @@ class OntologyQueryInterface(object):
                 self.knowledge_graph.add((prop_uri, URIRefConstants.RDF_TYPE,
                                           prop_type_uri))
 
-            # Reset property names list to ensure that the newly added 
+            # Reset property names list to ensure that the newly added
             # property is included in the next query to the property_list
             self.__property_names = None
 
@@ -420,7 +450,7 @@ class OntologyQueryInterface(object):
         Keyword arguments:
         property_name -- string representing the name of the predicate
         instance -- tuple(string, string) representing the subject and the object respectively.
-                    While the subject has to be an instance of a class, the object could be 
+                    While the subject has to be an instance of a class, the object could be
                     an instance of a class or a value of a data-type (such as float)
 
         '''
@@ -434,9 +464,9 @@ class OntologyQueryInterface(object):
                                       rdflib.URIRef(self.__get_entity_url(instance[1]))))
 
     def remove_class_definition(self, class_name):
-        '''Removes an existing class from the ontology. 
-        Additionally, also removes all instances of this class and 
-        all property definitions which contain this class as domain/range and 
+        '''Removes an existing class from the ontology.
+        Additionally, also removes all instances of this class and
+        all property definitions which contain this class as domain/range and
         all their assertions
 
         Keyword arguments:
@@ -479,7 +509,7 @@ class OntologyQueryInterface(object):
         self.__verbose('Class "{0}" successfully removed from ontology'.format(class_name))
 
     def remove_property_definition(self, property_name):
-        '''Removes an existing property from the ontology 
+        '''Removes an existing property from the ontology
         along with all its assertions
 
         Keyword arguments:
@@ -527,7 +557,7 @@ class OntologyQueryInterface(object):
         Keyword arguments:
         property_name -- string representing the name of the predicate
         instance -- tuple(string, string) representing the subject and the object respectively.
-                    While the subject has to be an instance of a class, the object could be 
+                    While the subject has to be an instance of a class, the object could be
                     an instance of a class or a value of a data-type (such as float)
 
         '''
@@ -602,14 +632,14 @@ class OntologyQueryInterface(object):
             return rdflib.URIRef(self.__get_entity_url(entity))
 
     def __extract_class_name(self, rdf_class, delimiter=':'):
-        '''Extracts the name of a class given a string of the format 
-        "class_prefix:class_name" or "class_prefix#class_name". 
-        However, if the rdf_class is a URL the function returns the last 
+        '''Extracts the name of a class given a string of the format
+        "class_prefix:class_name" or "class_prefix#class_name".
+        However, if the rdf_class is a URL the function returns the last
         element in the URL as the class name
 
         Keyword arguments:
         @param rdf_class -- string of the form "prefix:class"
-        @param delimiter -- char representing the delimiter between the 
+        @param delimiter -- char representing the delimiter between the
                             class_prefix and the class_name
 
         '''
@@ -629,7 +659,7 @@ class OntologyQueryInterface(object):
         return obj_url[obj_url.rfind('/')+1:]
 
     def __is_url(self, rdf_class):
-        '''Returns True if the rdf_class is specified as a URL and False if the 
+        '''Returns True if the rdf_class is specified as a URL and False if the
         rdf_class is specified in the form of class_prefix:class_name
 
         Keyword arguments:

@@ -1,6 +1,8 @@
 '''Module defining interfaces for knowledge base interactions
 specific to domestic applications.
 '''
+import numpy as np
+import tf
 
 from mas_knowledge_base.knowledge_base_interface import KnowledgeBaseInterface
 
@@ -14,6 +16,8 @@ class DomesticKBInterface(KnowledgeBaseInterface):
     '''
     def __init__(self):
         super(DomesticKBInterface, self).__init__()
+
+        self.tf_listener = tf.TransformListener()
 
     ############################################################################
     #--------------------------- Symbolic knowledge ---------------------------#
@@ -295,6 +299,27 @@ class DomesticKBInterface(KnowledgeBaseInterface):
     ############################################################################
     #------------------------------ Data storage ------------------------------#
     ############################################################################
+    def get_objects_within_distance(self, base_link_frame_name, obj_type, distance_threshold_m):
+        '''Returns a list of objects of a given type that are at a certain distance from the robot.
+
+        @param base_link_frame_name: str -- name of the robot's base link frame
+        @param obj_type: str -- type of the objects that need to be considered
+        @param distance_threshold_m: float -- threshold (in meters) within which objects
+                                              are considered
+
+        '''
+        objects = self.get_all_objects(obj_type)
+        objects_within_distance = []
+        for obj in objects:
+            pose_base_link = self.tf_listener.transformPose(base_link_frame_name,
+                                                            obj.pose)
+            position_base_link = np.array([pose_base_link.pose.position.x,
+                                           pose_base_link.pose.position.y,
+                                           pose_base_link.pose.position.z])
+            if np.linalg.norm(position_base_link) < distance_threshold_m:
+                objects_within_distance.append(obj)
+        return objects_within_distance
+
     def get_surface_object_pose_map(self, surface_object_map, obj_type):
         '''Returns a dictionary of surfaces and object poses, namely each key
         is a surface from the given dictionary and each value is a dictionary of
@@ -314,3 +339,42 @@ class DomesticKBInterface(KnowledgeBaseInterface):
                 if obj:
                     object_poses[surface][obj_name] = obj.pose
         return object_poses
+
+    def recognise_person(self, person_to_recognise_name,
+                         person_type='mas_perception_msgs/Person',
+                         recognition_threshold=0.5):
+        '''Attempts to recognise a person by calculating the distance between the embedding
+        of its face and the embeddings of known people. If a match is found, returns
+        the message corresponding to the recognised person; returns None if none of the
+        face embeddings are within the given distance threshold.
+
+        Note: The messages of known people are assumed to be stored in permanent storage; the
+        person to be recognised is assumed to be stored in temporary storage.
+
+        Keyword arguments:
+        person_to_recognise_name: str -- name of the stored message of the person to be recognised
+        person_type: str -- type of a person message - the value of the object's "_type" field
+                            (default "mas_perception_msgs/Person")
+        recognition_threshold: float -- threshold for the distance between the person embeddings
+
+        '''
+        known_people = self.get_all_objects(person_type, permanent_storage=True)
+        if not known_people:
+            print('[recognise_person] No people found in the knowledge base')
+            return None
+
+        unknown_person = self.get_obj_instance(person_to_recognise_name, person_type)
+        if not unknown_person.face.views[0].embedding.embedding:
+            print('[recognise_person] Could not recognise person; face not seen')
+            return None
+
+        unknown_person_embedding = np.array(unknown_person.face.views[0].embedding.embedding)
+        embedding_distances = np.zeros(len(known_people))
+        for i, known_person in enumerate(known_people):
+            person_distances = [np.linalg.norm(np.array(view.embedding.embedding) - unknown_person_embedding)
+                                for view in known_person.face.views]
+            embedding_distances[i] = np.mean(person_distances)
+        min_distance_idx = np.argmin(embedding_distances)
+        if embedding_distances[min_distance_idx] < recognition_threshold:
+            return known_people[min_distance_idx]
+        return None

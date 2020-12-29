@@ -25,7 +25,7 @@ class ontology_query_interface_test(unittest.TestCase):
                                              class_prefix=self.ontology_ns)
 
     def test_get_classes(self):
-        validation_data = ['Drinkware', 'Furniture', 'Location', 'Mug', 
+        validation_data = ['Drinkware', 'Furniture', 'Location', 'Mug',
                            'Object', 'Room', 'Table', 'WorkTable']
         acquired_data = sorted(self.ont_if.get_classes())
         self.assertEqual(acquired_data, validation_data)
@@ -44,6 +44,14 @@ class ontology_query_interface_test(unittest.TestCase):
         self.assertTrue(self.ont_if.is_instance_of("CoffeeMug", "Mug"))
         self.assertFalse(self.ont_if.is_instance_of("Desk", "Mug"))
 
+    def test_is_subclass_of(self):
+        self.assertTrue(self.ont_if.is_subclass_of("Room", "Location"))
+        self.assertFalse(self.ont_if.is_subclass_of("Room", "Object"))
+
+    def test_is_parent_class_of(self):
+        self.assertTrue(self.ont_if.is_parent_class_of("Location", "Room"))
+        self.assertFalse(self.ont_if.is_parent_class_of("Object", "Room"))
+
     def test_get_class_hierarchy(self):
         validation_data = {'Drinkware': ['Mug'], 'Mug': [], 'WorkTable': [],
                            'Table': ['WorkTable'], 'Location': ['Room'],
@@ -55,7 +63,7 @@ class ontology_query_interface_test(unittest.TestCase):
                          sorted(list(validation_data.keys())))
 
         for class_name in acquired_data.keys():
-            self.assertEqual(sorted(acquired_data[class_name]), 
+            self.assertEqual(sorted(acquired_data[class_name]),
                              validation_data[class_name])
 
     def test_get_instances_of(self):
@@ -201,7 +209,7 @@ class ontology_query_interface_test(unittest.TestCase):
         self.assertTrue(self.ont_if.is_property(prop_2_name))
 
         # Validate the domain-range of the properties
-        self.assertEqual(("Object", "Location"), 
+        self.assertEqual(("Object", "Location"),
                          self.ont_if.get_property_domain_range(prop_1_name))
         self.assertEqual(("Object", "float"),
                          self.ont_if.get_property_domain_range(prop_2_name))

@@ -40,6 +40,7 @@ class OntologyExporter(object):
         '''
         object_properties = self.ont_query_interface.get_object_properties()
         facts_to_add = []
+        instances_to_add = []
         for obj_property in object_properties:
             (prop_domain, prop_range) = self.ont_query_interface.get_property_domain_range(obj_property)
             subj_obj_pairs = self.ont_query_interface.get_all_subjects_and_objects(obj_property)
@@ -59,8 +60,58 @@ class OntologyExporter(object):
                     else:
                         fact = [obj_property, [(prop_domain + '0', subj),
                                                (prop_range + '1', obj)]]
+
+                    instances_to_add = self.update_instance_in_list(subj, prop_domain,
+                                                                    instances_to_add)
+                    instances_to_add = self.update_instance_in_list(obj, prop_range,
+                                                                    instances_to_add)
+
                 facts_to_add.append(fact)
+
+        print('Inserting instances')
+        self.kb_interface.insert_instances(instances_to_add)
+
+        print('Inserting facts')
         self.kb_interface.insert_facts(facts_to_add)
+
+        print('Ontology export complete')
+
+    def update_instance_in_list(self, instance, instance_type, instance_list):
+        '''Inserts or updates "instance" in "instance_list". In particular:
+        * returns "instance_list" if an entry (instance_type, instance) already exists
+        * returns an updated "instance_list" otherwise:
+            * if "instance" already exists in an entry in "instance_list", but the types
+              are different, takes the more specific type as the type of "instance" if
+              the types are in a ancestor/descendant relation. If the types are disjoint,
+              keeps the already existing type of "instance"
+            * if "instance" does not exist in any entry, a new entry
+            (instance_list, instance) is added to "instance_list"
+
+        Keyword arguments:
+        @param instance: str -- name of an instance in the ontology
+        @param instance_type: str -- type of "instance"
+        @param instance_list: Sequence[Tuple[str, str]] -- list of (type, instance) tuples
+
+        '''
+        if (instance_type, instance) in instance_list:
+            return instance_list
+
+        instance_inserted = False
+        for i, (inst_type, inst) in enumerate(instance_list):
+            if inst == instance:
+                if self.ont_query_interface.is_subclass_of(instance_type, inst_type):
+                    instance_list[i] = (instance_type, inst)
+                    instance_inserted = True
+                elif self.ont_query_interface.is_subclass_of(inst_type, instance_type):
+                    instance_list[i] = (inst_type, inst)
+                    instance_inserted = True
+                else:
+                    print('WARNING: {0} exists as an instance of two unrelated classes {1} and {2}'.format(inst, instance_type, inst_type))
+                    print('WARNING: Only exporting type {0}'.format(inst_type))
+
+        if not instance_inserted:
+            instance_list.append((instance_type, instance))
+        return instance_list
 
 if __name__ == '__main__':
     rospy.init_node('ontology_exporter')
