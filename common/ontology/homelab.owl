@@ -1,11 +1,23 @@
 <?xml version="1.0"?>
-<rdf:RDF
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY owl2xml "http://www.w3.org/2006/12/owl2-xml#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY homelab "http://homelab.owl#" >
+]>
+
+<rdf:RDF xmlns="http://homelab.owl#"
+     xml:base="http://homelab.owl"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-    <owl:Ontology rdf:about="urn:absolute:homelab"/>
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:homelab="http://homelab.owl#">
+    <owl:Ontology rdf:about="http://homelab.owl"/>
 
 
 
@@ -20,77 +32,77 @@
 
 
 
-    <!-- apartment:above -->
+    <!-- http://homelab.owl#above -->
 
-    <owl:ObjectProperty rdf:about="apartment:above">
-        <owl:inverseOf rdf:resource="apartment:below"/>
+    <owl:ObjectProperty rdf:about="&homelab;above">
+        <owl:inverseOf rdf:resource="&homelab;below"/>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
-        <rdfs:domain rdf:resource="apartment:Object"/>
-        <rdfs:range rdf:resource="apartment:Object"/>
+        <rdfs:domain rdf:resource="&homelab;Object"/>
+        <rdfs:range rdf:resource="&homelab;Object"/>
     </owl:ObjectProperty>
 
 
 
-    <!-- apartment:below -->
+    <!-- http://homelab.owl#below -->
 
-    <owl:ObjectProperty rdf:about="apartment:below"/>
+    <owl:ObjectProperty rdf:about="&homelab;below"/>
 
 
 
-    <!-- apartment:canPlaceOn -->
+    <!-- http://homelab.owl#canPlaceOn -->
 
-    <owl:ObjectProperty rdf:about="apartment:canPlaceOn">
-        <rdfs:domain rdf:resource="apartment:Object"/>
-        <rdfs:range rdf:resource="apartment:Plane"/>
+    <owl:ObjectProperty rdf:about="&homelab;canPlaceOn">
+        <rdfs:domain rdf:resource="&homelab;Object"/>
+        <rdfs:range rdf:resource="&homelab;Plane"/>
     </owl:ObjectProperty>
 
 
 
-    <!-- apartment:closeTo -->
+    <!-- http://homelab.owl#closeTo -->
 
-    <owl:ObjectProperty rdf:about="apartment:closeTo">
+    <owl:ObjectProperty rdf:about="&homelab;closeTo">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
-        <rdfs:domain rdf:resource="apartment:Object"/>
-        <rdfs:range rdf:resource="apartment:Object"/>
+        <rdfs:domain rdf:resource="&homelab;Object"/>
+        <rdfs:range rdf:resource="&homelab;Object"/>
     </owl:ObjectProperty>
 
 
 
-    <!-- apartment:closeToWall -->
+    <!-- http://homelab.owl#closeToWall -->
 
-    <owl:ObjectProperty rdf:about="apartment:closeToWall">
+    <owl:ObjectProperty rdf:about="&homelab;closeToWall">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
-        <rdfs:domain rdf:resource="apartment:Object"/>
-        <rdfs:range rdf:resource="apartment:Wall"/>
+        <rdfs:domain rdf:resource="&homelab;Object"/>
+        <rdfs:range rdf:resource="&homelab;Wall"/>
     </owl:ObjectProperty>
 
 
 
-    <!-- apartment:connectedTo -->
+    <!-- http://homelab.owl#connectedTo -->
 
-    <owl:ObjectProperty rdf:about="apartment:connectedTo">
+    <owl:ObjectProperty rdf:about="&homelab;connectedTo">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
-        <rdfs:domain rdf:resource="apartment:Room"/>
-        <rdfs:range rdf:resource="apartment:Room"/>
+        <rdfs:domain rdf:resource="&homelab;Room"/>
+        <rdfs:range rdf:resource="&homelab;Room"/>
     </owl:ObjectProperty>
 
 
 
-    <!-- apartment:defaultLocation -->
+    <!-- http://homelab.owl#defaultLocation -->
 
-    <owl:ObjectProperty rdf:about="apartment:defaultLocation">
+    <owl:ObjectProperty rdf:about="&homelab;defaultLocation">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="apartment:Object"/>
-        <rdfs:range rdf:resource="apartment:Furniture"/>
+        <rdfs:domain rdf:resource="&homelab;Object"/>
+        <rdfs:range rdf:resource="&homelab;Furniture"/>
     </owl:ObjectProperty>
 
 
 
-    <!-- apartment:hasDoor -->
+    <!-- http://homelab.owl#hasDoor -->
 
-    <owl:ObjectProperty rdf:about="apartment:hasDoor">
+    <owl:ObjectProperty rdf:about="&homelab;hasDoor">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="apartment:Furniture"/>
+        <rdfs:domain rdf:resource="&homelab;Furniture"/>
         <rdfs:range>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
@@ -101,78 +113,78 @@
 
 
 
-    <!-- apartment:inside -->
+    <!-- http://homelab.owl#inside -->
 
-    <owl:ObjectProperty rdf:about="apartment:inside">
-        <rdfs:domain rdf:resource="apartment:Object"/>
-        <rdfs:range rdf:resource="apartment:Object"/>
+    <owl:ObjectProperty rdf:about="&homelab;inside">
+        <rdfs:domain rdf:resource="&homelab;Object"/>
+        <rdfs:range rdf:resource="&homelab;Object"/>
     </owl:ObjectProperty>
 
 
 
-    <!-- apartment:locatedAt -->
+    <!-- http://homelab.owl#locatedAt -->
 
-    <owl:ObjectProperty rdf:about="apartment:locatedAt">
+    <owl:ObjectProperty rdf:about="&homelab;locatedAt">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="apartment:Object"/>
-        <rdfs:range rdf:resource="apartment:Location"/>
+        <rdfs:domain rdf:resource="&homelab;Object"/>
+        <rdfs:range rdf:resource="&homelab;Location"/>
     </owl:ObjectProperty>
 
 
 
-    <!-- apartment:locatedInRoom -->
+    <!-- http://homelab.owl#locatedInRoom -->
 
-    <owl:ObjectProperty rdf:about="apartment:locatedInRoom">
+    <owl:ObjectProperty rdf:about="&homelab;locatedInRoom">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="apartment:Object"/>
-        <rdfs:range rdf:resource="apartment:Room"/>
+        <rdfs:domain rdf:resource="&homelab;Object"/>
+        <rdfs:range rdf:resource="&homelab;Room"/>
     </owl:ObjectProperty>
 
 
 
-    <!-- apartment:nextTo -->
+    <!-- http://homelab.owl#nextTo -->
 
-    <owl:ObjectProperty rdf:about="apartment:nextTo">
+    <owl:ObjectProperty rdf:about="&homelab;nextTo">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
-        <rdfs:domain rdf:resource="apartment:Object"/>
-        <rdfs:range rdf:resource="apartment:Object"/>
+        <rdfs:domain rdf:resource="&homelab;Object"/>
+        <rdfs:range rdf:resource="&homelab;Object"/>
     </owl:ObjectProperty>
 
 
 
-    <!-- apartment:onTopOf -->
+    <!-- http://homelab.owl#onTopOf -->
 
-    <owl:ObjectProperty rdf:about="apartment:onTopOf">
-        <rdfs:domain rdf:resource="apartment:Object"/>
-        <rdfs:range rdf:resource="apartment:Object"/>
+    <owl:ObjectProperty rdf:about="&homelab;onTopOf">
+        <rdfs:domain rdf:resource="&homelab;Object"/>
+        <rdfs:range rdf:resource="&homelab;Object"/>
     </owl:ObjectProperty>
 
 
 
-    <!-- apartment:oppositeTo -->
+    <!-- http://homelab.owl#oppositeTo -->
 
-    <owl:ObjectProperty rdf:about="apartment:oppositeTo">
+    <owl:ObjectProperty rdf:about="&homelab;oppositeTo">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
-        <rdfs:domain rdf:resource="apartment:Object"/>
-        <rdfs:range rdf:resource="apartment:Object"/>
+        <rdfs:domain rdf:resource="&homelab;Object"/>
+        <rdfs:range rdf:resource="&homelab;Object"/>
     </owl:ObjectProperty>
 
 
 
-    <!-- apartment:toTheLeftOf -->
+    <!-- http://homelab.owl#toTheLeftOf -->
 
-    <owl:ObjectProperty rdf:about="apartment:toTheLeftOf">
-        <owl:inverseOf rdf:resource="apartment:toTheRightOf"/>
+    <owl:ObjectProperty rdf:about="&homelab;toTheLeftOf">
+        <owl:inverseOf rdf:resource="&homelab;toTheRightOf"/>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
-        <rdfs:domain rdf:resource="apartment:Object"/>
-        <rdfs:range rdf:resource="apartment:Object"/>
+        <rdfs:domain rdf:resource="&homelab;Object"/>
+        <rdfs:range rdf:resource="&homelab;Object"/>
     </owl:ObjectProperty>
 
 
 
-    <!-- apartment:toTheRightOf -->
+    <!-- http://homelab.owl#toTheRightOf -->
 
-    <owl:ObjectProperty rdf:about="apartment:toTheRightOf"/>
+    <owl:ObjectProperty rdf:about="&homelab;toTheRightOf"/>
 
 
 
@@ -187,988 +199,988 @@
 
 
 
-    <!-- apartment:Alcohol -->
+    <!-- http://homelab.owl#Alcohol -->
 
-    <owl:Class rdf:about="apartment:Alcohol">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrink"/>
+    <owl:Class rdf:about="&homelab;Alcohol">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrink"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Apple -->
+    <!-- http://homelab.owl#Apple -->
 
-    <owl:Class rdf:about="apartment:Apple">
-        <rdfs:subClassOf rdf:resource="apartment:Fruit"/>
+    <owl:Class rdf:about="&homelab;Apple">
+        <rdfs:subClassOf rdf:resource="&homelab;Fruit"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Appliance -->
+    <!-- http://homelab.owl#Appliance -->
 
-    <owl:Class rdf:about="apartment:Appliance">
-        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    <owl:Class rdf:about="&homelab;Appliance">
+        <rdfs:subClassOf rdf:resource="&homelab;Object"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Banana -->
+    <!-- http://homelab.owl#Banana -->
 
-    <owl:Class rdf:about="apartment:Banana">
-        <rdfs:subClassOf rdf:resource="apartment:Fruit"/>
+    <owl:Class rdf:about="&homelab;Banana">
+        <rdfs:subClassOf rdf:resource="&homelab;Fruit"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Beef -->
+    <!-- http://homelab.owl#Beef -->
 
-    <owl:Class rdf:about="apartment:Beef">
-        <rdfs:subClassOf rdf:resource="apartment:Meat"/>
+    <owl:Class rdf:about="&homelab;Beef">
+        <rdfs:subClassOf rdf:resource="&homelab;Meat"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Beer -->
+    <!-- http://homelab.owl#Beer -->
 
-    <owl:Class rdf:about="apartment:Beer">
-        <rdfs:subClassOf rdf:resource="apartment:Alcohol"/>
+    <owl:Class rdf:about="&homelab;Beer">
+        <rdfs:subClassOf rdf:resource="&homelab;Alcohol"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Bowl -->
+    <!-- http://homelab.owl#Bowl -->
 
-    <owl:Class rdf:about="apartment:Bowl">
-        <rdfs:subClassOf rdf:resource="apartment:Dish"/>
+    <owl:Class rdf:about="&homelab;Bowl">
+        <rdfs:subClassOf rdf:resource="&homelab;Dish"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Bread -->
+    <!-- http://homelab.owl#Bread -->
 
-    <owl:Class rdf:about="apartment:Bread">
-        <rdfs:subClassOf rdf:resource="apartment:Grain"/>
+    <owl:Class rdf:about="&homelab;Bread">
+        <rdfs:subClassOf rdf:resource="&homelab;Grain"/>
     </owl:Class>
 
 
 
-    <!-- apartment:BreadKnife -->
+    <!-- http://homelab.owl#BreadKnife -->
 
-    <owl:Class rdf:about="apartment:BreadKnife">
-        <rdfs:subClassOf rdf:resource="apartment:KitchenUtensil"/>
+    <owl:Class rdf:about="&homelab;BreadKnife">
+        <rdfs:subClassOf rdf:resource="&homelab;KitchenUtensil"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Broccoli -->
+    <!-- http://homelab.owl#Broccoli -->
 
-    <owl:Class rdf:about="apartment:Broccoli">
-        <rdfs:subClassOf rdf:resource="apartment:Vegetable"/>
+    <owl:Class rdf:about="&homelab;Broccoli">
+        <rdfs:subClassOf rdf:resource="&homelab;Vegetable"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Butter -->
+    <!-- http://homelab.owl#Butter -->
 
-    <owl:Class rdf:about="apartment:Butter">
-        <rdfs:subClassOf rdf:resource="apartment:Dairy"/>
+    <owl:Class rdf:about="&homelab;Butter">
+        <rdfs:subClassOf rdf:resource="&homelab;Dairy"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Buttermilk -->
+    <!-- http://homelab.owl#Buttermilk -->
 
-    <owl:Class rdf:about="apartment:Buttermilk">
-        <rdfs:subClassOf rdf:resource="apartment:Dairy"/>
+    <owl:Class rdf:about="&homelab;Buttermilk">
+        <rdfs:subClassOf rdf:resource="&homelab;Dairy"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Cabinet -->
+    <!-- http://homelab.owl#Cabinet -->
 
-    <owl:Class rdf:about="apartment:Cabinet">
-        <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    <owl:Class rdf:about="&homelab;Cabinet">
+        <rdfs:subClassOf rdf:resource="&homelab;Furniture"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Cereal -->
+    <!-- http://homelab.owl#Cereal -->
 
-    <owl:Class rdf:about="apartment:Cereal">
-        <rdfs:subClassOf rdf:resource="apartment:Grain"/>
+    <owl:Class rdf:about="&homelab;Cereal">
+        <rdfs:subClassOf rdf:resource="&homelab;Grain"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Chair -->
+    <!-- http://homelab.owl#Chair -->
 
-    <owl:Class rdf:about="apartment:Chair">
-        <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    <owl:Class rdf:about="&homelab;Chair">
+        <rdfs:subClassOf rdf:resource="&homelab;Furniture"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Cheese -->
+    <!-- http://homelab.owl#Cheese -->
 
-    <owl:Class rdf:about="apartment:Cheese">
-        <rdfs:subClassOf rdf:resource="apartment:Dairy"/>
+    <owl:Class rdf:about="&homelab;Cheese">
+        <rdfs:subClassOf rdf:resource="&homelab;Dairy"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Chicken -->
+    <!-- http://homelab.owl#Chicken -->
 
-    <owl:Class rdf:about="apartment:Chicken">
-        <rdfs:subClassOf rdf:resource="apartment:Meat"/>
+    <owl:Class rdf:about="&homelab;Chicken">
+        <rdfs:subClassOf rdf:resource="&homelab;Meat"/>
     </owl:Class>
 
 
 
-    <!-- apartment:CoffeeTable -->
+    <!-- http://homelab.owl#CoffeeTable -->
 
-    <owl:Class rdf:about="apartment:CoffeeTable">
-        <rdfs:subClassOf rdf:resource="apartment:Table"/>
+    <owl:Class rdf:about="&homelab;CoffeeTable">
+        <rdfs:subClassOf rdf:resource="&homelab;Table"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Colander -->
+    <!-- http://homelab.owl#Colander -->
 
-    <owl:Class rdf:about="apartment:Colander">
-        <rdfs:subClassOf rdf:resource="apartment:KitchenUtensil"/>
+    <owl:Class rdf:about="&homelab;Colander">
+        <rdfs:subClassOf rdf:resource="&homelab;KitchenUtensil"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Computer -->
+    <!-- http://homelab.owl#Computer -->
 
-    <owl:Class rdf:about="apartment:Computer">
-        <rdfs:subClassOf rdf:resource="apartment:Equipment"/>
+    <owl:Class rdf:about="&homelab;Computer">
+        <rdfs:subClassOf rdf:resource="&homelab;Equipment"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Container -->
+    <!-- http://homelab.owl#Container -->
 
-    <owl:Class rdf:about="apartment:Container">
-        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    <owl:Class rdf:about="&homelab;Container">
+        <rdfs:subClassOf rdf:resource="&homelab;Object"/>
     </owl:Class>
 
 
 
-    <!-- apartment:FoodOrDrinkContainer -->
+    <!-- http://homelab.owl#FoodOrDrinkContainer -->
 
-    <owl:Class rdf:about="apartment:FoodOrDrinkContainer">
-        <rdfs:subClassOf rdf:resource="apartment:Container"/>
+    <owl:Class rdf:about="&homelab;FoodOrDrinkContainer">
+        <rdfs:subClassOf rdf:resource="&homelab;Container"/>
     </owl:Class>
 
 
 
-    <!-- apartment:LunchBox -->
+    <!-- http://homelab.owl#LunchBox -->
 
-    <owl:Class rdf:about="apartment:LunchBox">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    <owl:Class rdf:about="&homelab;LunchBox">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrinkContainer"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Pitcher -->
+    <!-- http://homelab.owl#Pitcher -->
 
-    <owl:Class rdf:about="apartment:Pitcher">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    <owl:Class rdf:about="&homelab;Pitcher">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrinkContainer"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Bottle -->
+    <!-- http://homelab.owl#Bottle -->
 
-    <owl:Class rdf:about="apartment:Bottle">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    <owl:Class rdf:about="&homelab;Bottle">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrinkContainer"/>
     </owl:Class>
 
 
 
-    <!-- apartment:ChipsCan -->
+    <!-- http://homelab.owl#ChipsCan -->
 
-    <owl:Class rdf:about="apartment:ChipsCan">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    <owl:Class rdf:about="&homelab;ChipsCan">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrinkContainer"/>
     </owl:Class>
 
 
 
-    <!-- apartment:CoffeeCan -->
+    <!-- http://homelab.owl#CoffeeCan -->
 
-    <owl:Class rdf:about="apartment:CoffeeCan">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    <owl:Class rdf:about="&homelab;CoffeeCan">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrinkContainer"/>
     </owl:Class>
 
 
 
-    <!-- apartment:CrackerBox -->
+    <!-- http://homelab.owl#CrackerBox -->
 
-    <owl:Class rdf:about="apartment:CrackerBox">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    <owl:Class rdf:about="&homelab;CrackerBox">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrinkContainer"/>
     </owl:Class>
 
 
 
-    <!-- apartment:SugarBox -->
+    <!-- http://homelab.owl#SugarBox -->
 
-    <owl:Class rdf:about="apartment:SugarBox">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    <owl:Class rdf:about="&homelab;SugarBox">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrinkContainer"/>
     </owl:Class>
 
 
 
-    <!-- apartment:SoupCan -->
+    <!-- http://homelab.owl#SoupCan -->
 
-    <owl:Class rdf:about="apartment:SoupCan">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    <owl:Class rdf:about="&homelab;SoupCan">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrinkContainer"/>
     </owl:Class>
 
 
 
-    <!-- apartment:MustartContainer -->
+    <!-- http://homelab.owl#MustartContainer -->
 
-    <owl:Class rdf:about="apartment:MustardContainer">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    <owl:Class rdf:about="&homelab;MustardContainer">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrinkContainer"/>
     </owl:Class>
 
 
 
-    <!-- apartment:MeatCan -->
+    <!-- http://homelab.owl#MeatCan -->
 
-    <owl:Class rdf:about="apartment:MeatCan">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    <owl:Class rdf:about="&homelab;MeatCan">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrinkContainer"/>
     </owl:Class>
 
 
 
-    <!-- apartment:FishCan -->
+    <!-- http://homelab.owl#FishCan -->
 
-    <owl:Class rdf:about="apartment:FishCan">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    <owl:Class rdf:about="&homelab;FishCan">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrinkContainer"/>
     </owl:Class>
 
 
 
-    <!-- apartment:PuddingBox -->
+    <!-- http://homelab.owl#PuddingBox -->
 
-    <owl:Class rdf:about="apartment:PuddingBox">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    <owl:Class rdf:about="&homelab;PuddingBox">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrinkContainer"/>
     </owl:Class>
 
 
 
-    <!-- apartment:GelatinBox -->
+    <!-- http://homelab.owl#GelatinBox -->
 
-    <owl:Class rdf:about="apartment:GelatinBox">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    <owl:Class rdf:about="&homelab;GelatinBox">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrinkContainer"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Cookie -->
+    <!-- http://homelab.owl#Cookie -->
 
-    <owl:Class rdf:about="apartment:Cookie">
-        <rdfs:subClassOf rdf:resource="apartment:Snack"/>
+    <owl:Class rdf:about="&homelab;Cookie">
+        <rdfs:subClassOf rdf:resource="&homelab;Snack"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Couch -->
+    <!-- http://homelab.owl#Couch -->
 
-    <owl:Class rdf:about="apartment:Couch">
-        <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    <owl:Class rdf:about="&homelab;Couch">
+        <rdfs:subClassOf rdf:resource="&homelab;Furniture"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Counter -->
+    <!-- http://homelab.owl#Counter -->
 
-    <owl:Class rdf:about="apartment:Counter">
-        <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    <owl:Class rdf:about="&homelab;Counter">
+        <rdfs:subClassOf rdf:resource="&homelab;Furniture"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Cream -->
+    <!-- http://homelab.owl#Cream -->
 
-    <owl:Class rdf:about="apartment:Cream">
-        <rdfs:subClassOf rdf:resource="apartment:Dairy"/>
+    <owl:Class rdf:about="&homelab;Cream">
+        <rdfs:subClassOf rdf:resource="&homelab;Dairy"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Cup -->
+    <!-- http://homelab.owl#Cup -->
 
-    <owl:Class rdf:about="apartment:Cup">
-        <rdfs:subClassOf rdf:resource="apartment:Drinkware"/>
+    <owl:Class rdf:about="&homelab;Cup">
+        <rdfs:subClassOf rdf:resource="&homelab;Drinkware"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Cutlery -->
+    <!-- http://homelab.owl#Cutlery -->
 
-    <owl:Class rdf:about="apartment:Cutlery">
-        <rdfs:subClassOf rdf:resource="apartment:KitchenUtensil"/>
+    <owl:Class rdf:about="&homelab;Cutlery">
+        <rdfs:subClassOf rdf:resource="&homelab;KitchenUtensil"/>
     </owl:Class>
 
 
 
-    <!-- apartment:CuttingBoard -->
+    <!-- http://homelab.owl#CuttingBoard -->
 
-    <owl:Class rdf:about="apartment:CuttingBoard">
-        <rdfs:subClassOf rdf:resource="apartment:KitchenUtensil"/>
+    <owl:Class rdf:about="&homelab;CuttingBoard">
+        <rdfs:subClassOf rdf:resource="&homelab;KitchenUtensil"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Dairy -->
+    <!-- http://homelab.owl#Dairy -->
 
-    <owl:Class rdf:about="apartment:Dairy">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrink"/>
+    <owl:Class rdf:about="&homelab;Dairy">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrink"/>
     </owl:Class>
 
 
 
-    <!-- apartment:DiningRoom -->
+    <!-- http://homelab.owl#DiningRoom -->
 
-    <owl:Class rdf:about="apartment:DiningRoom">
-        <rdfs:subClassOf rdf:resource="apartment:Room"/>
+    <owl:Class rdf:about="&homelab;DiningRoom">
+        <rdfs:subClassOf rdf:resource="&homelab;Room"/>
     </owl:Class>
 
 
 
-    <!-- apartment:DiningTable -->
+    <!-- http://homelab.owl#DiningTable -->
 
-    <owl:Class rdf:about="apartment:DiningTable">
-        <rdfs:subClassOf rdf:resource="apartment:Table"/>
+    <owl:Class rdf:about="&homelab;DiningTable">
+        <rdfs:subClassOf rdf:resource="&homelab;Table"/>
     </owl:Class>
 
 
 
-    <!-- apartment:DiningTableChair -->
+    <!-- http://homelab.owl#DiningTableChair -->
 
-    <owl:Class rdf:about="apartment:DiningTableChair">
-        <rdfs:subClassOf rdf:resource="apartment:Chair"/>
+    <owl:Class rdf:about="&homelab;DiningTableChair">
+        <rdfs:subClassOf rdf:resource="&homelab;Chair"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Dish -->
+    <!-- http://homelab.owl#Dish -->
 
-    <owl:Class rdf:about="apartment:Dish">
-        <rdfs:subClassOf rdf:resource="apartment:KitchenUtensil"/>
+    <owl:Class rdf:about="&homelab;Dish">
+        <rdfs:subClassOf rdf:resource="&homelab;KitchenUtensil"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Dishwasher -->
+    <!-- http://homelab.owl#Dishwasher -->
 
-    <owl:Class rdf:about="apartment:Dishwasher">
-        <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
+    <owl:Class rdf:about="&homelab;Dishwasher">
+        <rdfs:subClassOf rdf:resource="&homelab;Appliance"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Drawer -->
+    <!-- http://homelab.owl#Drawer -->
 
-    <owl:Class rdf:about="apartment:Drawer">
-        <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    <owl:Class rdf:about="&homelab;Drawer">
+        <rdfs:subClassOf rdf:resource="&homelab;Furniture"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Drinkware -->
+    <!-- http://homelab.owl#Drinkware -->
 
-    <owl:Class rdf:about="apartment:Drinkware">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrinkContainer"/>
+    <owl:Class rdf:about="&homelab;Drinkware">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrinkContainer"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Equipment -->
+    <!-- http://homelab.owl#Equipment -->
 
-    <owl:Class rdf:about="apartment:Equipment">
-        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    <owl:Class rdf:about="&homelab;Equipment">
+        <rdfs:subClassOf rdf:resource="&homelab;Object"/>
     </owl:Class>
 
 
 
-    <!-- apartment:FoodOrDrink -->
+    <!-- http://homelab.owl#FoodOrDrink -->
 
-    <owl:Class rdf:about="apartment:FoodOrDrink">
-        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    <owl:Class rdf:about="&homelab;FoodOrDrink">
+        <rdfs:subClassOf rdf:resource="&homelab;Object"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Fork -->
+    <!-- http://homelab.owl#Fork -->
 
-    <owl:Class rdf:about="apartment:Fork">
-        <rdfs:subClassOf rdf:resource="apartment:Cutlery"/>
+    <owl:Class rdf:about="&homelab;Fork">
+        <rdfs:subClassOf rdf:resource="&homelab;Cutlery"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Fridge -->
+    <!-- http://homelab.owl#Fridge -->
 
-    <owl:Class rdf:about="apartment:Fridge">
-        <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
+    <owl:Class rdf:about="&homelab;Fridge">
+        <rdfs:subClassOf rdf:resource="&homelab;Appliance"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Fruit -->
+    <!-- http://homelab.owl#Fruit -->
 
-    <owl:Class rdf:about="apartment:Fruit">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrink"/>
+    <owl:Class rdf:about="&homelab;Fruit">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrink"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Furniture -->
+    <!-- http://homelab.owl#Furniture -->
 
-    <owl:Class rdf:about="apartment:Furniture">
-        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    <owl:Class rdf:about="&homelab;Furniture">
+        <rdfs:subClassOf rdf:resource="&homelab;Object"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Glass -->
+    <!-- http://homelab.owl#Glass -->
 
-    <owl:Class rdf:about="apartment:Glass">
-        <rdfs:subClassOf rdf:resource="apartment:Drinkware"/>
+    <owl:Class rdf:about="&homelab;Glass">
+        <rdfs:subClassOf rdf:resource="&homelab;Drinkware"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Grain -->
+    <!-- http://homelab.owl#Grain -->
 
-    <owl:Class rdf:about="apartment:Grain">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrink"/>
+    <owl:Class rdf:about="&homelab;Grain">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrink"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Grater -->
+    <!-- http://homelab.owl#Grater -->
 
-    <owl:Class rdf:about="apartment:Grater">
-        <rdfs:subClassOf rdf:resource="apartment:KitchenUtensil"/>
+    <owl:Class rdf:about="&homelab;Grater">
+        <rdfs:subClassOf rdf:resource="&homelab;KitchenUtensil"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Ham -->
+    <!-- http://homelab.owl#Ham -->
 
-    <owl:Class rdf:about="apartment:Ham">
-        <rdfs:subClassOf rdf:resource="apartment:Meat"/>
+    <owl:Class rdf:about="&homelab;Ham">
+        <rdfs:subClassOf rdf:resource="&homelab;Meat"/>
     </owl:Class>
 
 
 
-    <!-- apartment:IceCream -->
+    <!-- http://homelab.owl#IceCream -->
 
-    <owl:Class rdf:about="apartment:IceCream">
-        <rdfs:subClassOf rdf:resource="apartment:Dairy"/>
+    <owl:Class rdf:about="&homelab;IceCream">
+        <rdfs:subClassOf rdf:resource="&homelab;Dairy"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Ketchup -->
+    <!-- http://homelab.owl#Ketchup -->
 
-    <owl:Class rdf:about="apartment:Ketchup">
-        <rdfs:subClassOf rdf:resource="apartment:Sauce"/>
+    <owl:Class rdf:about="&homelab;Ketchup">
+        <rdfs:subClassOf rdf:resource="&homelab;Sauce"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Kitchen -->
+    <!-- http://homelab.owl#Kitchen -->
 
-    <owl:Class rdf:about="apartment:Kitchen">
-        <rdfs:subClassOf rdf:resource="apartment:Room"/>
+    <owl:Class rdf:about="&homelab;Kitchen">
+        <rdfs:subClassOf rdf:resource="&homelab;Room"/>
     </owl:Class>
 
 
 
-    <!-- apartment:KitchenUtensil -->
+    <!-- http://homelab.owl#KitchenUtensil -->
 
-    <owl:Class rdf:about="apartment:KitchenUtensil">
-        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    <owl:Class rdf:about="&homelab;KitchenUtensil">
+        <rdfs:subClassOf rdf:resource="&homelab;Object"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Knife -->
+    <!-- http://homelab.owl#Knife -->
 
-    <owl:Class rdf:about="apartment:Knife">
-        <rdfs:subClassOf rdf:resource="apartment:Cutlery"/>
+    <owl:Class rdf:about="&homelab;Knife">
+        <rdfs:subClassOf rdf:resource="&homelab;Cutlery"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Laptop -->
+    <!-- http://homelab.owl#Laptop -->
 
-    <owl:Class rdf:about="apartment:Laptop">
-        <rdfs:subClassOf rdf:resource="apartment:Equipment"/>
+    <owl:Class rdf:about="&homelab;Laptop">
+        <rdfs:subClassOf rdf:resource="&homelab;Equipment"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Lettuce -->
+    <!-- http://homelab.owl#Lettuce -->
 
-    <owl:Class rdf:about="apartment:Lettuce">
-        <rdfs:subClassOf rdf:resource="apartment:Vegetable"/>
+    <owl:Class rdf:about="&homelab;Lettuce">
+        <rdfs:subClassOf rdf:resource="&homelab;Vegetable"/>
     </owl:Class>
 
 
 
-    <!-- apartment:LivingRoom -->
+    <!-- http://homelab.owl#LivingRoom -->
 
-    <owl:Class rdf:about="apartment:LivingRoom">
-        <rdfs:subClassOf rdf:resource="apartment:Room"/>
+    <owl:Class rdf:about="&homelab;LivingRoom">
+        <rdfs:subClassOf rdf:resource="&homelab;Room"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Location -->
+    <!-- http://homelab.owl#Location -->
 
-    <owl:Class rdf:about="apartment:Location"/>
+    <owl:Class rdf:about="&homelab;Location"/>
 
 
 
-    <!-- apartment:Mayo -->
+    <!-- http://homelab.owl#Mayo -->
 
-    <owl:Class rdf:about="apartment:Mayo">
-        <rdfs:subClassOf rdf:resource="apartment:Sauce"/>
+    <owl:Class rdf:about="&homelab;Mayo">
+        <rdfs:subClassOf rdf:resource="&homelab;Sauce"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Meat -->
+    <!-- http://homelab.owl#Meat -->
 
-    <owl:Class rdf:about="apartment:Meat">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrink"/>
+    <owl:Class rdf:about="&homelab;Meat">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrink"/>
     </owl:Class>
 
 
 
-    <!-- apartment:MicrowaveOven -->
+    <!-- http://homelab.owl#MicrowaveOven -->
 
-    <owl:Class rdf:about="apartment:MicrowaveOven">
-        <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
+    <owl:Class rdf:about="&homelab;MicrowaveOven">
+        <rdfs:subClassOf rdf:resource="&homelab;Appliance"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Milk -->
+    <!-- http://homelab.owl#Milk -->
 
-    <owl:Class rdf:about="apartment:Milk">
-        <rdfs:subClassOf rdf:resource="apartment:Dairy"/>
+    <owl:Class rdf:about="&homelab;Milk">
+        <rdfs:subClassOf rdf:resource="&homelab;Dairy"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Mixer -->
+    <!-- http://homelab.owl#Mixer -->
 
-    <owl:Class rdf:about="apartment:Mixer">
-        <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
+    <owl:Class rdf:about="&homelab;Mixer">
+        <rdfs:subClassOf rdf:resource="&homelab;Appliance"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Mug -->
+    <!-- http://homelab.owl#Mug -->
 
-    <owl:Class rdf:about="apartment:Mug">
-        <rdfs:subClassOf rdf:resource="apartment:Drinkware"/>
+    <owl:Class rdf:about="&homelab;Mug">
+        <rdfs:subClassOf rdf:resource="&homelab;Drinkware"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Mustard -->
+    <!-- http://homelab.owl#Mustard -->
 
-    <owl:Class rdf:about="apartment:Mustard">
-        <rdfs:subClassOf rdf:resource="apartment:Sauce"/>
+    <owl:Class rdf:about="&homelab;Mustard">
+        <rdfs:subClassOf rdf:resource="&homelab;Sauce"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Object -->
+    <!-- http://homelab.owl#Object -->
 
-    <owl:Class rdf:about="apartment:Object"/>
+    <owl:Class rdf:about="&homelab;Object"/>
 
 
 
-    <!-- apartment:Office -->
+    <!-- http://homelab.owl#Office -->
 
-    <owl:Class rdf:about="apartment:Office">
-        <rdfs:subClassOf rdf:resource="apartment:Room"/>
+    <owl:Class rdf:about="&homelab;Office">
+        <rdfs:subClassOf rdf:resource="&homelab;Room"/>
     </owl:Class>
 
 
 
-    <!-- apartment:OfficeChair -->
+    <!-- http://homelab.owl#OfficeChair -->
 
-    <owl:Class rdf:about="apartment:OfficeChair">
-        <rdfs:subClassOf rdf:resource="apartment:Chair"/>
+    <owl:Class rdf:about="&homelab;OfficeChair">
+        <rdfs:subClassOf rdf:resource="&homelab;Chair"/>
     </owl:Class>
 
 
 
-    <!-- apartment:OfficeTable -->
+    <!-- http://homelab.owl#OfficeTable -->
 
-    <owl:Class rdf:about="apartment:OfficeTable">
-        <rdfs:subClassOf rdf:resource="apartment:Table"/>
+    <owl:Class rdf:about="&homelab;OfficeTable">
+        <rdfs:subClassOf rdf:resource="&homelab;Table"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Onion -->
+    <!-- http://homelab.owl#Onion -->
 
-    <owl:Class rdf:about="apartment:Onion">
-        <rdfs:subClassOf rdf:resource="apartment:Vegetable"/>
+    <owl:Class rdf:about="&homelab;Onion">
+        <rdfs:subClassOf rdf:resource="&homelab;Vegetable"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Orange -->
+    <!-- http://homelab.owl#Orange -->
 
-    <owl:Class rdf:about="apartment:Orange">
-        <rdfs:subClassOf rdf:resource="apartment:Fruit"/>
+    <owl:Class rdf:about="&homelab;Orange">
+        <rdfs:subClassOf rdf:resource="&homelab;Fruit"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Lemon -->
+    <!-- http://homelab.owl#Lemon -->
 
-    <owl:Class rdf:about="apartment:Lemon">
-        <rdfs:subClassOf rdf:resource="apartment:Fruit"/>
+    <owl:Class rdf:about="&homelab;Lemon">
+        <rdfs:subClassOf rdf:resource="&homelab;Fruit"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Peach -->
+    <!-- http://homelab.owl#Peach -->
 
-    <owl:Class rdf:about="apartment:Peach">
-        <rdfs:subClassOf rdf:resource="apartment:Fruit"/>
+    <owl:Class rdf:about="&homelab;Peach">
+        <rdfs:subClassOf rdf:resource="&homelab;Fruit"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Strawberry -->
+    <!-- http://homelab.owl#Strawberry -->
 
-    <owl:Class rdf:about="apartment:Strawberry">
-        <rdfs:subClassOf rdf:resource="apartment:Fruit"/>
+    <owl:Class rdf:about="&homelab;Strawberry">
+        <rdfs:subClassOf rdf:resource="&homelab;Fruit"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Plum -->
+    <!-- http://homelab.owl#Plum -->
 
-    <owl:Class rdf:about="apartment:Plum">
-        <rdfs:subClassOf rdf:resource="apartment:Fruit"/>
+    <owl:Class rdf:about="&homelab;Plum">
+        <rdfs:subClassOf rdf:resource="&homelab;Fruit"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Oven -->
+    <!-- http://homelab.owl#Oven -->
 
-    <owl:Class rdf:about="apartment:Oven">
-        <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
+    <owl:Class rdf:about="&homelab;Oven">
+        <rdfs:subClassOf rdf:resource="&homelab;Appliance"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Pan -->
+    <!-- http://homelab.owl#Pan -->
 
-    <owl:Class rdf:about="apartment:Pan">
-        <rdfs:subClassOf rdf:resource="apartment:KitchenUtensil"/>
+    <owl:Class rdf:about="&homelab;Pan">
+        <rdfs:subClassOf rdf:resource="&homelab;KitchenUtensil"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Pasta -->
+    <!-- http://homelab.owl#Pasta -->
 
-    <owl:Class rdf:about="apartment:Pasta">
-        <rdfs:subClassOf rdf:resource="apartment:Grain"/>
+    <owl:Class rdf:about="&homelab;Pasta">
+        <rdfs:subClassOf rdf:resource="&homelab;Grain"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Peanut -->
+    <!-- http://homelab.owl#Peanut -->
 
-    <owl:Class rdf:about="apartment:Peanut">
-        <rdfs:subClassOf rdf:resource="apartment:Snack"/>
+    <owl:Class rdf:about="&homelab;Peanut">
+        <rdfs:subClassOf rdf:resource="&homelab;Snack"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Pear -->
+    <!-- http://homelab.owl#Pear -->
 
-    <owl:Class rdf:about="apartment:Pear">
-        <rdfs:subClassOf rdf:resource="apartment:Fruit"/>
+    <owl:Class rdf:about="&homelab;Pear">
+        <rdfs:subClassOf rdf:resource="&homelab;Fruit"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Plane -->
+    <!-- http://homelab.owl#Plane -->
 
-    <owl:Class rdf:about="apartment:Plane"/>
+    <owl:Class rdf:about="&homelab;Plane"/>
 
 
 
-    <!-- apartment:Plate -->
+    <!-- http://homelab.owl#Plate -->
 
-    <owl:Class rdf:about="apartment:Plate">
-        <rdfs:subClassOf rdf:resource="apartment:Dish"/>
+    <owl:Class rdf:about="&homelab;Plate">
+        <rdfs:subClassOf rdf:resource="&homelab;Dish"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Popcorn -->
+    <!-- http://homelab.owl#Popcorn -->
 
-    <owl:Class rdf:about="apartment:Popcorn">
-        <rdfs:subClassOf rdf:resource="apartment:Grain"/>
+    <owl:Class rdf:about="&homelab;Popcorn">
+        <rdfs:subClassOf rdf:resource="&homelab;Grain"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Pork -->
+    <!-- http://homelab.owl#Pork -->
 
-    <owl:Class rdf:about="apartment:Pork">
-        <rdfs:subClassOf rdf:resource="apartment:Meat"/>
+    <owl:Class rdf:about="&homelab;Pork">
+        <rdfs:subClassOf rdf:resource="&homelab;Meat"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Pot -->
+    <!-- http://homelab.owl#Pot -->
 
-    <owl:Class rdf:about="apartment:Pot">
-        <rdfs:subClassOf rdf:resource="apartment:KitchenUtensil"/>
+    <owl:Class rdf:about="&homelab;Pot">
+        <rdfs:subClassOf rdf:resource="&homelab;KitchenUtensil"/>
     </owl:Class>
 
 
 
-    <!-- apartment:PotatoChips -->
+    <!-- http://homelab.owl#PotatoChips -->
 
-    <owl:Class rdf:about="apartment:PotatoChips">
-        <rdfs:subClassOf rdf:resource="apartment:Snack"/>
+    <owl:Class rdf:about="&homelab;PotatoChips">
+        <rdfs:subClassOf rdf:resource="&homelab;Snack"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Rice -->
+    <!-- http://homelab.owl#Rice -->
 
-    <owl:Class rdf:about="apartment:Rice">
-        <rdfs:subClassOf rdf:resource="apartment:Grain"/>
+    <owl:Class rdf:about="&homelab;Rice">
+        <rdfs:subClassOf rdf:resource="&homelab;Grain"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Robot -->
+    <!-- http://homelab.owl#Robot -->
 
-    <owl:Class rdf:about="apartment:Robot">
-        <rdfs:subClassOf rdf:resource="apartment:Equipment"/>
+    <owl:Class rdf:about="&homelab;Robot">
+        <rdfs:subClassOf rdf:resource="&homelab;Equipment"/>
     </owl:Class>
 
 
 
-    <!-- apartment:RollingPin -->
+    <!-- http://homelab.owl#RollingPin -->
 
-    <owl:Class rdf:about="apartment:RollingPin">
-        <rdfs:subClassOf rdf:resource="apartment:KitchenUtensil"/>
+    <owl:Class rdf:about="&homelab;RollingPin">
+        <rdfs:subClassOf rdf:resource="&homelab;KitchenUtensil"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Room -->
+    <!-- http://homelab.owl#Room -->
 
-    <owl:Class rdf:about="apartment:Room">
-        <rdfs:subClassOf rdf:resource="apartment:Location"/>
+    <owl:Class rdf:about="&homelab;Room">
+        <rdfs:subClassOf rdf:resource="&homelab;Location"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Sauce -->
+    <!-- http://homelab.owl#Sauce -->
 
-    <owl:Class rdf:about="apartment:Sauce">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrink"/>
+    <owl:Class rdf:about="&homelab;Sauce">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrink"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Shelf -->
+    <!-- http://homelab.owl#Shelf -->
 
-    <owl:Class rdf:about="apartment:Shelf">
-        <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    <owl:Class rdf:about="&homelab;Shelf">
+        <rdfs:subClassOf rdf:resource="&homelab;Furniture"/>
     </owl:Class>
 
 
 
-    <!-- apartment:ShotGlass -->
+    <!-- http://homelab.owl#ShotGlass -->
 
-    <owl:Class rdf:about="apartment:ShotGlass">
-        <rdfs:subClassOf rdf:resource="apartment:Glass"/>
+    <owl:Class rdf:about="&homelab;ShotGlass">
+        <rdfs:subClassOf rdf:resource="&homelab;Glass"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Sideboard -->
+    <!-- http://homelab.owl#Sideboard -->
 
-    <owl:Class rdf:about="apartment:Sideboard">
-        <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    <owl:Class rdf:about="&homelab;Sideboard">
+        <rdfs:subClassOf rdf:resource="&homelab;Furniture"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Snack -->
+    <!-- http://homelab.owl#Snack -->
 
-    <owl:Class rdf:about="apartment:Snack">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrink"/>
+    <owl:Class rdf:about="&homelab;Snack">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrink"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Spatula -->
+    <!-- http://homelab.owl#Spatula -->
 
-    <owl:Class rdf:about="apartment:Spatula">
-        <rdfs:subClassOf rdf:resource="apartment:KitchenUtensil"/>
+    <owl:Class rdf:about="&homelab;Spatula">
+        <rdfs:subClassOf rdf:resource="&homelab;KitchenUtensil"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Spinach -->
+    <!-- http://homelab.owl#Spinach -->
 
-    <owl:Class rdf:about="apartment:Spinach">
-        <rdfs:subClassOf rdf:resource="apartment:Vegetable"/>
+    <owl:Class rdf:about="&homelab;Spinach">
+        <rdfs:subClassOf rdf:resource="&homelab;Vegetable"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Spoon -->
+    <!-- http://homelab.owl#Spoon -->
 
-    <owl:Class rdf:about="apartment:Spoon">
-        <rdfs:subClassOf rdf:resource="apartment:Cutlery"/>
+    <owl:Class rdf:about="&homelab;Spoon">
+        <rdfs:subClassOf rdf:resource="&homelab;Cutlery"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Stove -->
+    <!-- http://homelab.owl#Stove -->
 
-    <owl:Class rdf:about="apartment:Stove">
-        <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
+    <owl:Class rdf:about="&homelab;Stove">
+        <rdfs:subClassOf rdf:resource="&homelab;Appliance"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Table -->
+    <!-- http://homelab.owl#Table -->
 
-    <owl:Class rdf:about="apartment:Table">
-        <rdfs:subClassOf rdf:resource="apartment:Furniture"/>
+    <owl:Class rdf:about="&homelab;Table">
+        <rdfs:subClassOf rdf:resource="&homelab;Furniture"/>
     </owl:Class>
 
 
 
-    <!-- apartment:VacuumCleaner -->
+    <!-- http://homelab.owl#VacuumCleaner -->
 
-    <owl:Class rdf:about="apartment:VacuumCleaner">
-        <rdfs:subClassOf rdf:resource="apartment:Equipment"/>
+    <owl:Class rdf:about="&homelab;VacuumCleaner">
+        <rdfs:subClassOf rdf:resource="&homelab;Equipment"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Vegetable -->
+    <!-- http://homelab.owl#Vegetable -->
 
-    <owl:Class rdf:about="apartment:Vegetable">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrink"/>
+    <owl:Class rdf:about="&homelab;Vegetable">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrink"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Wall -->
+    <!-- http://homelab.owl#Wall -->
 
-    <owl:Class rdf:about="apartment:Wall">
-        <rdfs:subClassOf rdf:resource="apartment:Location"/>
+    <owl:Class rdf:about="&homelab;Wall">
+        <rdfs:subClassOf rdf:resource="&homelab;Location"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Water -->
+    <!-- http://homelab.owl#Water -->
 
-    <owl:Class rdf:about="apartment:Water">
-        <rdfs:subClassOf rdf:resource="apartment:FoodOrDrink"/>
+    <owl:Class rdf:about="&homelab;Water">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodOrDrink"/>
     </owl:Class>
 
 
 
-    <!-- apartment:WaterBoiler -->
+    <!-- http://homelab.owl#WaterBoiler -->
 
-    <owl:Class rdf:about="apartment:WaterBoiler">
-        <rdfs:subClassOf rdf:resource="apartment:Appliance"/>
+    <owl:Class rdf:about="&homelab;WaterBoiler">
+        <rdfs:subClassOf rdf:resource="&homelab;Appliance"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Whisk -->
+    <!-- http://homelab.owl#Whisk -->
 
-    <owl:Class rdf:about="apartment:Whisk">
-        <rdfs:subClassOf rdf:resource="apartment:KitchenUtensil"/>
+    <owl:Class rdf:about="&homelab;Whisk">
+        <rdfs:subClassOf rdf:resource="&homelab;KitchenUtensil"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Wine -->
+    <!-- http://homelab.owl#Wine -->
 
-    <owl:Class rdf:about="apartment:Wine">
-        <rdfs:subClassOf rdf:resource="apartment:Alcohol"/>
+    <owl:Class rdf:about="&homelab;Wine">
+        <rdfs:subClassOf rdf:resource="&homelab;Alcohol"/>
     </owl:Class>
 
 
 
-    <!-- apartment:WineGlass -->
+    <!-- http://homelab.owl#WineGlass -->
 
-    <owl:Class rdf:about="apartment:WineGlass">
-        <rdfs:subClassOf rdf:resource="apartment:Glass"/>
+    <owl:Class rdf:about="&homelab;WineGlass">
+        <rdfs:subClassOf rdf:resource="&homelab;Glass"/>
     </owl:Class>
 
 
 
-    <!-- apartment:WoodenSpoon -->
+    <!-- http://homelab.owl#WoodenSpoon -->
 
-    <owl:Class rdf:about="apartment:WoodenSpoon">
-        <rdfs:subClassOf rdf:resource="apartment:KitchenUtensil"/>
+    <owl:Class rdf:about="&homelab;WoodenSpoon">
+        <rdfs:subClassOf rdf:resource="&homelab;KitchenUtensil"/>
     </owl:Class>
 
 
 
-    <!-- apartment:Yogurt -->
+    <!-- http://homelab.owl#Yogurt -->
 
-    <owl:Class rdf:about="apartment:Yogurt">
-        <rdfs:subClassOf rdf:resource="apartment:Dairy"/>
+    <owl:Class rdf:about="&homelab;Yogurt">
+        <rdfs:subClassOf rdf:resource="&homelab;Dairy"/>
     </owl:Class>
 
 
 
-    <!-- apartment:CleaningItem -->
+    <!-- http://homelab.owl#CleaningItem -->
 
-    <owl:Class rdf:about="apartment:CleaningItem">
-        <rdfs:subClassOf rdf:resource="apartment:Object"/>
+    <owl:Class rdf:about="&homelab;CleaningItem">
+        <rdfs:subClassOf rdf:resource="&homelab;Object"/>
     </owl:Class>
 
 
 
-    <!-- apartment:ClassCleaner -->
+    <!-- http://homelab.owl#ClassCleaner -->
 
-    <owl:Class rdf:about="apartment:GlassCleaner">
-        <rdfs:subClassOf rdf:resource="apartment:CleaningItem"/>
+    <owl:Class rdf:about="&homelab;GlassCleaner">
+        <rdfs:subClassOf rdf:resource="&homelab;CleaningItem"/>
     </owl:Class>
 
 
 
-    <!-- apartment:DishSoap -->
+    <!-- http://homelab.owl#DishSoap -->
 
-    <owl:Class rdf:about="apartment:DishSoap">
-        <rdfs:subClassOf rdf:resource="apartment:CleaningItem"/>
+    <owl:Class rdf:about="&homelab;DishSoap">
+        <rdfs:subClassOf rdf:resource="&homelab;CleaningItem"/>
     </owl:Class>
 </rdf:RDF>
 
