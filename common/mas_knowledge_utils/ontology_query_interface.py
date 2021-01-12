@@ -27,13 +27,20 @@ class OntologyQueryInterface(object):
 
     '''
 
-    def __init__(self, ontology_file, class_prefix, verbose=False):
+    def __init__(self, ontology_file, base_url=None, entity_delimiter='/',
+                 class_prefix='', verbose=False):
         self.knowledge_graph = rdflib.Graph()
         self.knowledge_graph.load(ontology_file)
         self.class_prefix = class_prefix
-        self.ontology_url = ontology_file[0:ontology_file.rfind('/')]
         self.ontology_file = ontology_file
+        self.entity_delimiter = entity_delimiter
         self.verbose = verbose
+
+        self.base_url = None
+        if base_url:
+            self.base_url = base_url
+        else:
+            self.base_url = ontology_file[0:ontology_file.rfind('/')]
 
         self.__class_names = None
         self.__instance_names = None
@@ -157,7 +164,8 @@ class OntologyQueryInterface(object):
             subclasses = self.get_subclasses_of(c)
 
             # we remove the class from the list since a class is also a subclass of itself
-            subclasses.remove(c)
+            if c in subclasses:
+                subclasses.remove(c)
 
             class_hierarchy[c] = subclasses
         return class_hierarchy
@@ -610,13 +618,16 @@ class OntologyQueryInterface(object):
             return self.__get_entity_url(class_name)
 
     def __get_entity_url(self, entity):
-        '''Returns a string of the format "self.ontology_url/entity"
+        '''Returns a string of the format "{0}{1}{2}" where
+        * {0} is self.ontology_url
+        * {1} is self.entity_delimiter
+        * {2} is entity
 
         Keyword arguments:
         @param entity -- string representing the name of an entity in the ontology
 
         '''
-        return '{0}/{1}'.format(self.ontology_url, entity)
+        return '{0}{1}{2}'.format(self.base_url, self.entity_delimiter, entity)
 
     def __get_entity_uriref(self, entity):
         '''Returns a rdflib.URIRef object for the entity.
@@ -647,7 +658,6 @@ class OntologyQueryInterface(object):
             return self.__extract_obj_name(rdf_class)
         return rdf_class[rdf_class.find(delimiter)+1:]
 
-
     def __extract_obj_name(self, obj_url):
         '''Extracts the name of an object from the given full URL,
         where the name is the last element of the URL.
@@ -656,7 +666,7 @@ class OntologyQueryInterface(object):
         @param obj_url -- object URL in string format
 
         '''
-        return obj_url[obj_url.rfind('/')+1:]
+        return obj_url[obj_url.rfind(self.entity_delimiter)+1:]
 
     def __is_url(self, rdf_class):
         '''Returns True if the rdf_class is specified as a URL and False if the
