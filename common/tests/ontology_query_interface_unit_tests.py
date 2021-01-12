@@ -19,9 +19,13 @@ class ontology_query_interface_test(unittest.TestCase):
         # Get the filepath and namespace for the ontology
         self.ontology_file_path = "file://" + os.path.join(ontology_dir, "sample.owl")
         self.ontology_ns = "apartment"
+        self.entity_delimiter = "/"
+        self.base_url = None
 
         # Create an instance of the ontology interface
         self.ont_if = OntologyQueryInterface(ontology_file=self.ontology_file_path,
+                                             base_url=self.base_url,
+                                             entity_delimiter=self.entity_delimiter,
                                              class_prefix=self.ontology_ns)
 
     def test_get_classes(self):
