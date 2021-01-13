@@ -18,9 +18,9 @@ class ontology_query_interface_test(unittest.TestCase):
 
         # Get the filepath and namespace for the ontology
         self.ontology_file_path = "file://" + os.path.join(ontology_dir, "sample.owl")
-        self.ontology_ns = "apartment"
-        self.entity_delimiter = "/"
-        self.base_url = None
+        self.ontology_ns = ""
+        self.entity_delimiter = "#"
+        self.base_url = "http://sample.owl"
 
         # Create an instance of the ontology interface
         self.ont_if = OntologyQueryInterface(ontology_file=self.ontology_file_path,
@@ -30,7 +30,7 @@ class ontology_query_interface_test(unittest.TestCase):
 
     def test_get_classes(self):
         validation_data = ['Drinkware', 'Furniture', 'Location', 'Mug',
-                           'Object', 'Room', 'Table', 'WorkTable']
+                           'Object', 'Room', 'Table', 'Thing', 'WorkTable']
         acquired_data = sorted(self.ont_if.get_classes())
         self.assertEqual(acquired_data, validation_data)
 
@@ -57,7 +57,7 @@ class ontology_query_interface_test(unittest.TestCase):
         self.assertFalse(self.ont_if.is_parent_class_of("Object", "Room"))
 
     def test_get_class_hierarchy(self):
-        validation_data = {'Drinkware': ['Mug'], 'Mug': [], 'WorkTable': [],
+        validation_data = {'Drinkware': ['Mug'], 'Mug': [], 'WorkTable': [], 'Thing': [],
                            'Table': ['WorkTable'], 'Location': ['Room'],
                            'Room': [], 'Furniture': ['Table', 'WorkTable'],
                            'Object': ['Drinkware', 'Furniture', 'Mug', 'Table', 'WorkTable']
@@ -76,7 +76,7 @@ class ontology_query_interface_test(unittest.TestCase):
         self.assertEqual(acquired_data, validation_data)
 
     def test_get_subclasses_of(self):
-        validation_data = ['Furniture', 'Table', 'WorkTable']
+        validation_data = ['Table', 'WorkTable']
         acquired_data = self.ont_if.get_subclasses_of("Furniture")
         self.assertEqual(acquired_data, validation_data)
 
@@ -89,7 +89,7 @@ class ontology_query_interface_test(unittest.TestCase):
         self.assertEqual(acquired_data, validation_data)
 
     def test_get_parent_classes_of(self):
-        validation_data = ['Table', 'Furniture', 'Object']
+        validation_data = ['Furniture', 'Object', 'Thing']
         acquired_data = self.ont_if.get_parent_classes_of("Table")
         self.assertEqual(acquired_data, validation_data)
 
@@ -97,7 +97,7 @@ class ontology_query_interface_test(unittest.TestCase):
         acquired_data = self.ont_if.get_parent_classes_of("Table", only_parents=True)
         self.assertEqual(acquired_data, validation_data)
 
-        validation_data = []
+        validation_data = ['Thing']
         acquired_data = self.ont_if.get_parent_classes_of("Object", only_parents=True)
         self.assertEqual(acquired_data, validation_data)
 
@@ -120,6 +120,35 @@ class ontology_query_interface_test(unittest.TestCase):
         validation_data = ('Object', 'Room')
         acquired_data = self.ont_if.get_property_domain_range("locatedAt")
         self.assertEqual(acquired_data, validation_data)
+
+    def test_get_class_depth(self):
+        acquired_data = self.ont_if.get_class_depth("Mug")
+        self.assertEqual(acquired_data, 4)
+
+        acquired_data = self.ont_if.get_class_depth("Room")
+        self.assertEqual(acquired_data, 3)
+
+    def test_get_lowest_common_subsumer(self):
+        # case 1
+        depth_mug = self.ont_if.get_class_depth("Mug")
+        depth_table = self.ont_if.get_class_depth("Table")
+        acquired_data = self.ont_if.get_lowest_common_subsumer("Mug", "Table",
+                                                               depth_mug, depth_table)
+        self.assertEqual(acquired_data, "Object")
+
+        # case 2
+        depth_room = self.ont_if.get_class_depth("Room")
+        depth_furniture = self.ont_if.get_class_depth("Furniture")
+        acquired_data = self.ont_if.get_lowest_common_subsumer("Room", "Furniture",
+                                                               depth_room, depth_furniture)
+        self.assertEqual(acquired_data, "Thing")
+
+    def test_class_similarity(self):
+        acquired_data = self.ont_if.class_similarity("Mug", "Table", similarity="wup")
+        self.assertAlmostEqual(acquired_data, 0.5)
+
+        acquired_data = self.ont_if.class_similarity("Room", "Furniture", similarity="wup")
+        self.assertAlmostEqual(acquired_data, 1./3.)
 
     def test_is_class(self):
         self.assertTrue(self.ont_if.is_class("Table"))
@@ -175,7 +204,7 @@ class ontology_query_interface_test(unittest.TestCase):
         self.assertTrue(self.ont_if.is_class(hybrid_class))
 
         # Verify if the hierarchy is properly established
-        self.assertEqual(len(self.ont_if.get_parent_classes_of(top_level_class)), 1)
+        self.assertEqual(len(self.ont_if.get_parent_classes_of(top_level_class)), 0)
         self.assertTrue(sub_class_1 in self.ont_if.get_subclasses_of(top_level_class))
         self.assertTrue(sub_class_2 in self.ont_if.get_subclasses_of(top_level_class))
         self.assertTrue(hybrid_class in self.ont_if.get_subclasses_of(sub_class_1))
@@ -286,8 +315,6 @@ class ontology_query_interface_test(unittest.TestCase):
         # Get a superset of all the sub classes of the classes to be removed
         sub_classes = self.ont_if.get_subclasses_of(class_1)
         sub_classes.extend(self.ont_if.get_subclasses_of(class_2))
-        sub_classes.remove(class_1)
-        sub_classes.remove(class_2)
 
         # Remove the classes
         self.ont_if.remove_class_definition(class_1)
@@ -355,29 +382,6 @@ class ontology_query_interface_test(unittest.TestCase):
         self.assertEqual(self.ont_if.get_objects_of("defaultStoringLocation", "CoffeeMug"), [])
         self.assertEqual(self.ont_if.get_objects_of("locatedAt", "Desk"), [])
         self.assertEqual(self.ont_if.get_objects_of("heightOf", "Desk"), [])
-
-class ontology_query_interface_test_no_class_prefix(ontology_query_interface_test):
-    '''Implements unit tests for the OntologyQueryInterface APIs
-    using an ontology that has no namespace (or class_prefix)
-
-    @author Sushant Chavan
-    @contact sushant.chavan@smail.inf.h-brs.de
-
-    '''
-
-    def setUp(self):
-        # Get directory paths
-        script_dir = os.path.abspath(os.path.dirname(__file__))
-        ontology_dir = os.path.join(os.path.dirname(script_dir), "ontology")
-
-        # Get the filepath for the ontology
-        self.ontology_file_path = "file://" + os.path.join(ontology_dir, "sample_no_namespace.owl")
-        # This ontology does not have a namespace, hence None
-        self.ontology_ns = None
-
-        # Create an instance of the ontology interface
-        self.ont_if = OntologyQueryInterface(ontology_file=self.ontology_file_path,
-                                             class_prefix=self.ontology_ns)
 
 if __name__ == '__main__':
     unittest.main()
