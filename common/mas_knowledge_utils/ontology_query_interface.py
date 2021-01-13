@@ -55,6 +55,11 @@ class OntologyQueryInterface(object):
         self.__class_names = [self.__extract_class_name(triple[0]) for triple in self.knowledge_graph[:]
                               if triple[1] == URIRefConstants.RDF_TYPE and \
                               triple[2] == URIRefConstants.OWL_CLASS]
+
+        # we explicitly add the owl:Thing class to the list of classes as the above query
+        # only returns the classes that are explicitly encoded in the ontology
+        self.__class_names.append('Thing')
+
         return self.__class_names
 
     def get_object_properties(self):
@@ -202,6 +207,16 @@ class OntologyQueryInterface(object):
             query_result = query_func(rdflib.RDFS.subClassOf, rdf_class_uri)
             subclasses = [self.__extract_class_name(subclass)
                           for subclass in [str(x) for x in query_result]]
+
+            # we remove the class itself from the list of subclasses
+            if class_name in subclasses:
+                subclasses.remove(class_name)
+
+            # the above query sometimes returns non-existing classes
+            # (represented by a UUID), so we remove those as well
+            for c in subclasses:
+                if not self.is_class(c):
+                    subclasses.remove(c)
             return subclasses
         else:
             raise ValueError('"{0}" does not exist as a class in the ontology!'.format(class_name))
@@ -222,6 +237,16 @@ class OntologyQueryInterface(object):
             query_result = query_func(rdf_class_uri, rdflib.RDFS.subClassOf)
             parent_classes = [self.__extract_class_name(parent_class)
                               for parent_class in [str(x) for x in query_result]]
+
+            # we remove the class itself from the list of parents
+            if class_name in parent_classes:
+                parent_classes.remove(class_name)
+
+            # the above query sometimes returns non-existing classes
+            # (represented by a UUID), so we remove those as well
+            for c in parent_classes:
+                if not self.is_class(c):
+                    parent_classes.remove(c)
             return parent_classes
         else:
             raise ValueError('"{0}" does not exist as a class in the ontology!'.format(class_name))
@@ -354,6 +379,131 @@ class OntologyQueryInterface(object):
             if class_name in domain_range_tuple:
                 associated_properties.append(prop)
         return associated_properties
+
+    def get_class_depth(self, class_name):
+        '''Returns the depth of the class in the ontology, where the most general
+        class (owl:Thing) has depth 1. Raises a ValueError if the class does not
+        exist in the ontology.
+
+        Keyword arguments:
+        @param class_name: str -- name of a class
+
+        '''
+        if not self.is_class(class_name):
+            raise ValueError('"{0}" does not exist as a class in the ontology!'.format(class_name))
+
+        def get_class_depth_rec(self, class_name, depth=1):
+            '''Internal function that recursively iterates through the class parents until
+            the root of the hierarchy is reached (which is indicated by the "Thing" class).
+
+            Keyword arguments:
+            @param class_name: str -- name of a class
+
+            '''
+            if class_name == 'Thing':
+                return depth
+
+            parents = self.get_parent_classes_of(class_name, only_parents=True)
+            for parent in parents:
+                return get_class_depth_rec(self, parent, depth+1)
+
+        return get_class_depth_rec(self, class_name)
+
+    def get_lowest_common_subsumer(self, class1, class2, depth_class1, depth_class2):
+        '''Returns the name of a class that is the lowest common subsumer (LCS)
+        of the two classes, namely the class that is the closest common ancestor
+        of both classes in the ontology.
+
+        Keyword arguments:
+        @param class1: str -- name of a class
+        @param class2: str -- name of a class
+
+        '''
+        if class1 == class2:
+            return class1
+
+        def get_ancestor_hierarchy(self, classes, ancestors):
+            '''Internal function that recursively creates a hierarchy of the ancestors
+            of the classes in "classes". The hierarchy is of the type List[List[str]],
+            where each entry is a list of classes on a given level.
+
+            @param classes: List[str] -- a list of class names
+            @param ancestors: List[List[str]] -- list representing the class hierarchy,
+                                                 where ancestors[i] are the ancestors
+                                                 of the classes at the i-th hierarchy level
+                                                 (counted from the class upwards), one list
+                                                 per each level
+
+            '''
+            if len(classes) == 1 and 'Thing' in classes:
+                return ancestors
+            level_parents = []
+            for c in classes:
+                level_parents.extend(self.get_parent_classes_of(c, only_parents=True))
+            ancestors.append(level_parents)
+            return get_ancestor_hierarchy(self, level_parents, ancestors)
+
+        parents_class1 = self.get_parent_classes_of(class1, only_parents=True)
+        parents_class2 = self.get_parent_classes_of(class2, only_parents=True)
+        class1_ancestor_hierarchy = get_ancestor_hierarchy(self, parents_class1,
+                                                           [parents_class1])
+        class2_ancestor_hierarchy = get_ancestor_hierarchy(self, parents_class2,
+                                                           [parents_class2])
+
+        # we find which of the classes is deeper/shallower in the hiearchy,
+        # as we will look for the LCS by going up from the deeper class and
+        # looking for the deepest level at which there is a common ancestor class
+        if depth_class1 > depth_class2:
+            deep_tree = class1_ancestor_hierarchy
+            shallow_tree = class2_ancestor_hierarchy
+            current_depth = depth_class1
+        else:
+            shallow_tree = class1_ancestor_hierarchy
+            deep_tree = class2_ancestor_hierarchy
+            current_depth = depth_class2
+
+        min_depth = min(depth_class1, depth_class2)
+        shallow_tree_idx = 0
+        for deep_tree_classes in deep_tree:
+            # we simply go up the tree until we reach the depth of the
+            # shallower class, as the LCS cannot be below it
+            if current_depth > min_depth:
+                current_depth -= 1
+            # once we reach the deepest level of the shallower class,
+            # we look for a common class between the ancestors of the
+            # deeper class and the ancestors of the shallower class
+            else:
+                intersecting_classes = set(deep_tree_classes).intersection(set(shallow_tree[shallow_tree_idx]))
+                if intersecting_classes:
+                    # if there are multiple classes in common, we take any one of them
+                    least_common_subsumer = intersecting_classes.pop()
+                    return least_common_subsumer
+                shallow_tree_idx += 1
+
+        # if there is no least common subsumer, there is probably
+        # something wrong with the design of the ontology
+        return None
+
+    def class_similarity(self, class1, class2, similarity='wup'):
+        '''Calculates the similarity between two classes in the ontology.
+        Only the Wu-Palmer similarity is currently supported.
+        Raises a ValueError if either class1 or class2 are not defined in the ontology.
+
+        Keyword arguments:
+        @param class1: str -- name of a class
+        @param class2: str -- name of a class
+        @param similarity: str -- name of the similarity measure to be used (default "wup")
+
+        '''
+        if similarity == 'wup':
+            depth_class1 = self.get_class_depth(class1)
+            depth_class2 = self.get_class_depth(class2)
+            lcs = self.get_lowest_common_subsumer(class1, class2,
+                                                  depth_class1, depth_class2)
+            depth_lcs = self.get_class_depth(lcs)
+            return (2 * depth_lcs) / (depth_class1 + depth_class2)
+        else:
+            raise ValueError('Unsupported similarity measure {0}'.format(similarity))
 
     def insert_class_definition(self, class_name, parent_class_names=[]):
         '''Defines a new class in the ontology. If the class_name already exists,
