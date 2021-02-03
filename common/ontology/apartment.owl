@@ -1694,6 +1694,59 @@
 
 
 
+    <!-- http://apartment.owl#Ball -->
+
+    <owl:Class rdf:about="&apartment;Ball">
+        <rdfs:subClassOf rdf:resource="&apartment;Toys"/>
+    </owl:Class>
+
+
+
+    <!-- http://apartment.owl#Football -->
+
+    <owl:Class rdf:about="&apartment;Football">
+        <rdfs:subClassOf rdf:resource="&apartment;Ball"/>
+    </owl:Class>
+
+
+
+
+    <!-- http://apartment.owl#Basketball -->
+
+    <owl:Class rdf:about="&apartment;Basketball">
+        <rdfs:subClassOf rdf:resource="&apartment;Ball"/>
+    </owl:Class>
+
+
+
+
+    <!-- http://apartment.owl#TennisBall -->
+
+    <owl:Class rdf:about="&apartment;TennisBall">
+        <rdfs:subClassOf rdf:resource="&apartment;Ball"/>
+    </owl:Class>
+
+
+
+
+    <!-- http://apartment.owl#Baseball -->
+
+    <owl:Class rdf:about="&apartment;Baseball">
+        <rdfs:subClassOf rdf:resource="&apartment;Ball"/>
+    </owl:Class>
+
+
+
+
+    <!-- http://apartment.owl#Racquetball -->
+
+    <owl:Class rdf:about="&apartment;Racquetball">
+        <rdfs:subClassOf rdf:resource="&apartment;Ball"/>
+    </owl:Class>
+
+
+
+
     <!-- http://apartment.owl#Utility -->
 
     <owl:Class rdf:about="&apartment;Utility">
@@ -1873,6 +1926,16 @@
             <rdf:Description rdf:about="&apartment;ToiletPaper"/>
             <rdf:Description rdf:about="&apartment;Toothbrush"/>
             <rdf:Description rdf:about="&apartment;Toothpaste"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&apartment;Football"/>
+            <rdf:Description rdf:about="&apartment;Basketball"/>
+            <rdf:Description rdf:about="&apartment;TennisBall"/>
+            <rdf:Description rdf:about="&apartment;Baseball"/>
+            <rdf:Description rdf:about="&apartment;Racquetball"/>
         </owl:members>
     </rdf:Description>
 </rdf:RDF>

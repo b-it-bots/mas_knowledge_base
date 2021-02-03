@@ -1693,6 +1693,57 @@
 
 
 
+    <!-- http://homelab.owl#Ball -->
+
+    <owl:Class rdf:about="&homelab;Ball">
+        <rdfs:subClassOf rdf:resource="&homelab;Toys"/>
+    </owl:Class>
+
+
+
+    <!-- http://homelab.owl#Football -->
+
+    <owl:Class rdf:about="&homelab;Football">
+        <rdfs:subClassOf rdf:resource="&homelab;Ball"/>
+    </owl:Class>
+
+
+
+
+    <!-- http://homelab.owl#Basketball -->
+
+    <owl:Class rdf:about="&homelab;Basketball">
+        <rdfs:subClassOf rdf:resource="&homelab;Ball"/>
+    </owl:Class>
+
+
+
+
+    <!-- http://homelab.owl#TennisBall -->
+
+    <owl:Class rdf:about="&homelab;TennisBall">
+        <rdfs:subClassOf rdf:resource="&homelab;Ball"/>
+    </owl:Class>
+
+
+
+
+    <!-- http://homelab.owl#Baseball -->
+
+    <owl:Class rdf:about="&homelab;Baseball">
+        <rdfs:subClassOf rdf:resource="&homelab;Ball"/>
+    </owl:Class>
+
+
+
+
+    <!-- http://homelab.owl#Racquetball -->
+
+    <owl:Class rdf:about="&homelab;Racquetball">
+        <rdfs:subClassOf rdf:resource="&homelab;Ball"/>
+    </owl:Class>
+
+
     <!-- http://homelab.owl#Utility -->
 
     <owl:Class rdf:about="&homelab;Utility">
@@ -1872,6 +1923,16 @@
             <rdf:Description rdf:about="&homelab;ToiletPaper"/>
             <rdf:Description rdf:about="&homelab;Toothbrush"/>
             <rdf:Description rdf:about="&homelab;Toothpaste"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&homelab;Football"/>
+            <rdf:Description rdf:about="&homelab;Basketball"/>
+            <rdf:Description rdf:about="&homelab;TennisBall"/>
+            <rdf:Description rdf:about="&homelab;Baseball"/>
+            <rdf:Description rdf:about="&homelab;Racquetball"/>
         </owl:members>
     </rdf:Description>
 </rdf:RDF>
