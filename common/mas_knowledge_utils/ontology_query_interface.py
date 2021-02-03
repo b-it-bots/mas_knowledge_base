@@ -409,20 +409,16 @@ class OntologyQueryInterface(object):
 
         return get_class_depth_rec(self, class_name)
 
-    def get_lowest_common_subsumer(self, class1, class2, depth_class1, depth_class2):
-        '''Returns the name of a class that is the lowest common subsumer (LCS)
-        of the two classes, namely the class that is the closest common ancestor
-        of both classes in the ontology.
+    def get_ancestor_hierarchy(self, obj_class):
+        '''Returns a list representing the ancestor hierarchy of the given class, where
+        the first entry is a list of direct class parents, the second entry is a list
+        of parents of the parents, and so on; the last element is a list with
+        the single element "Thing".
 
-        Keyword arguments:
-        @param class1: str -- name of a class
-        @param class2: str -- name of a class
+        obj_class: str -- name of a class
 
         '''
-        if class1 == class2:
-            return class1
-
-        def get_ancestor_hierarchy(self, classes, ancestors):
+        def get_ancestor_hierarchy_rec(self, classes, ancestors):
             '''Internal function that recursively creates a hierarchy of the ancestors
             of the classes in "classes". The hierarchy is of the type List[List[str]],
             where each entry is a list of classes on a given level.
@@ -441,14 +437,29 @@ class OntologyQueryInterface(object):
             for c in classes:
                 level_parents.extend(self.get_parent_classes_of(c, only_parents=True))
             ancestors.append(level_parents)
-            return get_ancestor_hierarchy(self, level_parents, ancestors)
+            return get_ancestor_hierarchy_rec(self, level_parents, ancestors)
 
-        parents_class1 = self.get_parent_classes_of(class1, only_parents=True)
-        parents_class2 = self.get_parent_classes_of(class2, only_parents=True)
-        class1_ancestor_hierarchy = get_ancestor_hierarchy(self, parents_class1,
-                                                           [parents_class1])
-        class2_ancestor_hierarchy = get_ancestor_hierarchy(self, parents_class2,
-                                                           [parents_class2])
+        parents = self.get_parent_classes_of(obj_class, only_parents=True)
+        ancestor_hierarchy = get_ancestor_hierarchy_rec(self, parents, [parents])
+        return ancestor_hierarchy
+
+    def get_lowest_common_subsumer(self, class1, class2, depth_class1, depth_class2):
+        '''Returns the name of a class that is the lowest common subsumer (LCS)
+        of the two classes, namely the class that is the closest common ancestor
+        of both classes in the ontology.
+
+        Keyword arguments:
+        @param class1: str -- name of a class
+        @param class2: str -- name of a class
+        @param depth_class1: int -- depth of class1 in the ontology hierarchy
+        @param depth_class2: int -- depth of class2 in the ontology hierarchy
+
+        '''
+        if class1 == class2:
+            return class1
+
+        class1_ancestor_hierarchy = self.get_ancestor_hierarchy(class1)
+        class2_ancestor_hierarchy = self.get_ancestor_hierarchy(class2)
 
         # we find which of the classes is deeper/shallower in the hiearchy,
         # as we will look for the LCS by going up from the deeper class and
