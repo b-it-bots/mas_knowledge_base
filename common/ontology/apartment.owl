@@ -721,7 +721,7 @@
     <!-- http://apartment.owl#Drinkware -->
 
     <owl:Class rdf:about="&apartment;Drinkware">
-        <rdfs:subClassOf rdf:resource="&apartment;Object"/>
+        <rdfs:subClassOf rdf:resource="&apartment;DrinkContainer"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&apartment;usedFor"/>
@@ -1217,14 +1217,6 @@
 
 
 
-    <!-- http://apartment.owl#Pitcher -->
-
-    <owl:Class rdf:about="&apartment;Pitcher">
-        <rdfs:subClassOf rdf:resource="&apartment;FoodContainer"/>
-    </owl:Class>
-
-
-
     <!-- http://apartment.owl#Plane -->
 
     <owl:Class rdf:about="&apartment;Plane">
@@ -1412,6 +1404,14 @@
     <!-- http://apartment.owl#SoupCan -->
 
     <owl:Class rdf:about="&apartment;SoupCan">
+        <rdfs:subClassOf rdf:resource="&apartment;DrinkContainer"/>
+    </owl:Class>
+
+
+
+    <!-- http://apartment.owl#Pitcher -->
+
+    <owl:Class rdf:about="&apartment;Pitcher">
         <rdfs:subClassOf rdf:resource="&apartment;DrinkContainer"/>
     </owl:Class>
 

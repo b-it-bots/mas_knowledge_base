@@ -720,7 +720,7 @@
     <!-- http://homelab.owl#Drinkware -->
 
     <owl:Class rdf:about="&homelab;Drinkware">
-        <rdfs:subClassOf rdf:resource="&homelab;Object"/>
+        <rdfs:subClassOf rdf:resource="&homelab;DrinkContainer"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&homelab;usedFor"/>
@@ -1216,14 +1216,6 @@
 
 
 
-    <!-- http://homelab.owl#Pitcher -->
-
-    <owl:Class rdf:about="&homelab;Pitcher">
-        <rdfs:subClassOf rdf:resource="&homelab;FoodContainer"/>
-    </owl:Class>
-
-
-
     <!-- http://homelab.owl#Plane -->
 
     <owl:Class rdf:about="&homelab;Plane">
@@ -1411,6 +1403,14 @@
     <!-- http://homelab.owl#SoupCan -->
 
     <owl:Class rdf:about="&homelab;SoupCan">
+        <rdfs:subClassOf rdf:resource="&homelab;DrinkContainer"/>
+    </owl:Class>
+
+
+
+    <!-- http://homelab.owl#Pitcher -->
+
+    <owl:Class rdf:about="&homelab;Pitcher">
         <rdfs:subClassOf rdf:resource="&homelab;DrinkContainer"/>
     </owl:Class>
 
