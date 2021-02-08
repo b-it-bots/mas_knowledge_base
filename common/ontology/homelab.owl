@@ -709,14 +709,6 @@
 
 
 
-    <!-- http://homelab.owl#DrinkingGlass -->
-
-    <owl:Class rdf:about="&homelab;DrinkingGlass">
-        <rdfs:subClassOf rdf:resource="&homelab;Drinkware"/>
-    </owl:Class>
-
-
-
     <!-- http://homelab.owl#Drinkware -->
 
     <owl:Class rdf:about="&homelab;Drinkware">
@@ -1339,7 +1331,7 @@
     <!-- http://homelab.owl#ShotGlass -->
 
     <owl:Class rdf:about="&homelab;ShotGlass">
-        <rdfs:subClassOf rdf:resource="&homelab;DrinkingGlass"/>
+        <rdfs:subClassOf rdf:resource="&homelab;Drinkware"/>
     </owl:Class>
 
 
@@ -1411,7 +1403,7 @@
     <!-- http://homelab.owl#Pitcher -->
 
     <owl:Class rdf:about="&homelab;Pitcher">
-        <rdfs:subClassOf rdf:resource="&homelab;DrinkContainer"/>
+        <rdfs:subClassOf rdf:resource="&homelab;FoodContainer"/>
     </owl:Class>
 
 
@@ -1419,6 +1411,14 @@
     <!-- http://homelab.owl#SoupPlate -->
 
     <owl:Class rdf:about="&homelab;SoupPlate">
+        <rdfs:subClassOf rdf:resource="&homelab;FoodContainer"/>
+    </owl:Class>
+
+
+
+    <!-- http://apartment.owl#TomatoCan -->
+
+    <owl:Class rdf:about="&homelab;TomatoCan">
         <rdfs:subClassOf rdf:resource="&homelab;FoodContainer"/>
     </owl:Class>
 
@@ -1809,7 +1809,7 @@
     <!-- http://homelab.owl#WineGlass -->
 
     <owl:Class rdf:about="&homelab;WineGlass">
-        <rdfs:subClassOf rdf:resource="&homelab;DrinkingGlass"/>
+        <rdfs:subClassOf rdf:resource="&homelab;Drinkware"/>
     </owl:Class>
 
 
@@ -1894,7 +1894,8 @@
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
         <owl:members rdf:parseType="Collection">
             <rdf:Description rdf:about="&homelab;Cup"/>
-            <rdf:Description rdf:about="&homelab;DrinkingGlass"/>
+            <rdf:Description rdf:about="&homelab;ShotGlass"/>
+            <rdf:Description rdf:about="&homelab;WineGlass"/>
             <rdf:Description rdf:about="&homelab;Glass"/>
             <rdf:Description rdf:about="&homelab;Mug"/>
         </owl:members>

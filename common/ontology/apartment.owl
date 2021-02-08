@@ -710,14 +710,6 @@
 
 
 
-    <!-- http://apartment.owl#DrinkingGlass -->
-
-    <owl:Class rdf:about="&apartment;DrinkingGlass">
-        <rdfs:subClassOf rdf:resource="&apartment;Drinkware"/>
-    </owl:Class>
-
-
-
     <!-- http://apartment.owl#Drinkware -->
 
     <owl:Class rdf:about="&apartment;Drinkware">
@@ -1340,7 +1332,7 @@
     <!-- http://apartment.owl#ShotGlass -->
 
     <owl:Class rdf:about="&apartment;ShotGlass">
-        <rdfs:subClassOf rdf:resource="&apartment;DrinkingGlass"/>
+        <rdfs:subClassOf rdf:resource="&apartment;Drinkware"/>
     </owl:Class>
 
 
@@ -1412,7 +1404,7 @@
     <!-- http://apartment.owl#Pitcher -->
 
     <owl:Class rdf:about="&apartment;Pitcher">
-        <rdfs:subClassOf rdf:resource="&apartment;DrinkContainer"/>
+        <rdfs:subClassOf rdf:resource="&apartment;FoodContainer"/>
     </owl:Class>
 
 
@@ -1420,6 +1412,14 @@
     <!-- http://apartment.owl#SoupPlate -->
 
     <owl:Class rdf:about="&apartment;SoupPlate">
+        <rdfs:subClassOf rdf:resource="&apartment;FoodContainer"/>
+    </owl:Class>
+
+
+
+    <!-- http://apartment.owl#TomatoCan -->
+
+    <owl:Class rdf:about="&apartment;TomatoCan">
         <rdfs:subClassOf rdf:resource="&apartment;FoodContainer"/>
     </owl:Class>
 
@@ -1812,7 +1812,7 @@
     <!-- http://apartment.owl#WineGlass -->
 
     <owl:Class rdf:about="&apartment;WineGlass">
-        <rdfs:subClassOf rdf:resource="&apartment;DrinkingGlass"/>
+        <rdfs:subClassOf rdf:resource="&apartment;Drinkware"/>
     </owl:Class>
 
 
@@ -1897,7 +1897,8 @@
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
         <owl:members rdf:parseType="Collection">
             <rdf:Description rdf:about="&apartment;Cup"/>
-            <rdf:Description rdf:about="&apartment;DrinkingGlass"/>
+            <rdf:Description rdf:about="&apartment;ShotGlass"/>
+            <rdf:Description rdf:about="&apartment;WineGlass"/>
             <rdf:Description rdf:about="&apartment;Glass"/>
             <rdf:Description rdf:about="&apartment;Mug"/>
         </owl:members>
