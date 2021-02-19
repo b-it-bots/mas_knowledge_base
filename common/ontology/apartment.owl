@@ -112,7 +112,7 @@
     <!-- http://apartment#hasPart -->
 
     <owl:ObjectProperty rdf:about="http://apartment#hasPart">
-        <owl:inverseOf rdf:resource="http://apartment#hasPart"/>
+        <owl:inverseOf rdf:resource="http://apartment#isPartOf"/>
         <rdfs:comment>This property is used to link objects to their sub-objects such as a cabinet has sub-object drawer.</rdfs:comment>
     </owl:ObjectProperty>
     
@@ -203,76 +203,6 @@
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
         <rdfs:domain rdf:resource="http://apartment#Object"/>
         <rdfs:range rdf:resource="http://apartment#Object"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://apartment#orientation -->
-
-    <owl:ObjectProperty rdf:about="http://apartment#orientation">
-        <rdfs:subPropertyOf rdf:resource="http://apartment#pose"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://apartment#orientationPitch -->
-
-    <owl:ObjectProperty rdf:about="http://apartment#orientationPitch">
-        <rdfs:subPropertyOf rdf:resource="http://apartment#orientation"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://apartment#orientationRoll -->
-
-    <owl:ObjectProperty rdf:about="http://apartment#orientationRoll">
-        <rdfs:subPropertyOf rdf:resource="http://apartment#orientation"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://apartment#orientationYaw -->
-
-    <owl:ObjectProperty rdf:about="http://apartment#orientationYaw">
-        <rdfs:subPropertyOf rdf:resource="http://apartment#orientation"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://apartment#pose -->
-
-    <owl:ObjectProperty rdf:about="http://apartment#pose"/>
-    
-
-
-    <!-- http://apartment#position -->
-
-    <owl:ObjectProperty rdf:about="http://apartment#position">
-        <rdfs:subPropertyOf rdf:resource="http://apartment#pose"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://apartment#positionX -->
-
-    <owl:ObjectProperty rdf:about="http://apartment#positionX">
-        <rdfs:subPropertyOf rdf:resource="http://apartment#position"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://apartment#positionY -->
-
-    <owl:ObjectProperty rdf:about="http://apartment#positionY">
-        <rdfs:subPropertyOf rdf:resource="http://apartment#position"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://apartment#positionZ -->
-
-    <owl:ObjectProperty rdf:about="http://apartment#positionZ">
-        <rdfs:subPropertyOf rdf:resource="http://apartment#position"/>
     </owl:ObjectProperty>
     
 
@@ -1802,13 +1732,18 @@
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
         <owl:members rdf:parseType="Collection">
             <rdf:Description rdf:about="http://apartment#Bed"/>
+            <rdf:Description rdf:about="http://apartment#Cabinet"/>
             <rdf:Description rdf:about="http://apartment#Chair"/>
+            <rdf:Description rdf:about="http://apartment#Couch"/>
+            <rdf:Description rdf:about="http://apartment#Counter"/>
             <rdf:Description rdf:about="http://apartment#Cupboard"/>
-            <rdf:Description rdf:about="http://apartment#DiningTable"/>
             <rdf:Description rdf:about="http://apartment#Drawer"/>
+            <rdf:Description rdf:about="http://apartment#Shelf"/>
+            <rdf:Description rdf:about="http://apartment#Sideboard"/>
+            <rdf:Description rdf:about="http://apartment#Sink"/>
             <rdf:Description rdf:about="http://apartment#Sofa"/>
+            <rdf:Description rdf:about="http://apartment#Table"/>
             <rdf:Description rdf:about="http://apartment#Wardrobe"/>
-            <rdf:Description rdf:about="http://apartment#WorkTable"/>
         </owl:members>
     </rdf:Description>
     <rdf:Description>
