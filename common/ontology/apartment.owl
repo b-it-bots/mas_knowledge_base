@@ -1,16 +1,6 @@
 <?xml version="1.0"?>
-
-<!DOCTYPE rdf:RDF [
-    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
-    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
-    <!ENTITY owl2xml "http://www.w3.org/2006/12/owl2-xml#" >
-    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
-    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
-    <!ENTITY apartment "http://apartment.owl#" >
-]>
-
-<rdf:RDF xmlns="http://apartment.owl#"
-     xml:base="http://apartment.owl"
+<rdf:RDF xmlns="http://apartment"
+     xml:base="http://apartment"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
@@ -636,14 +626,6 @@
 
     <owl:Class rdf:about="http://apartment#Drinking">
         <rdfs:subClassOf rdf:resource="http://apartment#Utility"/>
-    </owl:Class>
-    
-
-
-    <!-- http://apartment#DrinkingGlass -->
-
-    <owl:Class rdf:about="http://apartment#DrinkingGlass">
-        <rdfs:subClassOf rdf:resource="http://apartment#Drinkware"/>
     </owl:Class>
     
 
@@ -1278,7 +1260,7 @@
     <!-- http://apartment#ShotGlass -->
 
     <owl:Class rdf:about="http://apartment#ShotGlass">
-        <rdfs:subClassOf rdf:resource="http://apartment#DrinkingGlass"/>
+        <rdfs:subClassOf rdf:resource="http://apartment#Drinkware"/>
     </owl:Class>
     
 
@@ -1689,7 +1671,7 @@
     <!-- http://apartment#WineGlass -->
 
     <owl:Class rdf:about="http://apartment#WineGlass">
-        <rdfs:subClassOf rdf:resource="http://apartment#DrinkingGlass"/>
+        <rdfs:subClassOf rdf:resource="http://apartment#Drinkware"/>
     </owl:Class>
     
 
@@ -1706,6 +1688,14 @@
 
     <owl:Class rdf:about="http://apartment#Yogurt">
         <rdfs:subClassOf rdf:resource="http://apartment#Dairy"/>
+    </owl:Class>
+    
+
+
+    <!-- http://apartment.owl#TomatoCan -->
+
+    <owl:Class rdf:about="http://apartment.owl#TomatoCan">
+        <rdfs:subClassOf rdf:resource="http://apartment#FoodContainer"/>
     </owl:Class>
     
 
@@ -1773,15 +1763,6 @@
             <rdf:Description rdf:about="http://apartment#Knife"/>
             <rdf:Description rdf:about="http://apartment#TableSpoon"/>
             <rdf:Description rdf:about="http://apartment#TeaSpoon"/>
-        </owl:members>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
-        <owl:members rdf:parseType="Collection">
-            <rdf:Description rdf:about="http://apartment#Cup"/>
-            <rdf:Description rdf:about="http://apartment#DrinkingGlass"/>
-            <rdf:Description rdf:about="http://apartment#Glass"/>
-            <rdf:Description rdf:about="http://apartment#Mug"/>
         </owl:members>
     </rdf:Description>
     <rdf:Description>
