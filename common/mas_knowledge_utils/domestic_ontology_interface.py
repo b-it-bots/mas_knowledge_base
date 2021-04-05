@@ -13,8 +13,11 @@ class DomesticOntologyInterface(OntologyQueryInterface):
     @contact aleksandar.mitrevski@h-brs.de
 
     '''
-    def __init__(self, ontology_file, class_prefix):
-        super(DomesticOntologyInterface, self).__init__(ontology_file, class_prefix)
+    def __init__(self, ontology_file, base_url=None, entity_delimiter='/', class_prefix=''):
+        super(DomesticOntologyInterface, self).__init__(ontology_file=ontology_file,
+                                                        base_url=base_url,
+                                                        entity_delimiter=entity_delimiter,
+                                                        class_prefix=class_prefix)
 
     def get_default_storing_location(self, obj_name=None, obj_category=None):
         '''Returns a string representing the default storing location of an
