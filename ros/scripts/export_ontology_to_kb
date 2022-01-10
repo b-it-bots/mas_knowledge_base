@@ -9,13 +9,21 @@ class OntologyExporter(object):
         ontology_uri = rospy.get_param('/ontology_url', None)
         if not ontology_uri:
             raise RuntimeError('ontology_url not set')
+        ontology_base_url = rospy.get_param('/ontology_base_url', None)
+        ontology_entity_delimiter = rospy.get_param('/ontology_entity_delimiter', '/')
         ontology_class_prefix = rospy.get_param('/ontology_class_prefix', '')
-        self.ont_query_interface = OntologyQueryInterface(ontology_uri, ontology_class_prefix)
+        self.ont_query_interface = OntologyQueryInterface(ontology_file=ontology_uri,
+                                                          base_url=ontology_base_url,
+                                                          entity_delimiter=ontology_entity_delimiter,
+                                                          class_prefix=ontology_class_prefix)
         self.kb_interface = KnowledgeBaseInterface()
 
     def export_ontology_to_kb(self):
-        '''Inserts all property assertions in the ontology as facts in the
-        knowledge base. For every property, the domain and range are used
+        '''Inserts all class assertions in the ontology as instances in the
+        knowledge base and all property assertions as facts in the
+        knowledge base.
+
+        For every property, the domain and range are used
         as names for the variables in the facts; an exception to this is the
         case in which the domain and range are the same, when 0 and 1 are
         appended to the variable names to prevent name clashes.
@@ -38,9 +46,17 @@ class OntologyExporter(object):
         to Object to prevent name ambiguities.
 
         '''
+        classes = self.ont_query_interface.get_classes()
+        instances_to_add = []
+        for c in classes:
+            class_instances = self.ont_query_interface.get_instances_of(c)
+            instances_to_add += [(c, instance) for instance in class_instances]
+
+        print('Inserting instances')
+        self.kb_interface.insert_instances(instances_to_add)
+
         object_properties = self.ont_query_interface.get_object_properties()
         facts_to_add = []
-        instances_to_add = []
         for obj_property in object_properties:
             (prop_domain, prop_range) = self.ont_query_interface.get_property_domain_range(obj_property)
             subj_obj_pairs = self.ont_query_interface.get_all_subjects_and_objects(obj_property)
@@ -51,7 +67,7 @@ class OntologyExporter(object):
                     if obj.lower() == 'true':
                         fact = [obj_property, [(prop_domain, subj)]]
                 # we don't insert numeric values in the knowledge base
-                elif prop_range == 'integer' or prop_range == 'float':
+                elif prop_range in ('integer', 'float'):
                     continue
                 else:
                     if prop_domain != prop_range:
@@ -61,15 +77,7 @@ class OntologyExporter(object):
                         fact = [obj_property, [(prop_domain + '0', subj),
                                                (prop_range + '1', obj)]]
 
-                    instances_to_add = self.update_instance_in_list(subj, prop_domain,
-                                                                    instances_to_add)
-                    instances_to_add = self.update_instance_in_list(obj, prop_range,
-                                                                    instances_to_add)
-
                 facts_to_add.append(fact)
-
-        print('Inserting instances')
-        self.kb_interface.insert_instances(instances_to_add)
 
         print('Inserting facts')
         self.kb_interface.insert_facts(facts_to_add)
