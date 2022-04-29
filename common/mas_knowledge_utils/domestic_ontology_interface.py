@@ -24,7 +24,7 @@ class DomesticOntologyInterface(OntologyQueryInterface):
         object or an object category. If "obj_name" is not None, returns the
         default storing location for that particular object; if "obj_name"
         is None and "obj_category" is not, returns the default storing location
-        for objects that category.
+        for objects in that category (the latter is currently not implemented).
 
         Keyword arguments:
         @param obj_name -- string representing the name of an object (default None)
@@ -33,7 +33,7 @@ class DomesticOntologyInterface(OntologyQueryInterface):
         '''
         location = None
         if obj_name:
-            location_list = self.get_objects_of('defaultStoringLocation', obj_name)
+            location_list = self.get_objects_of('defaultLocation', obj_name)
             if location_list:
                 location = location_list[0]
         elif obj_category:
